@@ -4,9 +4,9 @@ import { onMounted } from 'vue'
 import { executeCommand, currentDirectory } from './CLI'
 
 onMounted(() => {
-  var terminalInput = document.getElementById('terminal-input')
-  var p = document.getElementById('prompt-output')
-  var typer = document.getElementById('typer')
+  var terminalInput = document.getElementById('terminal-input') as HTMLInputElement
+  var p = document.getElementById('prompt-output') as HTMLParagraphElement
+  var typer = document.getElementById('typer') as HTMLSpanElement
   if (terminalInput) {
     terminalInput.focus()
     terminalInput.select()
