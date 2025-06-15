@@ -77,3 +77,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Disable all mouse interactions globally */
+html, body, * {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+/* Hide the mouse cursor globally */
+html, body, * {
+  cursor: none !important;
+}
