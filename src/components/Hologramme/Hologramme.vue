@@ -1,15 +1,13 @@
 <script lang="ts" setup>
 import { TresCanvas, useRenderLoop } from '@tresjs/core'
+import { HolographicMaterial } from '@tresjs/cientos'
 import { ref } from 'vue'
 const { onLoop } = useRenderLoop()
 
 const rotationY = ref(0)
-const opacity = ref(0.4)
 
 onLoop(() => {
     rotationY.value += 0.01
-    opacity.value += 0.0005
-    opacity.value = opacity.value >= 0.5 ? 0.4 : opacity.value
 })
 
 </script>
@@ -30,16 +28,12 @@ onLoop(() => {
                     :opacity="0.92"
                 />
             </TresMesh>
-            <TresMesh :position="[0, 0.85, 0]" :rotation="[Math.PI, 0, 0]">
+            <TresMesh :position="[0, 0.85, 0]" :rotation="[Math.PI, rotationY, 0]">
                 <TresConeGeometry :args="[2, 1.5, 4]" />
-                <TresMeshStandardMaterial 
-                    color="#4a90e2"
-                    :metalness="0.9"
-                    :roughness="0.1"
-                    :emissive="'#4a90e2'"
-                    :emissiveIntensity="0.8"
-                    :transparent="true"
-                    :opacity="opacity"
+                <HolographicMaterial
+                    :hologramColor="'#00ff88'"
+                    :fresnelAmount="0.6"
+                    :hologramOpacity="0.8"
                 />
             </TresMesh>
             <TresAmbientLight :intensity="0.5" />
@@ -51,7 +45,7 @@ onLoop(() => {
 <style scoped>
 #hologramme {
     position: fixed;
-    top: 55%;
+    top: 45%;
     width: 50%;
     height: 50%;
     filter: drop-shadow(0 0 20px rgba(74, 144, 226, 0.3));
