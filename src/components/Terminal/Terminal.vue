@@ -4,9 +4,11 @@ import { onMounted } from 'vue'
 import { executeCommand, currentDirectory } from './CLI'
 
 onMounted(() => {
-  var terminalInput = document.getElementById('terminal-input') as HTMLInputElement
-  var p = document.getElementById('prompt-output') as HTMLParagraphElement
-  var typer = document.getElementById('typer') as HTMLSpanElement
+  var terminalInput : HTMLInputElement = document.getElementById('terminal-input') as HTMLInputElement
+  var output : HTMLSpanElement = document.getElementById('cmd-output') as HTMLSpanElement
+  var typer : HTMLSpanElement = document.getElementById('typer') as HTMLSpanElement
+  var line : HTMLElement = document.getElementById("line") as HTMLElement;
+
   if (terminalInput) {
     terminalInput.focus()
     terminalInput.select()
@@ -14,16 +16,27 @@ onMounted(() => {
       this.focus();
       this.select();
     });
-    if (p) {
+    if (output) {
       terminalInput.addEventListener('keyup', (e) => {
         typer!.innerHTML = terminalInput!.value        
         if (e.key === 'Enter') {
           terminalInput!.value = ''
+          // creating a new line
+          const newLine : HTMLElement = line.cloneNode(true) as HTMLElement;
+          typer = newLine.querySelector("#typer") as HTMLSpanElement;
+          typer!.innerHTML = '' 
+          document.getElementById("terminal")?.appendChild(newLine)
+          line.querySelector("#cursor")!.innerHTML = ''
+          line = newLine as HTMLElement;
+          // creating a new cmd output
+          output = output.cloneNode(true) as HTMLElement;
+          output.innerHTML = ''
+          document.getElementById("terminal")?.appendChild(output)
         }
       })
       terminalInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-          p!.innerHTML = JSON.stringify(executeCommand(terminalInput!.value))
+          output!.innerHTML = executeCommand(terminalInput!.value)
         } 
       })
     }
@@ -40,7 +53,7 @@ onMounted(() => {
       <span id="typer"></span>
       <b id="cursor">█</b>
     </div>
-    <p id="prompt-output"></p>
+    <span id="cmd-output"></span>
   </div>
 </template>
 
@@ -77,6 +90,11 @@ onMounted(() => {
   font-size: 14px;
 }
 
+#cmd-output{
+  display: flex;
+  font-size: 14px;
+}
+
 #cursor{
   height: 1.5em;
   width: 8px;
@@ -100,6 +118,9 @@ onMounted(() => {
   #line{
     font-size: 12px;
   }
+  #cmd-output{
+    font-size: 12px;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -110,6 +131,9 @@ onMounted(() => {
     padding: 15px;
   }
   #line{
+    font-size: 10px;
+  }
+  #cmd-output{
     font-size: 10px;
   }
 }

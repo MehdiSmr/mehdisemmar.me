@@ -1,3 +1,5 @@
+import { ref } from 'vue'
+
 const fileStructure : {[key: string]:  {[key: string]: string[]}} = {
     "home": {
         "experience": ["Raven Connected", "Versaterm","ISED","Wouessi Digital","SSC","Redal"],
@@ -6,62 +8,71 @@ const fileStructure : {[key: string]:  {[key: string]: string[]}} = {
     }
 }   
 
-let currentDirectory : string = "home"
+let currentDirectory = ref("home")
 
 function executeCommand(input: string){
     let command = input.split(" ")[0]
     let argument = input.split(" ")[1]
 
-    if (input.split(" ").length != 1 && input.split(" ").length != 2) return false
+    if (input.split(" ").length != 1 && input.split(" ").length != 2) return "false"
     console.log(command==="cd", command)
     switch (command){
-        case "help":
+        case "game":
+            console.log("Starting game...")
+            return "true"
+
+        case "clear":
+            console.log("Clearing terminal...")
+            return "true"
+
+        case "help": // assistant start talking
             console.log("help: display this help message")
             console.log("aboutme: display information about me")
             console.log("skills: display my skills")
             console.log("cd: change directory")
             console.log("ls: list files in the current directory")
-            return true
+            return "true"
+            
         case "aboutme":
-            if (argument !== undefined) return false
+            if (argument !== undefined) return "false"
             console.log("About me")
-            return true
+            return "true"
 
         case "skills":
-            if (argument !== undefined) return false
+            if (argument !== undefined) return "false"
             console.log("Skills")
-            return true
+            return "true"
 
         case "cd":
-            if (argument === undefined) return false
+            if (argument === undefined) return "false"
             if (argument === ".."){
-                currentDirectory = "home"
+                currentDirectory.value = "home"
             }
             else {
                 switch (argument){
                     case "experience":
-                        currentDirectory = "experience"
+                        currentDirectory.value = "experience"
                         break
                     case "projects":
-                        currentDirectory = "projects"
+                        currentDirectory.value = "projects"
                         break
                     case "extracurriculars":
-                        currentDirectory = "extracurriculars"
+                        currentDirectory.value = "extracurriculars"
                         break
                     default:
                         console.log("Invalid directory")
-                        return false
+                        return "false"
                 }
             }
-            return true
+            return "true"
 
         case "ls":
             if (argument === undefined){
-                if (currentDirectory == "home"){
+                if (currentDirectory.value == "home"){
                     return printFiles(Object.keys(fileStructure["home"]))
                 }
                 else{
-                    return printFiles(fileStructure["home"][currentDirectory])
+                    return printFiles(fileStructure["home"][currentDirectory.value])
                 }
             }
             else{
@@ -70,32 +81,32 @@ function executeCommand(input: string){
                 }
                 else{
                     console.log("Invalid file")
-                    return false
+                    return "false"
                 }
             }
 
         //to implement
         case "open":
             console.log("Opening hologram...")
-            return true
+            return "true"
 
         //to implement
         case "exit":
             console.log("Exiting...")
-            return true
+            return "true"
 
         default:
             console.log("Invalid command")
-            return false
+            return "false"
     }
 }
 
 function printFiles(files: string[]){
     let output = ""
     for (let file of files){
-        output += file + ", "
+        output += file + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
     }
-    return output.slice(0, -2)
+    return output.trim()
 }
 
 export { executeCommand, currentDirectory }

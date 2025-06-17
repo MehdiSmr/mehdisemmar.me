@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import Terminal from './components/Terminal/Terminal.vue'
 import Hologramme from './components/Hologramme/Hologramme.vue'
+import Assistant from './components/Assistant/Assistant.vue'
 import './style.css'
 </script>
 
@@ -9,11 +10,15 @@ import './style.css'
     <video autoplay loop muted playsinline class="background-video">
       <source src="./assets/bg.mp4" type="video/mp4"/>
     </video>
+    
     <div class="terminal-container">
       <Terminal/>
     </div>
     <div class="hologramme-container">
       <Hologramme />
+    </div>
+    <div class="assistant-container">
+      <Assistant />
     </div>
   </div>
 </template>
@@ -57,6 +62,7 @@ import './style.css'
     width: 100%;
     height: 100%;
     object-position: center;
+    z-index: -1;
   }
 }
 
@@ -94,6 +100,11 @@ import './style.css'
 .hologramme-container :deep(*) {
   animation: fadeInUp 0.8s ease-out 0.3s forwards;
   opacity: 0;
+}
+
+.assistant-container {
+  position: fixed;
+  z-index: 1;
 }
 
 @media screen and (max-width: 768px) {
