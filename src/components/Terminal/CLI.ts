@@ -22,8 +22,7 @@ function executeCommand(input: string){
             return "true"
 
         case "clear":
-            console.log("Clearing terminal...")
-            return "true"
+            return "clear"
 
         case "help": // assistant start talking
             console.log("help: display this help message")
@@ -31,6 +30,10 @@ function executeCommand(input: string){
             console.log("skills: display my skills")
             console.log("cd: change directory")
             console.log("ls: list files in the current directory")
+            console.log("open: open a file")
+            console.log("exit: exit the terminal")
+            console.log("game: start a game")
+            console.log("clear: clear the terminal")
             return "true"
             
         case "aboutme":
