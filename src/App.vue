@@ -2,7 +2,7 @@
 import Terminal from './components/Terminal/Terminal.vue'
 import Hologramme from './components/Hologramme/Hologramme.vue'
 import Assistant from './components/Assistant/Assistant.vue'
-import Bubble from './components/Assistant/Bubble.vue'
+// import Bubble from './components/Assistant/Bubble.vue'
 import './style.css'
 </script>
 
