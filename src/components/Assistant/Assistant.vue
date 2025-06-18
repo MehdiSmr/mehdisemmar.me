@@ -5,7 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 const scene = new THREE.Scene()
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-camera.position.z = 300
+camera.position.z = 350
 
 const renderer = new THREE.WebGLRenderer()
 renderer.setClearColor(0x000000, 0) 
@@ -24,14 +24,14 @@ light.position.set(1, 1, 1)
 scene.add(light)
 
 const loader = new GLTFLoader()
-loader.load('src/assets/robot_m.a.n.u.l./scene.gltf', (gltf: any) => {
+loader.load('src/assets/penguin-bot/scene.gltf', (gltf: any) => {
   const model = gltf.scene  
   scene.add(model)
 
   const box = new THREE.Box3().setFromObject(model)
   const center = box.getCenter(new THREE.Vector3())
   model.position.copy(center)
-  model.scale.set(100, 100, 100)
+  model.scale.set(20, 20, 20)
 })
 
 function animate() {

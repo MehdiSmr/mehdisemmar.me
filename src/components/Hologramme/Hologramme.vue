@@ -31,7 +31,7 @@ onLoop(() => {
             <TresMesh :position="[0, 0.85, 0]" :rotation="[Math.PI, rotationY, 0]">
                 <TresConeGeometry :args="[2, 1.5, 4]" />
                 <HolographicMaterial
-                    :hologramColor="'#00ff88'"
+                    :hologramColor="'#40e0d0'"
                     :fresnelAmount="0.6"
                     :hologramOpacity="0.8"
                 />

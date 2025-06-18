@@ -2,6 +2,7 @@
 import Terminal from './components/Terminal/Terminal.vue'
 import Hologramme from './components/Hologramme/Hologramme.vue'
 import Assistant from './components/Assistant/Assistant.vue'
+import Bubble from './components/Assistant/Bubble.vue'
 import './style.css'
 </script>
 
@@ -20,6 +21,9 @@ import './style.css'
     <div class="assistant-container">
       <Assistant />
     </div>
+    <!-- <div class="bubble-container">
+      <Bubble />
+    </div> -->
   </div>
 </template>
 
@@ -102,8 +106,11 @@ import './style.css'
   opacity: 0;
 }
 
+.bubble-container {
+  z-index: 2;
+}
+
 .assistant-container {
-  position: fixed;
   z-index: 1;
 }
 

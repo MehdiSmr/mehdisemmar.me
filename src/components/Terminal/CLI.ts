@@ -15,7 +15,6 @@ function executeCommand(input: string){
     let argument = input.split(" ")[1]
 
     if (input.split(" ").length != 1 && input.split(" ").length != 2) return "false"
-    console.log(command==="cd", command)
     switch (command){
         case "game":
             console.log("Starting game...")
@@ -63,8 +62,7 @@ function executeCommand(input: string){
                         currentDirectory.value = "extracurriculars"
                         break
                     default:
-                        console.log("Invalid directory")
-                        return "false"
+                        return argument + ": is not a directory"
                 }
             }
             return "true"
@@ -83,8 +81,7 @@ function executeCommand(input: string){
                     return printFiles(fileStructure["home"][argument])
                 }
                 else{
-                    console.log("Invalid file")
-                    return "false"
+                    return argument + ": is not a directory"
                 }
             }
 
@@ -99,8 +96,7 @@ function executeCommand(input: string){
             return "true"
 
         default:
-            console.log("Invalid command")
-            return "false"
+            return "command not found: " + command
     }
 }
 
