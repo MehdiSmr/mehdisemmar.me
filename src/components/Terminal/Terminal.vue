@@ -10,7 +10,8 @@ onMounted(() => {
   var typer : HTMLSpanElement = document.getElementById('typer') as HTMLSpanElement
   var line : HTMLElement = document.getElementById("line") as HTMLElement;
   var terminal : HTMLElement = document.getElementById("terminal-content") as HTMLElement;
-  
+  const terminalHeight = terminal.scrollHeight
+
   function newLine(){
     // creating a new line
     const newLine : HTMLElement = line.cloneNode(true) as HTMLElement;
@@ -39,8 +40,13 @@ onMounted(() => {
         if (e.key === 'Enter') {
           terminalInput!.value = ''
           newLine()
-          // scroll to the bottom of the terminal
-          terminal.scrollTo(0, terminal.scrollHeight)
+          while (terminal.scrollHeight > terminalHeight) {
+            const secondChild = terminal.children[1]
+            if (secondChild) {
+              secondChild.remove()
+            }
+          }
+          console.log(terminal.scrollHeight)
         }
       })
       
