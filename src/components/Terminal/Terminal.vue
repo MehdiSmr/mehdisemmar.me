@@ -60,7 +60,7 @@ onMounted(() => {
                 terminal!.appendChild(terminalInput)
                 break
               case "false":
-                output!.innerHTML = "Command not found"
+                output!.innerHTML = "command not valid"
                 break
               case "":
               case "true":

@@ -1,3 +1,4 @@
+import { pass } from 'three/tsl'
 import { ref } from 'vue'
 
 const fileStructure : {[key: string]:  {[key: string]: string[]}} = {
@@ -16,14 +17,11 @@ function executeCommand(input: string){
 
     if (input.split(" ").length != 1 && input.split(" ").length != 2) return "false"
     switch (command){
-        case "game":
-            console.log("Starting game...")
-            return "true"
-
         case "clear":
             return "clear"
 
-        case "help": // assistant start talking
+        case "help": //bot speaking
+            if (argument !== undefined) return "help takes no arguments"
             console.log("help: display this help message")
             console.log("aboutme: display information about me")
             console.log("skills: display my skills")
@@ -35,18 +33,18 @@ function executeCommand(input: string){
             console.log("clear: clear the terminal")
             return "true"
             
-        case "aboutme":
-            if (argument !== undefined) return "false"
+        case "aboutme": //bot speaking
+            if (argument !== undefined) return "aboutme takes no arguments"
             console.log("About me")
             return "true"
 
-        case "skills":
-            if (argument !== undefined) return "false"
+        case "skills": //bot speaking
+            if (argument !== undefined) return "skills takes no arguments"
             console.log("Skills")
             return "true"
 
         case "cd":
-            if (argument === undefined) return "false"
+            if (argument === undefined || argument === ".") return "true"
             if (argument === ".."){
                 currentDirectory.value = "home"
             }
@@ -68,7 +66,7 @@ function executeCommand(input: string){
             return "true"
 
         case "ls":
-            if (argument === undefined){
+            if (argument === undefined || argument.trim() === "" || argument === "." || argument === ".."){
                 if (currentDirectory.value == "home"){
                     return printFiles(Object.keys(fileStructure["home"]))
                 }
