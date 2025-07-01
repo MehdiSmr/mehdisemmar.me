@@ -44,7 +44,7 @@ function executeCommand(input: string){
             return "true"
 
         case "cd":
-            if (argument === undefined || argument === ".") return "true"
+            if (argument === undefined || argument === "." || argument === "home") return "true"
             if (argument === ".."){
                 currentDirectory.value = "home"
             }

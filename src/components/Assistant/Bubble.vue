@@ -1,22 +1,7 @@
 <script lang="ts" setup>
 import '../../style.css'
-import { onMounted, ref } from 'vue'
-
-const text = ref('')
-
-onMounted(() => {
-  // Example of dynamic text update
-  // You can call updateText() from parent component or emit events
-})
-
-const updateText = (newText: string) => {
-  text.value = newText
-}
-
-// Expose method to parent component
-defineExpose({
-  updateText
-})
+import {text} from './Assistant'
+ 
 </script>
 
 <template>
@@ -55,6 +40,7 @@ defineExpose({
   height: 80%;
   margin: 10vh 0;
   padding: 0;
+  display: none;
   box-sizing: border-box;
   
   /* Enhanced futuristic background */

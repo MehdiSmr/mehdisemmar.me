@@ -2,8 +2,32 @@
 import Terminal from './components/Terminal/Terminal.vue'
 import Hologramme from './components/Hologramme/Hologramme.vue'
 import Assistant from './components/Assistant/Assistant.vue'
-// import Bubble from './components/Assistant/Bubble.vue'
+import Bubble from './components/Assistant/Bubble.vue'
+import { updateText, showBubble, hideBubble } from './components/Assistant/Assistant.ts'
 import './style.css'
+
+var mouseWarningDisplayed : boolean = false;
+
+setTimeout(() => {
+    addEventListener("mousemove", (event) => {
+        if (!mouseWarningDisplayed) {
+            showBubble();
+            handleMouseMove(event);
+       } else {
+            removeEventListener("mousemove", handleMouseMove);
+        } 
+    });
+}, 5000);
+
+const handleMouseMove = (event: MouseEvent) => {
+    mouseWarningDisplayed = true;
+    updateText("This application is designed to be used without a mouse. Please use keyboard controls.");
+    setTimeout(() => {
+        updateText("");
+        hideBubble();
+    }, 5000);
+};
+
 </script>
 
 <template>
@@ -21,9 +45,9 @@ import './style.css'
     <div class="assistant-container">
       <Assistant />
     </div>
-    <!-- <div class="bubble-container">
+    <div class="bubble-container">
       <Bubble />
-    </div> -->
+    </div>
   </div>
 </template>
 

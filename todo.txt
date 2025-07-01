@@ -1,0 +1,13 @@
+-work on 3d model assistant + make animation of bakcground blured/copacity him walking in the center and bubble shows up with text
+   - each time he comes from somewhere else left right and fall from top
+   - he is gonna be talking aboutme, skills, introduction
+
+-work on holograms for the projects and experiences and how to interact with them with the terminal
+
+-finish styling/personalizing terminal and bubble 
+  -rajouter les bars au terminal comme la bulle de l'assistant
+
+-add loader + add/fix animations
+
+-make sure everything is responsive 
+-add sound effects

@@ -11,10 +11,12 @@ onMounted(() => {
   var line : HTMLElement = document.getElementById("line") as HTMLElement;
   var terminal : HTMLElement = document.getElementById("terminal-content") as HTMLElement;
   const terminalHeight = terminal.scrollHeight
-
-  function newLine(){
+  line.querySelector(".directory-info")!.innerHTML = '<Right>'+ currentDirectory.value + '&nbsp';
+ 
+ function newLine(){
     // creating a new line
     const newLine : HTMLElement = line.cloneNode(true) as HTMLElement;
+    newLine.querySelector(".directory-info")!.innerHTML= '<Right>'+ currentDirectory.value + '&nbsp';
     typer = newLine.querySelector("#typer") as HTMLSpanElement;
     typer!.innerHTML = ''
     document.getElementById("terminal-content")?.appendChild(newLine)
@@ -111,7 +113,7 @@ onMounted(() => {
         <span id="user" class="user-prompt">
           <span class="prompt-symbol">◉</span>
           <span class="user-info">visitors@mehdisemmar.me&nbsp;</span>
-          <span class="directory-info">{{ currentDirectory }}&nbsp;</span>
+          <span class="directory-info"></span>
           <span class="prompt-arrow">▶&nbsp;</span>
         </span>
         <span id="typer" class="user-input"></span>
