@@ -1,4 +1,3 @@
-import { pass } from 'three/tsl'
 import { ref } from 'vue'
 
 const fileStructure : {[key: string]:  {[key: string]: string[]}} = {

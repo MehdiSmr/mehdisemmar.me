@@ -1,5 +1,5 @@
 import {ref} from 'vue';
-import Bubble from './Bubble.vue';
+//import Bubble from './Bubble.vue';
 
 const text = ref<string>("");
 

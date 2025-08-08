@@ -19,7 +19,7 @@ setTimeout(() => {
     });
 }, 5000);
 
-const handleMouseMove = (event: MouseEvent) => {
+const handleMouseMove = (_event: MouseEvent) => {
     mouseWarningDisplayed = true;
     updateText("This application is designed to be used without a mouse. Please use keyboard controls.");
     setTimeout(() => {
