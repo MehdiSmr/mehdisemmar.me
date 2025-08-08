@@ -1,9 +1,23 @@
 <script lang="ts" setup>
 import '../../style.css'
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { executeCommand, currentDirectory } from './CLI'
 
+const router = useRouter()
+
+// Keyboard shortcut handler
+const handleKeyboardShortcut = (e: KeyboardEvent) => {
+  if (e.ctrlKey && e.key === 'h') {
+    e.preventDefault()
+    router.push('/')
+  }
+}
+
 onMounted(() => {
+  // Add keyboard shortcut listener
+  window.addEventListener('keydown', handleKeyboardShortcut)
+  
   var cmdout : string = ""
   var terminalInput : HTMLInputElement = document.getElementById('terminal-input') as HTMLInputElement
   var output : HTMLSpanElement = document.getElementById('cmd-output') as HTMLSpanElement
@@ -77,6 +91,11 @@ onMounted(() => {
     }
   }
 })
+
+onUnmounted(() => {
+  // Remove keyboard shortcut listener
+  window.removeEventListener('keydown', handleKeyboardShortcut)
+})
 </script>
 
 <template>
@@ -106,6 +125,7 @@ onMounted(() => {
         <div class="banner-line">║  STARSHIP NAVIGATION SYSTEM - AUTHENTICATED ACCESS GRANTED   ║</div>
         <div class="banner-line">║  User: visitors@mehdisemmar.me | Clearance Level: VISITOR     ║</div>
         <div class="banner-line">║  System Status: OPERATIONAL | All systems nominal            ║</div>
+        <div class="banner-line">║  Type 'help' for commands | Press CTRL+H to return home      ║</div>
         <div class="banner-line">╚═══════════════════════════════════════════════════════════════╝</div>
       </div>
 

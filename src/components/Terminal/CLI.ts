@@ -22,16 +22,18 @@ function executeCommand(input: string){
 
         case "help": //bot speaking
             if (argument !== undefined) return "help takes no arguments"
-            console.log("help: display this help message")
-            console.log("aboutme: display information about me")
-            console.log("skills: display my skills")
-            console.log("cd: change directory")
-            console.log("ls: list files in the current directory")
-            console.log("open: open a file")
-            console.log("exit: exit the terminal")
-            console.log("game: start a game")
-            console.log("clear: clear the terminal")
-            return "true"
+            return `AVAILABLE COMMANDS:
+  help      - display this help message
+  aboutme   - display information about me
+  skills    - display my skills
+  cd        - change directory
+  ls        - list files in the current directory
+  open      - open a file
+  exit      - exit the terminal
+  clear     - clear the terminal
+  
+KEYBOARD SHORTCUTS:
+  CTRL+H    - return to home page`
             
         case "aboutme": //bot speaking
             if (argument !== undefined) return "aboutme takes no arguments"
