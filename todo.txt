@@ -15,3 +15,8 @@ fix shortcut help description it is ctrl+h not ctrl+H
 
 -make sure everything is responsive 
 -add sound effects
+
+
+
+------- lazy portfolio
+-add education section at the top with degree and certification + update images of cards

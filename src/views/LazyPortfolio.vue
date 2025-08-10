@@ -9,91 +9,153 @@ const sections = {
   experience: [
     { 
       name: "Raven Connected", 
-      period: "MAY 2024 - AUG 2024",
-      description: "Full-stack development on IoT surveillance platforms using React, Node.js, and PostgreSQL. Built real-time dashboards and optimized database performance for enterprise clients.", 
+      period: "SEP 2025 - DEC 2025",
+      description: "AI/ML Engineer developing intelligent surveillance systems and computer vision solutions. Working on deep learning models for real-time video analytics and automated threat detection using TensorFlow and PyTorch.", 
       image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop&auto=format",
-      type: "SOFTWARE_ENGINEER_INTERN"
+      type: "AI_ML_ENGINEER_INTERN",
+      link: "https://ravenconnected.com"
     },
     { 
       name: "Versaterm", 
-      period: "JAN 2024 - APR 2024",
-      description: "Developed public safety software solutions with Java Spring Boot and Angular. Implemented critical features for law enforcement and emergency services management systems.", 
+      period: "MAY 2025 - AUG 2025",
+      description: "Built dynamic record retrieval tool with PostgreSQL and 4JS GUI frontend for VRMS integration. Developed NCIC response parser using Linux environment (Vim, PuTTY) with dynamic column views, backup systems, and CSV import/export functionality, deployed to production. Created Electron-based platform for configuring VMobile forms used by officers, enabling JSON-driven mobile communication interfaces.", 
       image: "https://images.unsplash.com/photo-1560472355-536de3962603?w=400&h=300&fit=crop&auto=format",
-      type: "FULL_STACK_DEVELOPER"
-    },
-    { 
-      name: "ISED Canada", 
-      period: "MAY 2023 - AUG 2023",
-      description: "Innovation, Science and Economic Development - Built government digital services using Python Django and React. Contributed to national technology policy implementations.", 
-      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop&auto=format",
-      type: "SOFTWARE_DEVELOPER"
+      type: "FULL_STACK_DEVELOPER_INTERN",
+      link: "https://versaterm.com"
     },
     { 
       name: "Wouessi Digital", 
-      period: "SEP 2022 - DEC 2022",
-      description: "Digital transformation solutions for African businesses. Developed mobile-first applications using React Native and Firebase, focusing on fintech and e-commerce platforms.", 
+      period: "FEB 2025 - MAR 2025",
+      description: "Improved website visibility by implementing responsive blog page with pagination using React.js and Tailwind CSS. Migrated codebase to TypeScript and enhanced data flow across 3+ microservices with Express.js and MongoDB.", 
       image: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=400&h=300&fit=crop&auto=format",
-      type: "DIGITAL_SOLUTIONS_DEV"
+      type: "SOFTWARE_DEVELOPER_INTERN",
+      link: "https://wouessi.com"
+    },
+    { 
+      name: "ISED Canada", 
+      period: "JAN 2025 - APR 2025",
+      description: "Resolved 7+ critical frontend and backend bugs using JavaScript, LWC, Apex, and SOQL, improving web platform stability. Built CRM features and managed Salesforce admin tasks for 10,000+ users in agile environment.", 
+      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop&auto=format",
+      type: "SALESFORCE_DEVELOPER_INTERN",
+      link: "https://ised-isde.canada.ca"
+    },
+    { 
+      name: "Shared Services Canada", 
+      period: "JUL 2024 - AUG 2024",
+      description: "Cut data processing time by 70% by automating financial reconciliation in Excel using VB.NET. Created detailed documentation and demo video, presenting to 30+ stakeholders. Audited high-value invoices, identifying $10K+ billing discrepancies.", 
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop&auto=format",
+      type: "DATA_ANALYST_INTERN",
+      link: "https://ssc-spc.gc.ca"
     }
   ],
   projects: [
     { 
-      name: "RZO SPORTS", 
+      name: "RZO Sports", 
       period: "2024 - ONGOING",
-      description: "Comprehensive sports management platform with real-time statistics, team management, and live streaming capabilities. Built with Next.js, TypeScript, and Supabase.", 
+      description: "Co-founded RZO Sports, a two-sided platform for amateur athletes and sports venues. Placed top 2 out of 40+ candidates in pitch competition. Leading MVP development with Spring Boot, React.js, MySQL, Docker, and Nginx using JWT/OAuth 2.0.", 
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&auto=format",
-      type: "FULL_STACK_PLATFORM"
+      type: "STARTUP_PLATFORM",
+      link: "https://github.com/FtKuBo/rzo-sports"
     },
     { 
-      name: "Dollaresume", 
-      period: "2023 - 2024",
-      description: "AI-powered resume builder with ATS optimization and real-time collaboration. Features include template customization, skill analysis, and job matching algorithms.", 
+      name: "DollaResume", 
+      period: "2024",
+      description: "Developed AI-powered resume generator using JavaScript, React.js, and Gadget. Integrated PDF generation ensuring 98% compatibility in ATS tests for optimized resume formatting. Won $300 cash prize in Gadget Challenge.", 
       image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop&auto=format",
-      type: "AI_POWERED_SAAS"
+      type: "AI_RESUME_GENERATOR",
+      link: "https://github.com/FtKuBo/dollaresume"
     },
     { 
       name: "SeekAndFind", 
-      period: "2023",
-      description: "Interactive search and discovery platform with advanced filtering, geolocation services, and social features. Implements machine learning for personalized recommendations.", 
+      period: "2024",
+      description: "Built event-driven web application connecting uOttawa students who lost and found items using Solace PubSub+ message broker, containerized Spring Boot API, and React.js frontend. Developed for uOttaHack 7 Solace challenge.", 
       image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop&auto=format",
-      type: "SEARCH_PLATFORM"
+      type: "EVENT_DRIVEN_PLATFORM",
+      link: "https://github.com/FtKuBo/seekandfind"
     },
     { 
-      name: "Open Source Portfolio", 
-      period: "2022 - ONGOING",
-      description: "Collection of open-source contributions including algorithm implementations, developer tools, and community libraries. Active on GitHub with 50+ repositories.", 
+      name: "Portfolio Website", 
+      period: "2024 - ONGOING",
+      description: "Dual-interface portfolio website featuring traditional scrollable view and terminal-based CLI experience. Built with Vue.js, TypeScript, and modern web technologies with responsive design and dynamic animations.", 
       image: "https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?w=400&h=300&fit=crop&auto=format",
-      type: "OPEN_SOURCE_CONTRIB"
+      type: "PERSONAL_PORTFOLIO",
+      link: "https://github.com/FtKuBo/mehdisemmar.me"
+    }
+  ],
+  skills: [
+    {
+      name: "Programming Languages",
+      period: "2022 - PRESENT",
+      description: "Python, Java, JavaScript, HTML5, CSS3, Dart, C/C++, NASM, SQL, Bash. Proficient in multiple paradigms including OOP, functional programming, and system-level programming.",
+      image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&h=300&fit=crop&auto=format",
+      type: "CORE_LANGUAGES",
+      link: "https://github.com/FtKuBo?tab=repositories"
+    },
+    {
+      name: "Frameworks & Libraries",
+      period: "2023 - PRESENT",
+      description: "Spring Boot, React.js, Express.js, Node.js, Tailwind CSS, Flutter, Django, TensorFlow. Experience building full-stack applications with modern web and mobile frameworks.",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop&auto=format",
+      type: "FRAMEWORKS_LIBRARIES",
+      link: "https://github.com/FtKuBo?tab=repositories"
+    },
+    {
+      name: "Cloud & DevOps",
+      period: "2023 - PRESENT",
+      description: "AWS, Google Cloud, Docker, Git, Linux, Vim, Postman. Experience with containerization, cloud deployment, version control, and API development/testing tools.",
+      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=300&fit=crop&auto=format",
+      type: "CLOUD_DEVOPS",
+      link: "https://github.com/FtKuBo?tab=repositories"
+    },
+    {
+      name: "Specialized Technologies",
+      period: "2024 - PRESENT",
+      description: "Salesforce (LWC, Apex, SOQL), Genero 4GL, PostgreSQL, MongoDB, PubSub+, VB.NET. Enterprise and specialized technology stack experience from professional internships.",
+      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop&auto=format",
+      type: "ENTERPRISE_TECH",
+      link: "https://linkedin.com/in/mehdisemmar"
     }
   ],
   extracurriculars: [
     { 
-      name: "SESA Logistics Lead", 
-      period: "2023 - 2024",
-      description: "Leading logistics operations for Software Engineering Student Association events. Coordinated 15+ tech talks, hackathons, and networking sessions with 500+ participants.", 
+      name: "SESA Logistics Team Lead", 
+      period: "2025",
+      description: "Leading logistics operations for Software Engineering Student Association events. Coordinating tech talks, hackathons, and networking sessions with 500+ participants, managing event planning and execution for university's largest engineering student organization.", 
       image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&h=300&fit=crop&auto=format",
-      type: "LEADERSHIP_ROLE"
+      type: "LEADERSHIP_ROLE",
+      link: "https://sesa.engineering.uottawa.ca"
     },
     { 
       name: "uOttaHack 8 Dev Team", 
-      period: "2024",
+      period: "2025",
       description: "Core development team member for Ottawa's largest hackathon. Built registration platform, judging systems, and live dashboards serving 1000+ participants.", 
       image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=300&fit=crop&auto=format",
-      type: "HACKATHON_ORGANIZER"
+      type: "HACKATHON_ORGANIZER",
+      link: "https://uottahack.ca"
     },
     { 
       name: "Hackathon Champion", 
       period: "2022 - 2024",
       description: "3x hackathon participant with winning projects in AI/ML and fintech categories. Built innovative solutions under 48-hour constraints, showcasing rapid prototyping skills.", 
       image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop&auto=format",
-      type: "COMPETITIVE_CODING"
+      type: "COMPETITIVE_CODING",
+      link: "https://github.com/FtKuBo"
     },
     { 
-      name: "Math Mentor Volunteer", 
+      name: "École des grands - Math Mentor", 
       period: "2022 - 2023",
       description: "Volunteer mathematics tutor helping high school students excel in calculus and linear algebra. Developed interactive learning materials and conducted weekly study sessions.", 
       image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop&auto=format",
-      type: "COMMUNITY_SERVICE"
+      type: "COMMUNITY_SERVICE",
+      link: "https://ecoleddesgrandsuottawa.ca"
+    },
+    { 
+      name: "University of Ottawa", 
+      period: "2023 - 2027",
+      description: "BASc Software Engineering (Eng. Management & Entrepreneurship) Co-op - GPA: 4.0/4.0 - x4 Dean's List - TD Green Scholarship recipient. HarvardX CS50 AI certification.", 
+      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop&auto=format",
+      type: "ACADEMIC_EXCELLENCE",
+      link: "https://engineering.uottawa.ca"
     }
   ]
 }
@@ -110,7 +172,8 @@ const updateActiveSection = () => {
     { id: 'section-0', index: 0 }, // About/Hero
     { id: 'section-1', index: 1 }, // Experience
     { id: 'section-2', index: 2 }, // Projects
-    { id: 'section-3', index: 3 }  // Extracurriculars
+    { id: 'section-3', index: 3 }, // Skills
+    { id: 'section-4', index: 4 }  // Extracurriculars
   ]
   
   const scrollPosition = window.scrollY + window.innerHeight / 2
@@ -181,6 +244,12 @@ const scrollToSection = (index: number) => {
 const goToHome = () => {
   router.push('/')
 }
+
+// Prevent any click event interference with card links
+const handleCardClick = (event: Event) => {
+  // Allow default anchor behavior by not preventing default
+  event.stopPropagation()
+}
 </script>
 
 <template>
@@ -204,7 +273,8 @@ const goToHome = () => {
           <a @click="scrollToSection(0)" :class="{ active: activeSection === 0 }">ABOUT</a>
           <a @click="scrollToSection(1)" :class="{ active: activeSection === 1 }">EXPERIENCE</a>
           <a @click="scrollToSection(2)" :class="{ active: activeSection === 2 }">PROJECTS</a>
-          <a @click="scrollToSection(3)" :class="{ active: activeSection === 3 }">EXTRACURRICULARS</a>
+          <a @click="scrollToSection(3)" :class="{ active: activeSection === 3 }">SKILLS</a>
+          <a @click="scrollToSection(4)" :class="{ active: activeSection === 4 }">EXTRACURRICULARS</a>
         </div>
       </div>
     </nav>
@@ -226,8 +296,8 @@ const goToHome = () => {
             <span class="stat-value">OTTAWA, ON</span>
           </div>
           <div class="stat">
-            <span class="stat-label">MODE:</span>
-            <span class="stat-value">SEEKING_OPPORTUNITIES</span>
+            <span class="stat-label">GPA:</span>
+            <span class="stat-value">4.0/4.0</span>
           </div>
         </div>
         <div class="cta-container">
@@ -246,12 +316,14 @@ const goToHome = () => {
           <span class="prompt">$</span> ls ~/experience
         </h2>
         <div class="cards-grid">
-          <div v-for="(item, index) in sections.experience" :key="index" class="holo-card">
-            <div class="card-image">
-              <img :src="item.image" :alt="item.name" class="hologram-img" />
-              <div class="holo-overlay"></div>
+          <a v-for="(item, index) in sections.experience" :key="index" :href="item.link" target="_blank" class="holo-card clickable-card">
+            <div class="card-image-section">
+              <div class="card-image">
+                <img :src="item.image" :alt="item.name" class="hologram-img" />
+                <div class="holo-overlay"></div>
+              </div>
             </div>
-            <div class="card-content">
+            <div class="card-content-section">
               <div class="card-header">
                 <span class="card-icon">◉</span>
                 <div class="card-title-group">
@@ -259,17 +331,23 @@ const goToHome = () => {
                   <span class="card-type">{{ item.type }}</span>
                 </div>
               </div>
-              <div class="card-period">
-                <span class="period-label">PERIOD:</span>
-                <span class="period-value">{{ item.period }}</span>
+              <div class="card-period-section">
+                <div class="card-period">
+                  <span class="period-label">PERIOD:</span>
+                  <span class="period-value">{{ item.period }}</span>
+                </div>
               </div>
-              <p class="card-description">{{ item.description }}</p>
-              <div class="card-footer">
-                <span class="status-indicator"></span>
-                <span class="card-link">VIEW_DETAILS →</span>
+              <div class="card-description-section">
+                <p class="card-description">{{ item.description }}</p>
+              </div>
+              <div class="card-footer-section">
+                <div class="card-footer">
+                  <span class="status-indicator"></span>
+                  <span class="card-link">VIEW_DETAILS →</span>
+                </div>
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </section>
@@ -281,12 +359,14 @@ const goToHome = () => {
           <span class="prompt">$</span> ls ~/projects
         </h2>
         <div class="cards-grid">
-          <div v-for="(item, index) in sections.projects" :key="index" class="holo-card">
-            <div class="card-image">
-              <img :src="item.image" :alt="item.name" class="hologram-img" />
-              <div class="holo-overlay"></div>
+          <a v-for="(item, index) in sections.projects" :key="index" :href="item.link" target="_blank" class="holo-card clickable-card">
+            <div class="card-image-section">
+              <div class="card-image">
+                <img :src="item.image" :alt="item.name" class="hologram-img" />
+                <div class="holo-overlay"></div>
+              </div>
             </div>
-            <div class="card-content">
+            <div class="card-content-section">
               <div class="card-header">
                 <span class="card-icon">▣</span>
                 <div class="card-title-group">
@@ -294,14 +374,63 @@ const goToHome = () => {
                   <span class="card-type">{{ item.type }}</span>
                 </div>
               </div>
-              <div class="card-period">
-                <span class="period-label">TIMELINE:</span>
-                <span class="period-value">{{ item.period }}</span>
+              <div class="card-period-section">
+                <div class="card-period">
+                  <span class="period-label">TIMELINE:</span>
+                  <span class="period-value">{{ item.period }}</span>
+                </div>
               </div>
-              <p class="card-description">{{ item.description }}</p>
-              <div class="card-footer">
-                <span class="status-indicator"></span>
-                <span class="card-link">LAUNCH_PROJECT →</span>
+              <div class="card-description-section">
+                <p class="card-description">{{ item.description }}</p>
+              </div>
+              <div class="card-footer-section">
+                <div class="card-footer">
+                  <span class="status-indicator"></span>
+                  <span class="card-link">LAUNCH_PROJECT →</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="section-3" class="content-section">
+      <div class="section-container">
+        <h2 class="section-title">
+          <span class="prompt">$</span> ls ~/skills
+        </h2>
+        <div class="cards-grid">
+          <div v-for="(item, index) in sections.skills" :key="index" class="holo-card skills-card">
+            <div class="card-image-section">
+              <div class="card-image">
+                <img :src="item.image" :alt="item.name" class="hologram-img" />
+                <div class="holo-overlay"></div>
+              </div>
+            </div>
+            <div class="card-content-section">
+              <div class="card-header">
+                <span class="card-icon">⚡</span>
+                <div class="card-title-group">
+                  <h3>{{ item.name }}</h3>
+                  <span class="card-type">{{ item.type }}</span>
+                </div>
+              </div>
+              <div class="card-period-section">
+                <div class="card-period">
+                  <span class="period-label">EXPERIENCE:</span>
+                  <span class="period-value">{{ item.period }}</span>
+                </div>
+              </div>
+              <div class="card-description-section">
+                <p class="card-description">{{ item.description }}</p>
+              </div>
+              <div class="card-footer-section">
+                <div class="card-footer">
+                  <span class="status-indicator"></span>
+                  <span class="card-link">SKILL_SET →</span>
+                </div>
               </div>
             </div>
           </div>
@@ -310,18 +439,20 @@ const goToHome = () => {
     </section>
 
     <!-- Extracurriculars Section -->
-    <section id="section-3" class="content-section">
+    <section id="section-4" class="content-section alt-bg">
       <div class="section-container">
         <h2 class="section-title">
           <span class="prompt">$</span> ls ~/extracurriculars
         </h2>
         <div class="cards-grid">
-          <div v-for="(item, index) in sections.extracurriculars" :key="index" class="holo-card">
-            <div class="card-image">
-              <img :src="item.image" :alt="item.name" class="hologram-img" />
-              <div class="holo-overlay"></div>
+          <a v-for="(item, index) in sections.extracurriculars" :key="index" :href="item.link" target="_blank" class="holo-card clickable-card">
+            <div class="card-image-section">
+              <div class="card-image">
+                <img :src="item.image" :alt="item.name" class="hologram-img" />
+                <div class="holo-overlay"></div>
+              </div>
             </div>
-            <div class="card-content">
+            <div class="card-content-section">
               <div class="card-header">
                 <span class="card-icon">◈</span>
                 <div class="card-title-group">
@@ -329,17 +460,23 @@ const goToHome = () => {
                   <span class="card-type">{{ item.type }}</span>
                 </div>
               </div>
-              <div class="card-period">
-                <span class="period-label">DURATION:</span>
-                <span class="period-value">{{ item.period }}</span>
+              <div class="card-period-section">
+                <div class="card-period">
+                  <span class="period-label">DURATION:</span>
+                  <span class="period-value">{{ item.period }}</span>
+                </div>
               </div>
-              <p class="card-description">{{ item.description }}</p>
-              <div class="card-footer">
-                <span class="status-indicator"></span>
-                <span class="card-link">READ_more →</span>
+              <div class="card-description-section">
+                <p class="card-description">{{ item.description }}</p>
+              </div>
+              <div class="card-footer-section">
+                <div class="card-footer">
+                  <span class="status-indicator"></span>
+                  <span class="card-link">read_more →</span>
+                </div>
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </section>
@@ -351,9 +488,10 @@ const goToHome = () => {
           <span class="prompt">$</span> echo "Built with Vue.js | © 2025 Mehdi Semmar"
         </div>
         <div class="footer-links">
-          <a href="#" class="social-link">GITHUB</a>
-          <a href="#" class="social-link">LINKEDIN</a>
-          <a href="#" class="social-link">EMAIL</a>
+          <a href="https://github.com/FtKuBo" target="_blank" class="social-link">GITHUB</a>
+          <a href="https://linkedin.com/in/mehdisemmar" target="_blank" class="social-link">LINKEDIN</a>
+          <a href="https://codewars.com/users/FtKuBo" target="_blank" class="social-link">CODEWARS</a>
+          <a href="mailto:msemm031@uottawa.ca" class="social-link">EMAIL</a>
         </div>
       </div>
     </footer>
@@ -367,6 +505,111 @@ const goToHome = () => {
 }
 
 .lazy-portfolio * {
+  cursor: auto !important;
+  pointer-events: auto !important;
+}
+
+/* Clickable card styles */
+.clickable-card {
+  cursor: pointer !important;
+  text-decoration: none !important;
+  color: inherit !important;
+  pointer-events: auto !important;
+  display: block !important;
+}
+
+.clickable-card:hover {
+  cursor: pointer !important;
+  text-decoration: none !important;
+}
+
+.clickable-card:visited {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.clickable-card:active {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+/* Ensure all card elements show pointer cursor on hover */
+.clickable-card *,
+.clickable-card *:hover,
+.holo-card *,
+.holo-card *:hover,
+.card-image-section,
+.card-image-section *,
+.card-content-section,
+.card-content-section *,
+.card-header,
+.card-header *,
+.card-title-group,
+.card-title-group *,
+.card-period-section,
+.card-period-section *,
+.card-description-section,
+.card-description-section *,
+.card-footer-section,
+.card-footer-section *,
+.hologram-img,
+.holo-overlay,
+.card-icon,
+.period-label,
+.period-value,
+.card-type,
+.card-description,
+.card-footer,
+.card-link,
+.status-indicator {
+  cursor: pointer !important;
+  pointer-events: none !important; /* Let the parent anchor handle the click */
+}
+
+/* Re-enable pointer events for the main clickable card */
+.clickable-card {
+  pointer-events: auto !important;
+}
+
+.social-link {
+  cursor: pointer !important;
+}
+
+.social-link:hover {
+  cursor: pointer !important;
+}
+
+/* Skills cards - non-clickable styling */
+.skills-card {
+  cursor: auto !important;
+}
+
+.skills-card *,
+.skills-card *:hover,
+.skills-card .card-image-section,
+.skills-card .card-image-section *,
+.skills-card .card-content-section,
+.skills-card .card-content-section *,
+.skills-card .card-header,
+.skills-card .card-header *,
+.skills-card .card-title-group,
+.skills-card .card-title-group *,
+.skills-card .card-period-section,
+.skills-card .card-period-section *,
+.skills-card .card-description-section,
+.skills-card .card-description-section *,
+.skills-card .card-footer-section,
+.skills-card .card-footer-section *,
+.skills-card .hologram-img,
+.skills-card .holo-overlay,
+.skills-card .card-icon,
+.skills-card .period-label,
+.skills-card .period-value,
+.skills-card .card-type,
+.skills-card .card-description,
+.skills-card .card-footer,
+.skills-card .card-link,
+.skills-card .status-indicator {
   cursor: auto !important;
   pointer-events: auto !important;
 }
@@ -533,6 +776,15 @@ const goToHome = () => {
 
 .home-btn:hover .icon {
   transform: translateX(-3px);
+}
+
+/* Ensure home button, navigation elements, and CTA button have pointer cursor */
+.home-btn,
+.home-btn *,
+.nav-links a,
+.cta-button,
+.cta-button * {
+  cursor: pointer !important;
 }
 
 /* Hero Section */
@@ -890,6 +1142,38 @@ const goToHome = () => {
   position: relative;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Card section alignment */
+.card-image-section {
+  flex-shrink: 0;
+}
+
+.card-content-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.5rem;
+}
+
+.card-period-section {
+  flex-shrink: 0;
+  margin: 1rem 0;
+}
+
+.card-description-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.card-footer-section {
+  flex-shrink: 0;
+  margin-top: auto;
 }
 
 .holo-card::before {
@@ -1021,7 +1305,7 @@ const goToHome = () => {
 }
 
 .card-period {
-  margin: 1rem 0;
+  margin: 0;
   font-family: 'Courier New', monospace;
   font-size: 0.8rem;
 }
@@ -1040,15 +1324,16 @@ const goToHome = () => {
 .holo-card .card-description {
   color: #b0c4de;
   line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin: 0;
   font-size: 0.9rem;
+  flex: 1;
 }
 
 .holo-card .card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: auto;
+  margin: 0;
 }
 
 .holo-card .status-indicator {
@@ -1234,7 +1519,7 @@ const goToHome = () => {
     height: 140px;
   }
   
-  .holo-card .card-content {
+  .holo-card .card-content-section {
     padding: 1.2rem;
   }
   
@@ -1523,7 +1808,7 @@ const goToHome = () => {
     height: 240px;
   }
   
-  .holo-card .card-content {
+  .holo-card .card-content-section {
     padding: 2rem;
   }
   
@@ -1649,7 +1934,7 @@ const goToHome = () => {
     height: 280px;
   }
   
-  .holo-card .card-content {
+  .holo-card .card-content-section {
     padding: 2.5rem;
   }
   

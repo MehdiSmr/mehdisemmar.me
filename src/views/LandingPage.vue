@@ -93,6 +93,21 @@ const navigateTo = (path: string) => {
   pointer-events: auto !important;
 }
 
+/* Clickable card cursor */
+.option-card,
+.option-card *,
+.option-card .card-inner,
+.option-card .card-inner *,
+.option-card .card-icon,
+.option-card h2,
+.option-card .card-description,
+.option-card .card-footer,
+.option-card .card-footer *,
+.option-card .status,
+.option-card .arrow {
+  cursor: pointer !important;
+}
+
 .landing-page {
   min-height: 100vh;
   background: 
