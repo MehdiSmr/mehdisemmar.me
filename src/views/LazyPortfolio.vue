@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -102,6 +102,41 @@ const activeSection = ref(0)
 const typedText = ref('')
 const fullText = "MEHDI_SEMMAR_PORTFOLIO"
 let typingInterval: any
+let scrollListener: (() => void) | null = null
+
+// Function to update active section based on scroll position
+const updateActiveSection = () => {
+  const sections = [
+    { id: 'section-0', index: 0 }, // About/Hero
+    { id: 'section-1', index: 1 }, // Experience
+    { id: 'section-2', index: 2 }, // Projects
+    { id: 'section-3', index: 3 }  // Extracurriculars
+  ]
+  
+  const scrollPosition = window.scrollY + window.innerHeight / 2
+  
+  let currentSection = 0
+  
+  for (let i = 0; i < sections.length; i++) {
+    const element = document.getElementById(sections[i].id)
+    if (element) {
+      const elementTop = element.offsetTop
+      const elementHeight = element.offsetHeight
+      
+      if (scrollPosition >= elementTop && scrollPosition < elementTop + elementHeight) {
+        currentSection = sections[i].index
+        break
+      }
+      
+      // If we're past the last section, keep it active
+      if (i === sections.length - 1 && scrollPosition >= elementTop) {
+        currentSection = sections[i].index
+      }
+    }
+  }
+  
+  activeSection.value = currentSection
+}
 
 onMounted(() => {
   // Typing animation for header
@@ -114,6 +149,27 @@ onMounted(() => {
       clearInterval(typingInterval)
     }
   }, 100)
+  
+  // Add scroll listener for dynamic section detection
+  scrollListener = () => {
+    updateActiveSection()
+  }
+  
+  window.addEventListener('scroll', scrollListener, { passive: true })
+  
+  // Initial check
+  setTimeout(() => {
+    updateActiveSection()
+  }, 500) // Wait for elements to be rendered
+})
+
+onUnmounted(() => {
+  if (scrollListener) {
+    window.removeEventListener('scroll', scrollListener)
+  }
+  if (typingInterval) {
+    clearInterval(typingInterval)
+  }
 })
 
 const scrollToSection = (index: number) => {
@@ -1033,39 +1089,607 @@ const goToHome = () => {
 }
 
 /* Responsive Design */
-@media screen and (max-width: 768px) {
-  .nav-links {
-    gap: 1rem;
+/* Extra small devices (phones, 320px to 480px) */
+@media screen and (max-width: 480px) {
+  .nav-bar {
+    padding: 0.8rem 0;
   }
   
-  .nav-links a {
+  .nav-content {
+    padding: 0 1rem;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: none;
+  }
+  
+  .nav-left {
+    gap: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1;
+  }
+  
+  .nav-logo {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+  
+  .nav-links {
     display: none;
   }
   
+  .home-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  
+  .home-btn .icon {
+    font-size: 0.9rem;
+  }
+  
+  .hero-section {
+    padding: 2rem 1rem;
+    min-height: calc(100vh - 4rem);
+  }
+  
+  .hero-content {
+    max-width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
   .glitch {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  
+  .subtitle {
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    margin-bottom: 2rem;
+    max-width: 100%;
+    word-break: break-word;
+    white-space: normal;
   }
   
   .hero-stats {
+    display: flex;
     flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
     align-items: center;
+  }
+  
+  .stat {
+    padding: 1rem 1.2rem;
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .stat-label {
+    font-size: 0.75rem;
+    display: block;
+    margin: 0;
+  }
+  
+  .stat-value {
+    font-size: 0.9rem;
+    display: block;
+  }
+  
+  .cta-button {
+    padding: 1rem 2rem;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    margin-top: 1rem;
+  }
+  
+  .content-section {
+    padding: 4rem 1rem;
+  }
+  
+  .section-container {
+    width: 100%;
+    padding: 0;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
   }
   
   .cards-grid {
     grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 0.5rem;
+    justify-items: center;
+  }
+  
+  .holo-card {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
   }
   
   .card-image {
-    height: 150px;
+    height: 140px;
+  }
+  
+  .holo-card .card-content {
+    padding: 1.2rem;
   }
   
   .card-title-group h3 {
     font-size: 1.1rem;
   }
   
+  .card-type {
+    font-size: 0.65rem;
+  }
+  
+  .card-period {
+    font-size: 0.7rem;
+  }
+  
+  .holo-card .card-description {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  
   .footer-content {
     flex-direction: column;
     text-align: center;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .footer-text {
+    font-size: 0.8rem;
+  }
+  
+  .footer-links {
+    gap: 1rem;
+  }
+  
+  .social-link {
+    font-size: 0.8rem;
+  }
+}
+
+/* Small devices (larger phones, 481px to 768px) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .nav-content {
+    padding: 0 1.5rem;
+  }
+  
+  .nav-logo {
+    font-size: 1.1rem;
+  }
+  
+  .nav-links {
+    gap: 1rem;
+  }
+  
+  .nav-links a {
+    font-size: 0.8rem;
+  }
+  
+  .hero-section {
+    padding: 3rem 1.5rem;
+  }
+  
+  .glitch {
+    font-size: 2.8rem;
+    letter-spacing: 0.1em;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+    letter-spacing: 1.5px;
+  }
+  
+  .hero-stats {
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .stat {
+    padding: 0.9rem 1.2rem;
+  }
+  
+  .cta-button {
+    padding: 0.9rem 1.8rem;
+    font-size: 0.95rem;
+  }
+  
+  .content-section {
+    padding: 5rem 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.7rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+  
+  .card-image {
+    height: 160px;
+  }
+  
+  .holo-card .card-content {
+    padding: 1.2rem;
+  }
+  
+  .card-title-group h3 {
+    font-size: 1.2rem;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+}
+
+/* Medium devices (tablets, 769px to 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .nav-content {
+    max-width: 900px;
+  }
+  
+  .nav-links {
+    gap: 1.5rem;
+  }
+  
+  .nav-links a {
+    font-size: 0.85rem;
+  }
+  
+  .hero-section {
+    padding: 3.5rem 2rem;
+  }
+  
+  .glitch {
+    font-size: 3.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .hero-stats {
+    gap: 1.5rem;
+  }
+  
+  .content-section {
+    padding: 5.5rem 2rem;
+  }
+  
+  .section-container {
+    max-width: 900px;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.8rem;
+  }
+  
+  .card-image {
+    height: 180px;
+  }
+}
+
+/* Large devices (desktops, 1025px to 1440px) */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  .nav-content {
+    max-width: 1200px;
+  }
+  
+  .hero-section {
+    padding: 4rem 2rem;
+  }
+  
+  .glitch {
+    font-size: 4rem;
+  }
+  
+  .content-section {
+    padding: 6rem 2rem;
+  }
+  
+  .section-container {
+    max-width: 1200px;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .card-image {
+    height: 200px;
+  }
+}
+
+/* Extra large devices (large desktops, 1441px to 1920px) */
+@media screen and (min-width: 1441px) and (max-width: 1920px) {
+  .nav-content {
+    max-width: 1400px;
+    padding: 0 3rem;
+  }
+  
+  .nav-logo {
+    font-size: 1.4rem;
+  }
+  
+  .nav-links {
+    gap: 2.5rem;
+  }
+  
+  .nav-links a {
+    font-size: 1rem;
+  }
+  
+  .home-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+  }
+  
+  .hero-section {
+    padding: 5rem 3rem;
+  }
+  
+  .glitch {
+    font-size: 5rem;
+    letter-spacing: 0.15em;
+  }
+  
+  .subtitle {
+    font-size: 1.4rem;
+    letter-spacing: 2.5px;
+    margin-bottom: 2.5rem;
+  }
+  
+  .hero-stats {
+    gap: 2.5rem;
+    margin-bottom: 3.5rem;
+  }
+  
+  .stat {
+    padding: 1.2rem 2rem;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+  }
+  
+  .cta-button {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.1rem;
+    letter-spacing: 2.5px;
+  }
+  
+  .content-section {
+    padding: 7rem 3rem;
+  }
+  
+  .section-container {
+    max-width: 1400px;
+  }
+  
+  .section-title {
+    font-size: 2.4rem;
+    margin-bottom: 3.5rem;
+  }
+  
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+  }
+  
+  .card-image {
+    height: 240px;
+  }
+  
+  .holo-card .card-content {
+    padding: 2rem;
+  }
+  
+  .card-title-group h3 {
+    font-size: 1.5rem;
+  }
+  
+  .card-type {
+    font-size: 0.8rem;
+  }
+  
+  .card-period {
+    font-size: 0.9rem;
+  }
+  
+  .holo-card .card-description {
+    font-size: 1rem;
+  }
+  
+  .holo-card .card-link {
+    font-size: 1rem;
+  }
+  
+  .footer-content {
+    max-width: 1400px;
+    gap: 3rem;
+  }
+  
+  .footer-text {
+    font-size: 1rem;
+  }
+  
+  .footer-links {
+    gap: 2.5rem;
+  }
+  
+  .social-link {
+    font-size: 1rem;
+  }
+}
+
+/* Ultra large devices (4K and beyond, 1921px+) */
+@media screen and (min-width: 1921px) {
+  .nav-content {
+    max-width: 1800px;
+    padding: 0 4rem;
+  }
+  
+  .nav-logo {
+    font-size: 1.6rem;
+  }
+  
+  .nav-links {
+    gap: 3rem;
+  }
+  
+  .nav-links a {
+    font-size: 1.1rem;
+  }
+  
+  .home-btn {
+    padding: 0.7rem 1.4rem;
+    font-size: 1.1rem;
+  }
+  
+  .hero-section {
+    padding: 6rem 4rem;
+  }
+  
+  .hero-content {
+    max-width: 1000px;
+  }
+  
+  .glitch {
+    font-size: 6rem;
+    letter-spacing: 0.2em;
+  }
+  
+  .subtitle {
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    margin-bottom: 3rem;
+  }
+  
+  .hero-stats {
+    gap: 3rem;
+    margin-bottom: 4rem;
+  }
+  
+  .stat {
+    padding: 1.4rem 2.4rem;
+  }
+  
+  .stat-label {
+    font-size: 1rem;
+  }
+  
+  .cta-button {
+    padding: 1.4rem 3rem;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+  }
+  
+  .content-section {
+    padding: 8rem 4rem;
+  }
+  
+  .section-container {
+    max-width: 1800px;
+  }
+  
+  .section-title {
+    font-size: 2.8rem;
+    margin-bottom: 4rem;
+  }
+  
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 3rem;
+  }
+  
+  .card-image {
+    height: 280px;
+  }
+  
+  .holo-card .card-content {
+    padding: 2.5rem;
+  }
+  
+  .card-title-group h3 {
+    font-size: 1.7rem;
+  }
+  
+  .card-type {
+    font-size: 0.9rem;
+  }
+  
+  .card-period {
+    font-size: 1rem;
+  }
+  
+  .holo-card .card-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+  
+  .holo-card .card-link {
+    font-size: 1.1rem;
+  }
+  
+  .footer-content {
+    max-width: 1800px;
+    gap: 4rem;
+    padding: 3rem;
+  }
+  
+  .footer-text {
+    font-size: 1.1rem;
+  }
+  
+  .footer-links {
+    gap: 3rem;
+  }
+  
+  .social-link {
+    font-size: 1.1rem;
   }
 }
 </style>

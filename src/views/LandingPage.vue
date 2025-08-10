@@ -42,7 +42,7 @@ const navigateTo = (path: string) => {
           <span class="glitch" :data-text="glitchText">{{ glitchText }}</span>
           <span class="cursor">_</span>
         </h1>
-        <p class="subtitle">SOFTWARE_ENGINEER</p>
+        <p class="subtitle">SOFTWARE_ENGINEER | ML_AI_ENGINEER</p>
       </div>
       
       <transition name="fade-up">
@@ -176,20 +176,27 @@ const navigateTo = (path: string) => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: calc(100vh - 4rem);
 }
 
 .title-section {
   margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .main-title {
   font-size: 5rem;
   font-weight: bold;
-  margin: 0;
+  margin: 0 auto;
   letter-spacing: 0.2em;
   color: #e0f7ff;
   position: relative;
   display: inline-block;
+  text-align: center;
 }
 
 .glitch {
@@ -245,8 +252,16 @@ const navigateTo = (path: string) => {
   font-size: 1.2rem;
   color: #40e0d0;
   letter-spacing: 0.3em;
-  margin-top: 1rem;
+  margin: 1rem auto 0 auto;
   opacity: 0.8;
+  text-align: center;
+  width: 100%;
+}
+
+.typing {
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 /* Options container */
@@ -255,9 +270,10 @@ const navigateTo = (path: string) => {
   gap: 7rem;
   align-items: center;
   justify-content: center;
-  margin-bottom: 3rem;
+  margin: 0 auto 3rem auto;
   flex-wrap: wrap;
   width: 100%;
+  max-width: 800px;
 }
 
 .option-card {
@@ -383,20 +399,295 @@ const navigateTo = (path: string) => {
   transform: translateY(30px);
 }
 
-/* Responsive */
-@media screen and (max-width: 768px) {
+/* Responsive Design */
+/* Extra small devices (phones, 320px to 480px) */
+@media screen and (max-width: 480px) {
+  .landing-page {
+    padding: 0;
+  }
+  
+  .landing-content {
+    padding: 1rem;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .title-section {
+    margin-bottom: 2.5rem;
+    width: 100%;
+    text-align: center;
+  }
+  
   .main-title {
-    font-size: 3rem;
+    font-size: 2.2rem;
+    letter-spacing: 0.1em;
+    width: 100%;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    margin: 0.8rem auto 0 auto;
+    width: 100%;
   }
   
   .options-container {
+    display: flex;
     flex-direction: column;
-    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .option-card {
+    width: calc(100% - 2rem);
+    max-width: 320px;
+    height: auto;
+    min-height: 340px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .card-inner {
+    padding: 1.5rem;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .option-card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .card-description {
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  
+  .card-footer {
+    font-size: 0.7rem;
+  }
+}
+
+/* Small devices (larger phones, 481px to 768px) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .landing-content {
+    padding: 1.5rem;
+  }
+  
+  .title-section {
+    margin-bottom: 3rem;
+  }
+  
+  .main-title {
+    font-size: 3.5rem;
+    letter-spacing: 0.15em;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+  }
+  
+  .options-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .option-card {
+    width: calc(100% - 2rem);
+    max-width: 360px;
+    height: auto;
+    min-height: 340px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .card-inner {
+    padding: 1.8rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* Medium devices (tablets, 769px to 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .landing-content {
+    padding: 2rem;
+    max-width: 900px;
+  }
+  
+  .main-title {
+    font-size: 4rem;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .options-container {
+    gap: 4rem;
+    max-width: 700px;
   }
   
   .option-card {
     width: 280px;
-    height: 320px;
+    height: 340px;
+  }
+}
+
+/* Large devices (desktops, 1025px to 1440px) */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  .landing-content {
+    max-width: 1200px;
+  }
+  
+  .main-title {
+    font-size: 5rem;
+  }
+  
+  .options-container {
+    gap: 6rem;
+    max-width: 800px;
+  }
+  
+  .option-card {
+    width: 300px;
+    height: 350px;
+  }
+}
+
+/* Extra large devices (large desktops, 1441px to 1920px) */
+@media screen and (min-width: 1441px) and (max-width: 1920px) {
+  .landing-content {
+    max-width: 1400px;
+    padding: 3rem;
+  }
+  
+  .title-section {
+    margin-bottom: 5rem;
+  }
+  
+  .main-title {
+    font-size: 6rem;
+    letter-spacing: 0.25em;
+  }
+  
+  .subtitle {
+    font-size: 1.4rem;
+    letter-spacing: 0.35em;
+    margin-top: 1.5rem;
+  }
+  
+  .options-container {
+    gap: 8rem;
+    max-width: 1000px;
+  }
+  
+  .option-card {
+    width: 350px;
+    height: 400px;
+  }
+  
+  .card-inner {
+    padding: 2.5rem;
+  }
+  
+  .card-icon {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .option-card h2 {
+    font-size: 1.7rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .card-description {
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* Ultra large devices (4K and beyond, 1921px+) */
+@media screen and (min-width: 1921px) {
+  .landing-content {
+    max-width: 1800px;
+    padding: 4rem;
+  }
+  
+  .title-section {
+    margin-bottom: 6rem;
+  }
+  
+  .main-title {
+    font-size: 8rem;
+    letter-spacing: 0.3em;
+  }
+  
+  .subtitle {
+    font-size: 1.8rem;
+    letter-spacing: 0.4em;
+    margin-top: 2rem;
+  }
+  
+  .options-container {
+    gap: 10rem;
+    max-width: 1200px;
+  }
+  
+  .option-card {
+    width: 400px;
+    height: 450px;
+  }
+  
+  .card-inner {
+    padding: 3rem;
+  }
+  
+  .card-icon {
+    font-size: 4rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .option-card h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .card-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+  
+  .card-footer {
+    font-size: 0.9rem;
+  }
+  
+  .arrow {
+    font-size: 1.8rem;
   }
 }
 </style>

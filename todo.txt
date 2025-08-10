@@ -9,5 +9,9 @@
 
 -add loader + add/fix animations
 
+-add a logo to the page etc
+
+fix shortcut help description it is ctrl+h not ctrl+H
+
 -make sure everything is responsive 
 -add sound effects
