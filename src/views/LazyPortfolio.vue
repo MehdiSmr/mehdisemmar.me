@@ -245,11 +245,6 @@ const goToHome = () => {
   router.push('/')
 }
 
-// Prevent any click event interference with card links
-const handleCardClick = (event: Event) => {
-  // Allow default anchor behavior by not preventing default
-  event.stopPropagation()
-}
 </script>
 
 <template>

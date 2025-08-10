@@ -13,6 +13,8 @@
 
 fix shortcut help description it is ctrl+h not ctrl+H
 
+-make sure ux is good for touch screen people
+
 -make sure everything is responsive 
 -add sound effects
 
