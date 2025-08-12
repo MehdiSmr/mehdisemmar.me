@@ -21,4 +21,8 @@ fix shortcut help description it is ctrl+h not ctrl+H
 
 
 ------- lazy portfolio
--add education section at the top with degree and certification + update images of cards
+-add a hackathon section with a link to all the projects for each hackathon
+-add education section below experience degree and certification
+-update images of cards
+-update the links
+-update the way skills are displayed

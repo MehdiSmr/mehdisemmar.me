@@ -9,7 +9,7 @@ const fullText = 'MEHDI SEMMAR'
 const showOptions = ref(false)
 
 onMounted(() => {
-  // Glitch typing effect
+  // Glitch typing effect for title
   let i = 0
   const typingInterval = setInterval(() => {
     if (i < fullText.length) {
@@ -17,6 +17,7 @@ onMounted(() => {
       i++
     } else {
       clearInterval(typingInterval)
+      // Show options directly after title completes
       setTimeout(() => {
         showOptions.value = true
       }, 500)
@@ -42,7 +43,9 @@ const navigateTo = (path: string) => {
           <span class="glitch" :data-text="glitchText">{{ glitchText }}</span>
           <span class="cursor">_</span>
         </h1>
-        <p class="subtitle">SOFTWARE_ENGINEER | ML_AI_ENGINEER</p>
+        <p class="subtitle">
+          SOFTWARE_ENGINEER | ML_AI_ENGINEER
+        </p>
       </div>
       
       <transition name="fade-up">
@@ -88,6 +91,10 @@ const navigateTo = (path: string) => {
 
 <style scoped>
 /* Enable cursor for landing page */
+.landing-page {
+  cursor: auto !important;
+}
+
 .landing-page * {
   cursor: auto !important;
   pointer-events: auto !important;
@@ -201,6 +208,7 @@ const navigateTo = (path: string) => {
   align-items: center;
   justify-content: center;
   width: 100%;
+  text-align: center;
 }
 
 .main-title {
@@ -212,6 +220,7 @@ const navigateTo = (path: string) => {
   position: relative;
   display: inline-block;
   text-align: center;
+  width: 100%;
 }
 
 .glitch {
@@ -282,13 +291,14 @@ const navigateTo = (path: string) => {
 /* Options container */
 .options-container {
   display: flex;
-  gap: 7rem;
+  gap: 6rem;
   align-items: center;
   justify-content: center;
   margin: 0 auto 3rem auto;
   flex-wrap: wrap;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
+  padding: 0 3rem;
 }
 
 .option-card {
@@ -550,7 +560,7 @@ const navigateTo = (path: string) => {
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .landing-content {
     padding: 2rem;
-    max-width: 900px;
+    max-width: 1000px;
   }
   
   .main-title {
@@ -562,12 +572,15 @@ const navigateTo = (path: string) => {
   }
   
   .options-container {
-    gap: 4rem;
-    max-width: 700px;
+    gap: 5rem;
+    max-width: 850px;
+    padding: 0 3rem;
+    flex-direction: row;
+    justify-content: center;
   }
   
   .option-card {
-    width: 280px;
+    width: 300px;
     height: 340px;
   }
 }
@@ -584,11 +597,14 @@ const navigateTo = (path: string) => {
   
   .options-container {
     gap: 6rem;
-    max-width: 800px;
+    max-width: 1000px;
+    padding: 0 3rem;
+    flex-direction: row;
+    justify-content: center;
   }
   
   .option-card {
-    width: 300px;
+    width: 320px;
     height: 350px;
   }
 }

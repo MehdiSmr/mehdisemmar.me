@@ -68,8 +68,6 @@ const handleMouseMove = (_event: MouseEvent) => {
 
 @media screen and (max-width: 1024px) {
   .background-video {
-    min-width: 100%;
-    min-height: 100%;
     width: 100%;
     height: 100%;
     object-position: center;
@@ -77,20 +75,16 @@ const handleMouseMove = (_event: MouseEvent) => {
 }
 
 @media screen and (max-width: 768px) {
-  .background-video {
+  .background-video,
+  video {
     filter: blur(1px) brightness(0.7);
     object-position: center;
   }
-}
-
-@media screen and (max-width: 480px) {
-  .background-video {
-    min-width: 100%;
-    min-height: 100%;
+  
+  .terminal-container,
+  .hologramme-container {
     width: 100%;
-    height: 100%;
-    object-position: center;
-    z-index: -1;
+    height: 50%;
   }
 }
 
@@ -136,17 +130,5 @@ const handleMouseMove = (_event: MouseEvent) => {
 
 .assistant-container {
   z-index: 1;
-}
-
-@media screen and (max-width: 768px) {
-  .terminal-container,
-  .hologramme-container {
-    width: 100%;
-    height: 50%;
-  }
-
-  video {
-    filter: blur(1px) brightness(0.7);
-  }
 }
 </style>

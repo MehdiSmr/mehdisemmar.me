@@ -11,7 +11,7 @@ const sections = {
       name: "Raven Connected", 
       period: "SEP 2025 - DEC 2025",
       description: "AI/ML Engineer developing intelligent surveillance systems and computer vision solutions. Working on deep learning models for real-time video analytics and automated threat detection using TensorFlow and PyTorch.", 
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop&auto=format",
+      image: "https://imgs.search.brave.com/fwsmOfTPxHGUqygMdSOKjDjTom-RK-C3eAS1OTyGjZ0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/Z2V0cm8uY29tL2Nv/bXBhbmllcy83ZWNh/ODg0OC1lNDM2LTU0/MWYtYjhkNS05ZTAw/NGM4Yzc0OWMtMTc0/NjQ5NTQ1Mw",
       type: "AI_ML_ENGINEER_INTERN",
       link: "https://ravenconnected.com"
     },
@@ -19,7 +19,7 @@ const sections = {
       name: "Versaterm", 
       period: "MAY 2025 - AUG 2025",
       description: "Built dynamic record retrieval tool with PostgreSQL and 4JS GUI frontend for VRMS integration. Developed NCIC response parser using Linux environment (Vim, PuTTY) with dynamic column views, backup systems, and CSV import/export functionality, deployed to production. Created Electron-based platform for configuring VMobile forms used by officers, enabling JSON-driven mobile communication interfaces.", 
-      image: "https://images.unsplash.com/photo-1560472355-536de3962603?w=400&h=300&fit=crop&auto=format",
+      image: "https://imgs.search.brave.com/EZFUsOYfAdI2DxYn3g_aHpP-Yc47vwMhHrRkvogmi9M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5sYWJjb21wYXJl/LmNvbS9tLzUzL3Zl/bmRvci8xMDgwNDku/anBn",
       type: "FULL_STACK_DEVELOPER_INTERN",
       link: "https://versaterm.com"
     },
@@ -27,7 +27,7 @@ const sections = {
       name: "Wouessi Digital", 
       period: "FEB 2025 - MAR 2025",
       description: "Improved website visibility by implementing responsive blog page with pagination using React.js and Tailwind CSS. Migrated codebase to TypeScript and enhanced data flow across 3+ microservices with Express.js and MongoDB.", 
-      image: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=400&h=300&fit=crop&auto=format",
+      image: "https://imgs.search.brave.com/3LbSjAc7rvVJ8nu09kZycIRRHyLGH-qXiHi6Lq-__bk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zbWFy/dGhpcHBvLm9yZy93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8x/Mi93b3Vlc3Nzc3Mu/cG5n",
       type: "SOFTWARE_DEVELOPER_INTERN",
       link: "https://wouessi.com"
     },
@@ -35,7 +35,7 @@ const sections = {
       name: "ISED Canada", 
       period: "JAN 2025 - APR 2025",
       description: "Resolved 7+ critical frontend and backend bugs using JavaScript, LWC, Apex, and SOQL, improving web platform stability. Built CRM features and managed Salesforce admin tasks for 10,000+ users in agile environment.", 
-      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop&auto=format",
+      image: "https://imgs.search.brave.com/HPAXn7LzT5LrOpS1d4sq2dn-VVsFM9BO0W7iJyOVrqE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/Y29oZXJlbnRjb21t/b25zLmNvbS8zMDB4/MjAwcGFkL29yZ2Fu/aXphdGlvbnMvb3Jn/YW5pemF0aW9uL2xv/Z28vY2Y4NmM1ZDEt/ZDAwMS00YThlLWI2/MTAtNmY4YWE4YTNm/YjU2LmpwZw",
       type: "SALESFORCE_DEVELOPER_INTERN",
       link: "https://ised-isde.canada.ca"
     },
@@ -43,7 +43,7 @@ const sections = {
       name: "Shared Services Canada", 
       period: "JUL 2024 - AUG 2024",
       description: "Cut data processing time by 70% by automating financial reconciliation in Excel using VB.NET. Created detailed documentation and demo video, presenting to 30+ stakeholders. Audited high-value invoices, identifying $10K+ billing discrepancies.", 
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop&auto=format",
+      image: "https://imgs.search.brave.com/fm6UoB4eKGpQ1S12OJejCK8DDvmI73DlaTIhfGU31iU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9kMnE3/OWl1N3k3NDhqei5j/bG91ZGZyb250Lm5l/dC9zL19zcXVhcmVs/b2dvLzk2eDk2L2Yx/OGMzYzUzZjkzNzdi/YmMzNDI2ZDM2YWM0/ZTFiNmI0",
       type: "DATA_ANALYST_INTERN",
       link: "https://ssc-spc.gc.ca"
     }
@@ -118,10 +118,10 @@ const sections = {
   ],
   extracurriculars: [
     { 
-      name: "SESA Logistics Team Lead", 
+      name: "Logistics Team Lead", 
       period: "2025",
       description: "Leading logistics operations for Software Engineering Student Association events. Coordinating tech talks, hackathons, and networking sessions with 500+ participants, managing event planning and execution for university's largest engineering student organization.", 
-      image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&h=300&fit=crop&auto=format",
+      image: "https://imgs.search.brave.com/qVa0K62R3Pm79hMJQ1jwXGhxV4iwaeWeaISCrmQUL6k/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly96ZW5w/cm9zcGVjdC1wcm9k/dWN0aW9uLnMzLmFt/YXpvbmF3cy5jb20v/dXBsb2Fkcy9waWN0/dXJlcy82NWE5ZDI0/MWRiODEyMTAwMDFm/ZmNhMWEvcGljdHVy/ZQ",
       type: "LEADERSHIP_ROLE",
       link: "https://sesa.engineering.uottawa.ca"
     },
@@ -129,23 +129,15 @@ const sections = {
       name: "uOttaHack 8 Dev Team", 
       period: "2025",
       description: "Core development team member for Ottawa's largest hackathon. Built registration platform, judging systems, and live dashboards serving 1000+ participants.", 
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=300&fit=crop&auto=format",
+      image: "https://imgs.search.brave.com/aWsVRwAO5OhYk-jp1lfDqo6aRB60xFEBCs7w1ENK6JI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/cHJvZC53ZWJzaXRl/LWZpbGVzLmNvbS82/MDc3M2M3YWViM2Zi/OTM3NTM0MTkzODAv/Njc5MTU1MzY0YjYw/YTllYTZkZWQ0ZDJi/X2hhY2sucG5n",
       type: "HACKATHON_ORGANIZER",
       link: "https://uottahack.ca"
     },
     { 
-      name: "Hackathon Champion", 
-      period: "2022 - 2024",
-      description: "3x hackathon participant with winning projects in AI/ML and fintech categories. Built innovative solutions under 48-hour constraints, showcasing rapid prototyping skills.", 
-      image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop&auto=format",
-      type: "COMPETITIVE_CODING",
-      link: "https://github.com/FtKuBo"
-    },
-    { 
-      name: "École des grands - Math Mentor", 
+      name: "Math Mentor", 
       period: "2022 - 2023",
-      description: "Volunteer mathematics tutor helping high school students excel in calculus and linear algebra. Developed interactive learning materials and conducted weekly study sessions.", 
-      image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop&auto=format",
+      description: "Volunteer mathematics tutor for École des grands helping high school students excel in calculus and linear algebra. Developed interactive learning materials and conducted weekly study sessions.", 
+      image: "https://imgs.search.brave.com/QDxXucSk6HxRvHrzwljVrGDZH0YYJRirEeLF2qFrrwY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dW90dGF3YS5jYS9l/dHVkZXMvc2l0ZXMv/Zy9maWxlcy9iaHJz/a2QyOTYvZmlsZXMv/c3R5bGVzL21heF93/aWR0aF9sXzE0NzBw/eC9wdWJsaWMvMjAy/My0wOC9zY3JlZW5z/aG90JTIwZWNvbGUl/MjBkZXMlMjBncmFu/ZHMuanBnP2l0b2s9/UmpKRUlqRE8",
       type: "COMMUNITY_SERVICE",
       link: "https://ecoleddesgrandsuottawa.ca"
     },
@@ -153,7 +145,7 @@ const sections = {
       name: "University of Ottawa", 
       period: "2023 - 2027",
       description: "BASc Software Engineering (Eng. Management & Entrepreneurship) Co-op - GPA: 4.0/4.0 - x4 Dean's List - TD Green Scholarship recipient. HarvardX CS50 AI certification.", 
-      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop&auto=format",
+      image: "https://imgs.search.brave.com/57qPRpY3yu944Dr3WCJNC6Xsn_xexz7gHYJcFHIQbhI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dW90dGF3YS5jYS9h/Ym91dC11cy9zaXRl/cy9nL2ZpbGVzL2Jo/cnNrZDMzNi9maWxl/cy8yMDI1LTA1L3VP/dHRhd2FfbG9nby1n/d19nYXJuZXQucG5n",
       type: "ACADEMIC_EXCELLENCE",
       link: "https://engineering.uottawa.ca"
     }
@@ -280,7 +272,7 @@ const goToHome = () => {
         <div class="glitch-wrapper">
           <h1 class="glitch" data-text="MEHDI SEMMAR">MEHDI SEMMAR</h1>
         </div>
-        <p class="subtitle typing">SOFTWARE_ENGINEER | MACHINE_LEARNING_ENGINEER</p>
+        <p class="subtitle typing">SOFTWARE_ENGINEER | ML_AI_ENGINEER</p>
         <div class="hero-stats">
           <div class="stat">
             <span class="stat-label">STATUS:</span>
@@ -513,52 +505,19 @@ const goToHome = () => {
   display: block !important;
 }
 
-.clickable-card:hover {
-  cursor: pointer !important;
-  text-decoration: none !important;
-}
-
-.clickable-card:visited {
-  color: inherit !important;
-  text-decoration: none !important;
-}
-
+.clickable-card:hover,
+.clickable-card:visited,
 .clickable-card:active {
-  color: inherit !important;
+  cursor: pointer !important;
   text-decoration: none !important;
+  color: inherit !important;
 }
 
-/* Ensure all card elements show pointer cursor on hover */
+/* Ensure all clickable card elements show pointer cursor */
 .clickable-card *,
-.clickable-card *:hover,
-.holo-card *,
-.holo-card *:hover,
-.card-image-section,
-.card-image-section *,
-.card-content-section,
-.card-content-section *,
-.card-header,
-.card-header *,
-.card-title-group,
-.card-title-group *,
-.card-period-section,
-.card-period-section *,
-.card-description-section,
-.card-description-section *,
-.card-footer-section,
-.card-footer-section *,
-.hologram-img,
-.holo-overlay,
-.card-icon,
-.period-label,
-.period-value,
-.card-type,
-.card-description,
-.card-footer,
-.card-link,
-.status-indicator {
+.clickable-card *:hover {
   cursor: pointer !important;
-  pointer-events: none !important; /* Let the parent anchor handle the click */
+  pointer-events: none !important;
 }
 
 /* Re-enable pointer events for the main clickable card */
@@ -568,45 +527,6 @@ const goToHome = () => {
 
 .social-link {
   cursor: pointer !important;
-}
-
-.social-link:hover {
-  cursor: pointer !important;
-}
-
-/* Skills cards - non-clickable styling */
-.skills-card {
-  cursor: auto !important;
-}
-
-.skills-card *,
-.skills-card *:hover,
-.skills-card .card-image-section,
-.skills-card .card-image-section *,
-.skills-card .card-content-section,
-.skills-card .card-content-section *,
-.skills-card .card-header,
-.skills-card .card-header *,
-.skills-card .card-title-group,
-.skills-card .card-title-group *,
-.skills-card .card-period-section,
-.skills-card .card-period-section *,
-.skills-card .card-description-section,
-.skills-card .card-description-section *,
-.skills-card .card-footer-section,
-.skills-card .card-footer-section *,
-.skills-card .hologram-img,
-.skills-card .holo-overlay,
-.skills-card .card-icon,
-.skills-card .period-label,
-.skills-card .period-value,
-.skills-card .card-type,
-.skills-card .card-description,
-.skills-card .card-footer,
-.skills-card .card-link,
-.skills-card .status-indicator {
-  cursor: auto !important;
-  pointer-events: auto !important;
 }
 
 /* Matrix background effect */
@@ -1142,9 +1062,11 @@ const goToHome = () => {
   color: inherit;
 }
 
-/* Card section alignment */
+/* Card section alignment - Enhanced for consistency */
 .card-image-section {
   flex-shrink: 0;
+  height: 200px; /* Fixed height for all images */
+  overflow: hidden;
 }
 
 .card-content-section {
@@ -1152,23 +1074,51 @@ const goToHome = () => {
   flex-direction: column;
   flex: 1;
   padding: 1.5rem;
+  position: relative;
+  height: 450px; /* Fixed total height for all card content */
+}
+
+.card-header {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 70px; /* Fixed height for header section */
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .card-period-section {
-  flex-shrink: 0;
-  margin: 1rem 0;
+  position: absolute;
+  top: 105px; /* 1.5rem + 70px + 1rem spacing */
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 35px; /* Fixed height for period section */
+  display: flex;
+  align-items: center;
 }
 
 .card-description-section {
-  flex: 1;
+  position: absolute;
+  top: 155px; /* Previous sections + spacing */
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 70px; /* Leave space for footer */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  overflow: hidden;
 }
 
 .card-footer-section {
-  flex-shrink: 0;
-  margin-top: auto;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 50px; /* Fixed height for footer - ensures perfect alignment */
+  display: flex;
+  align-items: center;
 }
 
 .holo-card::before {
@@ -1329,15 +1279,18 @@ const goToHome = () => {
   align-items: center;
   justify-content: space-between;
   margin: 0;
+  width: 100%;
+  position: relative;
 }
 
 .holo-card .status-indicator {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   background: #00ff88;
   border-radius: 50%;
   animation: holo-pulse 2s ease-in-out infinite;
   box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+  flex-shrink: 0;
 }
 
 @keyframes holo-pulse {
@@ -1360,6 +1313,8 @@ const goToHome = () => {
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .holo-card:hover .card-link {
