@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import '../../style.css'
 import {text} from './Assistant'
  
 </script>

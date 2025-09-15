@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import '../../style.css'
 import { onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { executeCommand, currentDirectory } from './CLI'
@@ -125,7 +124,7 @@ onUnmounted(() => {
         <div class="banner-line">║  STARSHIP NAVIGATION SYSTEM - AUTHENTICATED ACCESS GRANTED   ║</div>
         <div class="banner-line">║  User: visitors@mehdisemmar.me | Clearance Level: VISITOR     ║</div>
         <div class="banner-line">║  System Status: OPERATIONAL | All systems nominal            ║</div>
-        <div class="banner-line">║  Type 'help' for commands | Press CTRL+H to return home      ║</div>
+        <div class="banner-line">║  Type 'help' for commands | Press CTRL+H for portfolio       ║</div>
         <div class="banner-line">╚═══════════════════════════════════════════════════════════════╝</div>
       </div>
 

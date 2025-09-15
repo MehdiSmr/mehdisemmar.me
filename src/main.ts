@@ -4,17 +4,13 @@ import './style.css'
 import App from './App.vue'
 import LazyPortfolio from './views/LazyPortfolio.vue'
 import TerminalPortfolio from './views/TerminalPortfolio.vue'
+import i18n from './i18n'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: '/',
-      name: 'landing',
-      component: () => import('./views/LandingPage.vue')
-    },
-    {
-      path: '/lazy-portfolio',
       name: 'lazy-portfolio',
       component: LazyPortfolio
     },
@@ -28,4 +24,5 @@ const router = createRouter({
 
 const app = createApp(App)
 app.use(router)
+app.use(i18n)
 app.mount('#app')

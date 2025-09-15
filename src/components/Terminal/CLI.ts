@@ -32,9 +32,9 @@ function executeCommand(input: string){
   clear     - clear the terminal
   
 KEYBOARD SHORTCUTS:
-  CTRL+H    - return to home page`
+  CTRL+H    - return to portfolio page`
             
-        case "aboutme": //bot speaking
+        case "aboutme":
             if (argument !== undefined) return "aboutme takes no arguments"
             console.log("About me")
             return "true"

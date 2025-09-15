@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import Terminal3D from '../components/Terminal3DSimple.vue'
 
 const router = useRouter()
+const { t, locale } = useI18n()
 
 // Sections data structure with holographic card information
 const sections = {
@@ -13,7 +16,8 @@ const sections = {
       description: "AI/ML Engineer developing intelligent surveillance systems and computer vision solutions. Working on deep learning models for real-time video analytics and automated threat detection using TensorFlow and PyTorch.", 
       image: "https://imgs.search.brave.com/fwsmOfTPxHGUqygMdSOKjDjTom-RK-C3eAS1OTyGjZ0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/Z2V0cm8uY29tL2Nv/bXBhbmllcy83ZWNh/ODg0OC1lNDM2LTU0/MWYtYjhkNS05ZTAw/NGM4Yzc0OWMtMTc0/NjQ5NTQ1Mw",
       type: "AI_ML_ENGINEER_INTERN",
-      link: "https://ravenconnected.com"
+      link: "https://ravenconnected.com",
+      skills: ["Python", "TensorFlow", "PyTorch", "Computer Vision", "Deep Learning", "AI/ML"]
     },
     { 
       name: "Versaterm", 
@@ -21,7 +25,8 @@ const sections = {
       description: "Built dynamic record retrieval tool with PostgreSQL and 4JS GUI frontend for VRMS integration. Developed NCIC response parser using Linux environment (Vim, PuTTY) with dynamic column views, backup systems, and CSV import/export functionality, deployed to production. Created Electron-based platform for configuring VMobile forms used by officers, enabling JSON-driven mobile communication interfaces.", 
       image: "https://imgs.search.brave.com/EZFUsOYfAdI2DxYn3g_aHpP-Yc47vwMhHrRkvogmi9M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5sYWJjb21wYXJl/LmNvbS9tLzUzL3Zl/bmRvci8xMDgwNDku/anBn",
       type: "FULL_STACK_DEVELOPER_INTERN",
-      link: "https://versaterm.com"
+      link: "https://versaterm.com",
+      skills: ["PostgreSQL", "4JS", "Electron", "Linux", "JSON", "Production"]
     },
     { 
       name: "Wouessi Digital", 
@@ -29,7 +34,8 @@ const sections = {
       description: "Improved website visibility by implementing responsive blog page with pagination using React.js and Tailwind CSS. Migrated codebase to TypeScript and enhanced data flow across 3+ microservices with Express.js and MongoDB.", 
       image: "https://imgs.search.brave.com/3LbSjAc7rvVJ8nu09kZycIRRHyLGH-qXiHi6Lq-__bk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zbWFy/dGhpcHBvLm9yZy93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8x/Mi93b3Vlc3Nzc3Mu/cG5n",
       type: "SOFTWARE_DEVELOPER_INTERN",
-      link: "https://wouessi.com"
+      link: "https://wouessi.com",
+      skills: ["React.js", "Tailwind CSS", "TypeScript", "Express.js", "MongoDB"]
     },
     { 
       name: "ISED Canada", 
@@ -37,7 +43,8 @@ const sections = {
       description: "Resolved 7+ critical frontend and backend bugs using JavaScript, LWC, Apex, and SOQL, improving web platform stability. Built CRM features and managed Salesforce admin tasks for 10,000+ users in agile environment.", 
       image: "https://imgs.search.brave.com/HPAXn7LzT5LrOpS1d4sq2dn-VVsFM9BO0W7iJyOVrqE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/Y29oZXJlbnRjb21t/b25zLmNvbS8zMDB4/MjAwcGFkL29yZ2Fu/aXphdGlvbnMvb3Jn/YW5pemF0aW9uL2xv/Z28vY2Y4NmM1ZDEt/ZDAwMS00YThlLWI2/MTAtNmY4YWE4YTNm/YjU2LmpwZw",
       type: "SALESFORCE_DEVELOPER_INTERN",
-      link: "https://ised-isde.canada.ca"
+      link: "https://ised-isde.canada.ca",
+      skills: ["JavaScript", "LWC", "Apex", "SOQL", "Salesforce", "CRM"]
     },
     { 
       name: "Shared Services Canada", 
@@ -45,7 +52,8 @@ const sections = {
       description: "Cut data processing time by 70% by automating financial reconciliation in Excel using VB.NET. Created detailed documentation and demo video, presenting to 30+ stakeholders. Audited high-value invoices, identifying $10K+ billing discrepancies.", 
       image: "https://imgs.search.brave.com/fm6UoB4eKGpQ1S12OJejCK8DDvmI73DlaTIhfGU31iU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9kMnE3/OWl1N3k3NDhqei5j/bG91ZGZyb250Lm5l/dC9zL19zcXVhcmVs/b2dvLzk2eDk2L2Yx/OGMzYzUzZjkzNzdi/YmMzNDI2ZDM2YWM0/ZTFiNmI0",
       type: "DATA_ANALYST_INTERN",
-      link: "https://ssc-spc.gc.ca"
+      link: "https://ssc-spc.gc.ca",
+      skills: ["VB.NET", "Excel", "Automation", "Data Analysis", "Financial Systems"]
     }
   ],
   projects: [
@@ -55,7 +63,8 @@ const sections = {
       description: "Co-founded RZO Sports, a two-sided platform for amateur athletes and sports venues. Placed top 2 out of 40+ candidates in pitch competition. Leading MVP development with Spring Boot, React.js, MySQL, Docker, and Nginx using JWT/OAuth 2.0.", 
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&auto=format",
       type: "STARTUP_PLATFORM",
-      link: "https://github.com/FtKuBo/rzo-sports"
+      link: "https://github.com/FtKuBo/rzo-sports",
+      skills: ["Spring Boot", "React.js", "MySQL", "Docker", "Nginx", "JWT/OAuth"]
     },
     { 
       name: "DollaResume", 
@@ -63,7 +72,8 @@ const sections = {
       description: "Developed AI-powered resume generator using JavaScript, React.js, and Gadget. Integrated PDF generation ensuring 98% compatibility in ATS tests for optimized resume formatting. Won $300 cash prize in Gadget Challenge.", 
       image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop&auto=format",
       type: "AI_RESUME_GENERATOR",
-      link: "https://github.com/FtKuBo/dollaresume"
+      link: "https://github.com/FtKuBo/dollaresume",
+      skills: ["JavaScript", "React.js", "Gadget", "PDF Generation", "AI"]
     },
     { 
       name: "SeekAndFind", 
@@ -71,7 +81,8 @@ const sections = {
       description: "Built event-driven web application connecting uOttawa students who lost and found items using Solace PubSub+ message broker, containerized Spring Boot API, and React.js frontend. Developed for uOttaHack 7 Solace challenge.", 
       image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop&auto=format",
       type: "EVENT_DRIVEN_PLATFORM",
-      link: "https://github.com/FtKuBo/seekandfind"
+      link: "https://github.com/FtKuBo/seekandfind",
+      skills: ["Spring Boot", "React.js", "Solace PubSub+", "Docker", "Event-Driven"]
     },
     { 
       name: "Portfolio Website", 
@@ -79,7 +90,8 @@ const sections = {
       description: "Dual-interface portfolio website featuring traditional scrollable view and terminal-based CLI experience. Built with Vue.js, TypeScript, and modern web technologies with responsive design and dynamic animations.", 
       image: "https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?w=400&h=300&fit=crop&auto=format",
       type: "PERSONAL_PORTFOLIO",
-      link: "https://github.com/FtKuBo/mehdisemmar.me"
+      link: "https://github.com/FtKuBo/mehdisemmar.me",
+      skills: ["Vue.js", "TypeScript", "CSS3", "Responsive Design", "Animations"]
     }
   ],
   skills: [
@@ -153,19 +165,22 @@ const sections = {
 }
 
 const activeSection = ref(0)
-const typedText = ref('')
-const fullText = "MEHDI_SEMMAR_PORTFOLIO"
 let typingInterval: any
 let scrollListener: (() => void) | null = null
+let observerInstances: IntersectionObserver[] = []
+
+// Scroll animation tracking
+let lastScrollY = 0
+let scrollDirection = 'down'
+const seenItems = new Set<Element>()
+
 
 // Function to update active section based on scroll position
 const updateActiveSection = () => {
   const sections = [
     { id: 'section-0', index: 0 }, // About/Hero
     { id: 'section-1', index: 1 }, // Experience
-    { id: 'section-2', index: 2 }, // Projects
-    { id: 'section-3', index: 3 }, // Skills
-    { id: 'section-4', index: 4 }  // Extracurriculars
+    { id: 'section-2', index: 2 }  // Projects
   ]
   
   const scrollPosition = window.scrollY + window.innerHeight / 2
@@ -193,20 +208,80 @@ const updateActiveSection = () => {
   activeSection.value = currentSection
 }
 
-onMounted(() => {
-  // Typing animation for header
-  let i = 0
-  typingInterval = setInterval(() => {
-    if (i < fullText.length) {
-      typedText.value += fullText[i]
-      i++
-    } else {
-      clearInterval(typingInterval)
-    }
-  }, 100)
+// Track scroll direction
+const updateScrollDirection = () => {
+  const currentScrollY = window.scrollY
+  scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up'
+  lastScrollY = currentScrollY
+}
+
+// Setup scroll-triggered animations
+const setupScrollAnimations = () => {
+  // Timeline items animation
+  const timelineItems = document.querySelectorAll('.timeline-item')
+  timelineItems.forEach((item) => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Item is entering viewport
+          if (scrollDirection === 'down' && !seenItems.has(entry.target)) {
+            // First time seeing this item while scrolling down - animate in
+            entry.target.classList.add('animate-in')
+            seenItems.add(entry.target)
+          } else if (seenItems.has(entry.target)) {
+            // Item has been seen before - just show it without animation
+            entry.target.classList.add('animate-in')
+          }
+        } else {
+          // Item is leaving viewport
+          if (scrollDirection === 'up' && seenItems.has(entry.target)) {
+            // Scrolling up and item is leaving - slide out
+            entry.target.classList.remove('animate-in')
+          }
+        }
+      })
+    }, { threshold: 0.2, rootMargin: '50px' })
+    
+    observer.observe(item)
+    observerInstances.push(observer)
+  })
   
-  // Add scroll listener for dynamic section detection
+  // Project cards animation
+  const projectCards = document.querySelectorAll('.modern-card')
+  projectCards.forEach((card, index) => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Item is entering viewport
+          if (scrollDirection === 'down' && !seenItems.has(entry.target)) {
+            // First time seeing this item while scrolling down - animate in with delay
+            setTimeout(() => {
+              entry.target.classList.add('animate-in')
+            }, index * 100)
+            seenItems.add(entry.target)
+          } else if (seenItems.has(entry.target)) {
+            // Item has been seen before - just show it without animation
+            entry.target.classList.add('animate-in')
+          }
+        } else {
+          // Item is leaving viewport
+          if (scrollDirection === 'up' && seenItems.has(entry.target)) {
+            // Scrolling up and item is leaving - slide out
+            entry.target.classList.remove('animate-in')
+          }
+        }
+      })
+    }, { threshold: 0.2, rootMargin: '50px' })
+    
+    observer.observe(card)
+    observerInstances.push(observer)
+  })
+}
+
+onMounted(() => {
+  // Add scroll listener for dynamic section detection and scroll direction tracking
   scrollListener = () => {
+    updateScrollDirection()
     updateActiveSection()
   }
   
@@ -215,6 +290,7 @@ onMounted(() => {
   // Initial check
   setTimeout(() => {
     updateActiveSection()
+    setupScrollAnimations()
   }, 500) // Wait for elements to be rendered
 })
 
@@ -225,6 +301,9 @@ onUnmounted(() => {
   if (typingInterval) {
     clearInterval(typingInterval)
   }
+  // Clean up observers
+  observerInstances.forEach(observer => observer.disconnect())
+  observerInstances = []
 })
 
 const scrollToSection = (index: number) => {
@@ -233,14 +312,32 @@ const scrollToSection = (index: number) => {
   element?.scrollIntoView({ behavior: 'smooth' })
 }
 
-const goToHome = () => {
-  router.push('/')
+const goToTerminal = () => {
+  router.push('/terminal-portfolio')
+}
+
+const toggleLanguage = () => {
+  locale.value = locale.value === 'en' ? 'fr' : 'en'
+}
+
+const scrollToTerminalSection = () => {
+  const element = document.querySelector('.about-section')
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 </script>
 
 <template>
   <div class="lazy-portfolio">
+    <!-- Mobile viewport optimization -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <!-- Background effect -->
     <div class="matrix-bg"></div>
     
@@ -248,20 +345,23 @@ const goToHome = () => {
     <nav class="nav-bar">
       <div class="nav-content">
         <div class="nav-left">
-          <button @click="goToHome" class="home-btn">
-            <span class="icon">←</span>
-            <span>HOME</span>
+          <div class="nav-user-name" @click="scrollToTop">{{ t('nav.mehdisemmar') }}</div>
+          <button @click="goToTerminal" class="terminal-btn">
+            <span class="terminal-icon">></span>
+            <span class="terminal-icon">_</span>
+            <span class="terminal-text">{{ t('nav.terminal') }}</span>
           </button>
-          <div class="nav-logo">
-            <span class="typing-text">{{ typedText }}<span class="cursor">_</span></span>
-          </div>
+          <a href="https://drive.google.com/file/d/1yAeZgKOKwJ5VYsKCBAKyI-1YeKvt0BVP/view?usp=sharing" target="_blank" class="resume-btn">
+            {{ t('nav.resume') }}
+          </a>
+          <button @click="toggleLanguage" class="language-btn">
+            {{ locale === 'en' ? 'FR' : 'EN' }}
+          </button>
         </div>
         <div class="nav-links">
-          <a @click="scrollToSection(0)" :class="{ active: activeSection === 0 }">ABOUT</a>
-          <a @click="scrollToSection(1)" :class="{ active: activeSection === 1 }">EXPERIENCE</a>
-          <a @click="scrollToSection(2)" :class="{ active: activeSection === 2 }">PROJECTS</a>
-          <a @click="scrollToSection(3)" :class="{ active: activeSection === 3 }">SKILLS</a>
-          <a @click="scrollToSection(4)" :class="{ active: activeSection === 4 }">EXTRACURRICULARS</a>
+          <a @click="scrollToTerminalSection" :class="{ active: activeSection === 0 }">{{ t('nav.about') }}</a>
+          <a @click="scrollToSection(1)" :class="{ active: activeSection === 1 }">{{ t('nav.experience') }}</a>
+          <a @click="scrollToSection(2)" :class="{ active: activeSection === 2 }">{{ t('nav.projects') }}</a>
         </div>
       </div>
     </nav>
@@ -272,7 +372,7 @@ const goToHome = () => {
         <div class="glitch-wrapper">
           <h1 class="glitch" data-text="MEHDI SEMMAR">MEHDI SEMMAR</h1>
         </div>
-        <p class="subtitle typing">SOFTWARE_ENGINEER | ML_AI_ENGINEER</p>
+        <p class="subtitle typing">SOFTWARE_ENGINEER</p>
         <div class="hero-stats">
           <div class="stat">
             <span class="stat-label">STATUS:</span>
@@ -288,7 +388,7 @@ const goToHome = () => {
           </div>
         </div>
         <div class="cta-container">
-          <button @click="scrollToSection(1)" class="cta-button">
+          <button @click="scrollToTerminalSection" class="cta-button">
             <span>EXPLORE_PORTFOLIO</span>
             <span class="arrow">↓</span>
           </button>
@@ -296,170 +396,89 @@ const goToHome = () => {
       </div>
     </section>
 
+    <!-- About Section -->
+    <section class="about-section">
+      <div class="section-container">
+        <h2 class="section-title">
+            <span class="prompt">$</span> open -a Terminal
+        </h2>
+        <div class="about-container-centered">
+            <Terminal3D />
+        </div>
+      </div>
+    </section>
+
     <!-- Experience Section -->
-    <section id="section-1" class="content-section">
+    <section id="section-1" class="content-section experience-timeline">
       <div class="section-container">
         <h2 class="section-title">
-          <span class="prompt">$</span> ls ~/experience
+          <span class="prompt">$</span> cat ~/experience.log
         </h2>
-        <div class="cards-grid">
-          <a v-for="(item, index) in sections.experience" :key="index" :href="item.link" target="_blank" class="holo-card clickable-card">
-            <div class="card-image-section">
-              <div class="card-image">
-                <img :src="item.image" :alt="item.name" class="hologram-img" />
-                <div class="holo-overlay"></div>
-              </div>
+        <div class="timeline-container">
+          <div class="timeline-line"></div>
+          <div v-for="(item, index) in sections.experience" :key="index" class="timeline-item" :class="{ 'timeline-right': index % 2 === 1 }" :style="{ animationDelay: (index * 0.2) + 's' }">
+            <div class="timeline-marker">
+              <div class="marker-dot"></div>
+              <div class="marker-pulse"></div>
             </div>
-            <div class="card-content-section">
-              <div class="card-header">
-                <span class="card-icon">◉</span>
-                <div class="card-title-group">
-                  <h3>{{ item.name }}</h3>
-                  <span class="card-type">{{ item.type }}</span>
+            <a :href="item.link" target="_blank" class="modern-card clickable-card">
+              <div class="card-background">
+                <img :src="item.image" :alt="item.name" class="card-bg-img" />
+                <div class="card-overlay"></div>
+              </div>
+              <div class="card-hover-overlay">
+                <div class="hover-header">
+                  <h3 class="hover-company-name">{{ item.name }}</h3>
+                  <p class="hover-position-title">{{ item.type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) }}</p>
+                </div>
+                <div class="hover-footer">
+                  <div class="hover-globe">
+                    <svg class="globe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="2" y1="12" x2="22" y2="12"/>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                  </div>
+                  <div class="hover-skills">
+                    <span v-for="(skill, skillIndex) in item.skills" :key="skillIndex" class="skill-tag" :style="{ animationDelay: (skillIndex * 0.05) + 's' }">
+                      {{ skill }}
+                    </span>
+                  </div>
                 </div>
               </div>
-              <div class="card-period-section">
-                <div class="card-period">
-                  <span class="period-label">PERIOD:</span>
-                  <span class="period-value">{{ item.period }}</span>
-                </div>
-              </div>
-              <div class="card-description-section">
-                <p class="card-description">{{ item.description }}</p>
-              </div>
-              <div class="card-footer-section">
-                <div class="card-footer">
-                  <span class="status-indicator"></span>
-                  <span class="card-link">VIEW_DETAILS →</span>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="section-2" class="content-section alt-bg">
-      <div class="section-container">
-        <h2 class="section-title">
-          <span class="prompt">$</span> ls ~/projects
-        </h2>
-        <div class="cards-grid">
-          <a v-for="(item, index) in sections.projects" :key="index" :href="item.link" target="_blank" class="holo-card clickable-card">
-            <div class="card-image-section">
-              <div class="card-image">
-                <img :src="item.image" :alt="item.name" class="hologram-img" />
-                <div class="holo-overlay"></div>
-              </div>
-            </div>
-            <div class="card-content-section">
-              <div class="card-header">
-                <span class="card-icon">▣</span>
-                <div class="card-title-group">
-                  <h3>{{ item.name }}</h3>
-                  <span class="card-type">{{ item.type }}</span>
-                </div>
-              </div>
-              <div class="card-period-section">
-                <div class="card-period">
-                  <span class="period-label">TIMELINE:</span>
-                  <span class="period-value">{{ item.period }}</span>
-                </div>
-              </div>
-              <div class="card-description-section">
-                <p class="card-description">{{ item.description }}</p>
-              </div>
-              <div class="card-footer-section">
-                <div class="card-footer">
-                  <span class="status-indicator"></span>
-                  <span class="card-link">LAUNCH_PROJECT →</span>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="section-3" class="content-section">
-      <div class="section-container">
-        <h2 class="section-title">
-          <span class="prompt">$</span> ls ~/skills
-        </h2>
-        <div class="cards-grid">
-          <div v-for="(item, index) in sections.skills" :key="index" class="holo-card skills-card">
-            <div class="card-image-section">
-              <div class="card-image">
-                <img :src="item.image" :alt="item.name" class="hologram-img" />
-                <div class="holo-overlay"></div>
-              </div>
-            </div>
-            <div class="card-content-section">
-              <div class="card-header">
-                <span class="card-icon">⚡</span>
-                <div class="card-title-group">
-                  <h3>{{ item.name }}</h3>
-                  <span class="card-type">{{ item.type }}</span>
-                </div>
-              </div>
-              <div class="card-period-section">
-                <div class="card-period">
-                  <span class="period-label">EXPERIENCE:</span>
-                  <span class="period-value">{{ item.period }}</span>
-                </div>
-              </div>
-              <div class="card-description-section">
-                <p class="card-description">{{ item.description }}</p>
-              </div>
-              <div class="card-footer-section">
-                <div class="card-footer">
-                  <span class="status-indicator"></span>
-                  <span class="card-link">SKILL_SET →</span>
-                </div>
-              </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Extracurriculars Section -->
-    <section id="section-4" class="content-section alt-bg">
+    <!-- Projects Section -->
+    <section id="section-2" class="content-section alt-bg final-section">
       <div class="section-container">
         <h2 class="section-title">
-          <span class="prompt">$</span> ls ~/extracurriculars
+          <span class="prompt">$</span> ls ~/projects
         </h2>
-        <div class="cards-grid">
-          <a v-for="(item, index) in sections.extracurriculars" :key="index" :href="item.link" target="_blank" class="holo-card clickable-card">
-            <div class="card-image-section">
-              <div class="card-image">
-                <img :src="item.image" :alt="item.name" class="hologram-img" />
-                <div class="holo-overlay"></div>
-              </div>
+        <div class="projects-grid">
+          <a v-for="(item, index) in sections.projects" :key="index" :href="item.link" target="_blank" class="modern-card clickable-card">
+            <div class="card-background">
+              <img :src="item.image" :alt="item.name" class="card-bg-img" />
+              <div class="card-overlay"></div>
             </div>
-            <div class="card-content-section">
-              <div class="card-header">
-                <span class="card-icon">◈</span>
-                <div class="card-title-group">
-                  <h3>{{ item.name }}</h3>
-                  <span class="card-type">{{ item.type }}</span>
+            <div class="card-hover-overlay">
+              <div class="hover-header">
+                <h3 class="hover-project-name">{{ item.name }}</h3>
+                <p class="hover-project-type">{{ item.type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) }}</p>
+              </div>
+              <div class="hover-footer">
+                <div class="hover-github">
+                  <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
                 </div>
-              </div>
-              <div class="card-period-section">
-                <div class="card-period">
-                  <span class="period-label">DURATION:</span>
-                  <span class="period-value">{{ item.period }}</span>
-                </div>
-              </div>
-              <div class="card-description-section">
-                <p class="card-description">{{ item.description }}</p>
-              </div>
-              <div class="card-footer-section">
-                <div class="card-footer">
-                  <span class="status-indicator"></span>
-                  <span class="card-link">read_more →</span>
+                <div class="hover-skills">
+                  <span v-for="(skill, skillIndex) in item.skills" :key="skillIndex" class="skill-tag" :style="{ animationDelay: (skillIndex * 0.05) + 's' }">
+                    {{ skill }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -467,6 +486,7 @@ const goToHome = () => {
         </div>
       </div>
     </section>
+
 
     <!-- Footer -->
     <footer class="footer">
@@ -486,6 +506,29 @@ const goToHome = () => {
 </template>
 
 <style scoped>
+/* Base responsive setup */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  min-width: 320px;
+}
+
+/* Prevent horizontal scrolling */
+.lazy-portfolio {
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
 /* Reset cursor for lazy portfolio */
 .lazy-portfolio {
   cursor: auto !important;
@@ -599,6 +642,158 @@ const goToHome = () => {
   gap: 1.5rem;
 }
 
+.nav-user-name {
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem;
+  color: #40e0d0;
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(64, 224, 208, 0.5);
+  letter-spacing: 1px;
+  cursor: pointer !important;
+  transition: all 0.3s ease;
+}
+
+.nav-user-name:hover {
+  transform: translateY(-1px);
+}
+
+.terminal-btn {
+  background: transparent;
+  border: 2px solid #40e0d0;
+  color: #40e0d0;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  cursor: pointer !important;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+  height: 44px;
+}
+
+.terminal-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(64, 224, 208, 0.2);
+  transition: left 0.3s ease;
+}
+
+.terminal-btn:hover::before {
+  left: 0;
+}
+
+.terminal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
+  cursor: pointer !important;
+}
+
+.terminal-icon {
+  color: #00ff88;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.terminal-text {
+  position: relative;
+  z-index: 1;
+}
+
+.resume-btn {
+  background: transparent;
+  border: 2px solid #40e0d0;
+  color: #40e0d0;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  cursor: pointer !important;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+  height: 44px;
+}
+
+.resume-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(64, 224, 208, 0.2);
+  transition: left 0.3s ease;
+}
+
+.resume-btn:hover::before {
+  left: 0;
+}
+
+.resume-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
+  cursor: pointer !important;
+}
+
+.language-btn {
+  background: transparent;
+  border: 2px solid #40e0d0;
+  color: #40e0d0;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  cursor: pointer !important;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  height: 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+.language-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(64, 224, 208, 0.2);
+  transition: left 0.3s ease;
+}
+
+.language-btn:hover::before {
+  left: 0;
+}
+
+.language-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
+  cursor: pointer !important;
+}
+
 .nav-logo {
   font-family: 'Courier New', monospace;
   font-size: 1.2rem;
@@ -661,8 +856,8 @@ const goToHome = () => {
 
 .home-btn {
   background: transparent;
-  border: 1px solid rgba(0, 255, 136, 0.5);
-  color: #00ff88;
+  border: 2px solid #40e0d0;
+  color: #40e0d0;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   font-family: 'Courier New', monospace;
@@ -673,12 +868,28 @@ const goToHome = () => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(64, 224, 208, 0.2);
+  transition: left 0.3s ease;
+}
+
+.home-btn:hover::before {
+  left: 0;
 }
 
 .home-btn:hover {
-  background: rgba(0, 255, 136, 0.1);
-  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
   transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
 }
 
 .home-btn .icon {
@@ -693,12 +904,19 @@ const goToHome = () => {
   transform: translateX(-3px);
 }
 
-/* Ensure home button, navigation elements, and CTA button have pointer cursor */
+/* Ensure all navigation elements have pointer cursor */
 .home-btn,
 .home-btn *,
 .nav-links a,
 .cta-button,
-.cta-button * {
+.cta-button *,
+.terminal-btn,
+.terminal-btn *,
+.resume-btn,
+.resume-btn *,
+.language-btn,
+.language-btn *,
+.nav-user-name {
   cursor: pointer !important;
 }
 
@@ -916,6 +1134,327 @@ const goToHome = () => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+}
+
+/* Modern card styles for both experience and projects */
+.modern-card {
+  background: linear-gradient(135deg, rgba(0, 20, 25, 0.95), rgba(0, 35, 45, 0.85));
+  border: 1px solid rgba(64, 224, 208, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 300px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modern-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #40e0d0, #00ff88, #40e0d0, transparent);
+  animation: holo-scan 4s linear infinite;
+  z-index: 2;
+}
+
+.modern-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 15px 40px rgba(64, 224, 208, 0.3),
+    0 0 20px rgba(0, 255, 136, 0.2);
+  border-color: #40e0d0;
+}
+
+.card-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.card-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(1) hue-rotate(160deg) saturate(1.5) brightness(1.1) contrast(1.2);
+  transition: all 0.3s ease;
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(64, 224, 208, 0.1) 0%, rgba(0, 255, 136, 0.05) 50%, rgba(64, 224, 208, 0.1) 100%);
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+.modern-card:hover .card-bg-img {
+  transform: scale(1.1);
+  filter: sepia(1) hue-rotate(160deg) saturate(2) brightness(1.2) contrast(1.3);
+}
+
+.modern-card:hover .card-overlay {
+  opacity: 1;
+}
+
+/* Title overlay on card (always visible) */
+.card-title-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 20, 25, 0.95));
+  padding: 3rem 1.5rem 1.5rem 1.5rem;
+  z-index: 3;
+}
+
+.overlay-company-name,
+.overlay-project-name {
+  font-family: 'Courier New', monospace;
+  color: #e0f7ff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(224, 247, 255, 0.5);
+  line-height: 1.2;
+}
+
+.overlay-position-title,
+.overlay-project-type {
+  color: #40e0d0;
+  font-size: 0.85rem;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
+
+/* Hover overlay (hidden by default) */
+.card-hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 20, 25, 0.92), rgba(0, 35, 45, 0.92));
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.modern-card:hover .card-hover-overlay {
+  opacity: 1;
+}
+
+.hover-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.hover-company-name,
+.hover-project-name {
+  font-family: 'Courier New', monospace;
+  color: #e0f7ff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(224, 247, 255, 0.5);
+  line-height: 1.2;
+}
+
+.hover-position-title,
+.hover-project-type {
+  color: #40e0d0;
+  font-size: 0.85rem;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.hover-footer {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.hover-globe {
+  display: flex;
+  align-items: center;
+}
+
+.globe-icon {
+  width: 2rem;
+  height: 2rem;
+  color: #40e0d0;
+  filter: drop-shadow(0 0 10px rgba(64, 224, 208, 0.5));
+  transition: all 0.3s ease;
+}
+
+.modern-card:hover .globe-icon {
+  color: #00ff88;
+  filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.7));
+  transform: scale(1.1);
+}
+
+.hover-github {
+  display: flex;
+  align-items: center;
+}
+
+.github-icon {
+  width: 2rem;
+  height: 2rem;
+  color: #40e0d0;
+  filter: drop-shadow(0 0 10px rgba(64, 224, 208, 0.5));
+  transition: all 0.3s ease;
+}
+
+.modern-card:hover .github-icon {
+  color: #00ff88;
+  filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.7));
+  transform: scale(1.1);
+}
+
+.hover-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  max-width: 60%;
+}
+
+.skill-tag {
+  background: linear-gradient(135deg, rgba(64, 224, 208, 0.2), rgba(0, 255, 136, 0.1));
+  border: 1px solid rgba(64, 224, 208, 0.4);
+  color: #e0f7ff;
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  animation: skill-fade-in 0.6s ease forwards;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px rgba(224, 247, 255, 0.3);
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.skill-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(64, 224, 208, 0.3);
+  background: linear-gradient(135deg, rgba(64, 224, 208, 0.3), rgba(0, 255, 136, 0.2));
+  border-color: #00ff88;
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.company-logo,
+.project-logo {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(64, 224, 208, 0.3);
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(1) hue-rotate(160deg) saturate(1.5) brightness(1.1) contrast(1.2);
+  transition: all 0.3s ease;
+}
+
+.modern-card:hover .logo-img {
+  transform: scale(1.1);
+  filter: sepia(1) hue-rotate(160deg) saturate(2) brightness(1.2) contrast(1.3);
+}
+
+.company-info,
+.project-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.company-name,
+.project-name {
+  font-family: 'Courier New', monospace;
+  color: #e0f7ff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+  text-shadow: 0 0 8px rgba(224, 247, 255, 0.3);
+  line-height: 1.2;
+}
+
+.position-title,
+.project-description {
+  color: #87ceeb;
+  font-size: 0.8rem;
+  margin: 0;
+  line-height: 1.3;
+  opacity: 0.9;
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.tech-badge {
+  background: linear-gradient(135deg, rgba(64, 224, 208, 0.2), rgba(0, 255, 136, 0.1));
+  border: 1px solid rgba(64, 224, 208, 0.4);
+  color: #e0f7ff;
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  animation: skill-fade-in 0.6s ease forwards;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px rgba(224, 247, 255, 0.3);
+  white-space: nowrap;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.tech-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(64, 224, 208, 0.3);
+  background: linear-gradient(135deg, rgba(64, 224, 208, 0.3), rgba(0, 255, 136, 0.2));
+  border-color: #00ff88;
 }
 
 .card {
@@ -1323,7 +1862,224 @@ const goToHome = () => {
   text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
 }
 
+/* Project Grid Styles */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.project-card {
+  background: linear-gradient(135deg, rgba(0, 20, 25, 0.95), rgba(0, 35, 45, 0.85));
+  border: 1px solid rgba(64, 224, 208, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  height: 400px;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #40e0d0, #00ff88, #40e0d0, transparent);
+  animation: holo-scan 4s linear infinite;
+  z-index: 2;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 15px 40px rgba(64, 224, 208, 0.3),
+    0 0 20px rgba(0, 255, 136, 0.2);
+  border-color: #40e0d0;
+}
+
+.project-image-section {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(1) hue-rotate(160deg) saturate(1.5) brightness(1.1) contrast(1.2);
+  transition: all 0.3s ease;
+}
+
+.project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(64, 224, 208, 0.1) 0%, rgba(0, 255, 136, 0.05) 50%, rgba(64, 224, 208, 0.1) 100%);
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+.project-name {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  color: #e0f7ff;
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7), 0 0 10px rgba(224, 247, 255, 0.5);
+  z-index: 3;
+}
+
+.project-skills-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 20, 25, 0.98), rgba(0, 35, 45, 0.95));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 4;
+}
+
+.project-card:hover .project-skills-overlay {
+  opacity: 1;
+}
+
+.project-skills-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Courier New', monospace;
+}
+
+.skills-icon {
+  font-size: 1.5rem;
+}
+
+.skills-title {
+  color: #40e0d0;
+  font-size: 1.3rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.project-skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.project-skill-tag {
+  background: linear-gradient(135deg, rgba(64, 224, 208, 0.2), rgba(0, 255, 136, 0.1));
+  border: 1px solid rgba(64, 224, 208, 0.4);
+  color: #e0f7ff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  opacity: 0;
+  animation: skill-fade-in 0.6s ease forwards;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px rgba(224, 247, 255, 0.3);
+}
+
+.project-skill-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(64, 224, 208, 0.3);
+  background: linear-gradient(135deg, rgba(64, 224, 208, 0.3), rgba(0, 255, 136, 0.2));
+  border-color: #00ff88;
+}
+
+.project-hover-footer {
+  margin-top: auto;
+}
+
+.hover-action {
+  color: #40e0d0;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover .hover-action {
+  color: #00ff88;
+  text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
+}
+
+.project-card:hover .project-img {
+  transform: scale(1.1);
+  filter: sepia(1) hue-rotate(160deg) saturate(2) brightness(1.2) contrast(1.3);
+}
+
 /* Responsive Design */
+/* Ultra small devices (phones, 280px to 320px) */
+@media screen and (max-width: 320px) {
+  .nav-left {
+    gap: 0.3rem;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  
+  .nav-user-name {
+    font-size: 0.75rem;
+    max-width: 80px;
+  }
+  
+  .terminal-btn, .resume-btn, .language-btn {
+    min-width: 60px;
+    height: 32px;
+    padding: 0.3rem 0.4rem;
+    font-size: 0.65rem;
+  }
+  
+  .glitch {
+    font-size: 1.8rem;
+  }
+  
+  .subtitle {
+    font-size: 0.7rem;
+  }
+  
+  .stat {
+    max-width: 250px;
+    padding: 0.8rem 1rem;
+  }
+  
+  .modern-card {
+    min-height: 250px;
+  }
+  
+  .project-card {
+    height: 250px;
+  }
+}
+
 /* Extra small devices (phones, 320px to 480px) */
 @media screen and (max-width: 480px) {
   .nav-bar {
@@ -1340,19 +2096,29 @@ const goToHome = () => {
   }
   
   .nav-left {
-    gap: 0.8rem;
+    gap: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex: 1;
+    flex-wrap: wrap;
   }
   
-  .nav-logo {
+  .nav-user-name {
     font-size: 0.85rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 200px;
+    max-width: 120px;
+  }
+  
+  .terminal-btn, .resume-btn, .language-btn {
+    min-width: 80px;
+    height: 36px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
   
   .nav-links {
@@ -1364,6 +2130,8 @@ const goToHome = () => {
     font-size: 0.75rem;
     white-space: nowrap;
     flex-shrink: 0;
+    min-width: 80px;
+    height: 36px;
   }
   
   .home-btn .icon {
@@ -1459,6 +2227,33 @@ const goToHome = () => {
     justify-items: center;
   }
   
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 100%;
+  }
+  
+  .project-card {
+    height: 300px;
+  }
+  
+  .project-name {
+    font-size: 1rem;
+  }
+  
+  .skills-title {
+    font-size: 0.9rem;
+  }
+  
+  .project-skill-tag {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .hover-action {
+    font-size: 0.8rem;
+  }
+  
   .holo-card {
     width: 100%;
     max-width: 320px;
@@ -1508,6 +2303,32 @@ const goToHome = () => {
   .social-link {
     font-size: 0.8rem;
   }
+  
+  /* Mobile touch optimizations */
+  .modern-card, .project-card {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  
+  .terminal-btn, .resume-btn, .language-btn, .cta-button {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(64, 224, 208, 0.2);
+  }
+  
+  /* Improve mobile scrolling */
+  .lazy-portfolio {
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+  }
+  
+  /* Mobile animation performance */
+  .modern-card, .timeline-item {
+    will-change: transform, opacity;
+  }
+  
+  .modern-card:hover {
+    transform: none; /* Disable hover transform on mobile */
+  }
 }
 
 /* Small devices (larger phones, 481px to 768px) */
@@ -1516,8 +2337,15 @@ const goToHome = () => {
     padding: 0 1.5rem;
   }
   
-  .nav-logo {
-    font-size: 1.1rem;
+  .nav-user-name {
+    font-size: 1rem;
+  }
+  
+  .terminal-btn, .resume-btn, .language-btn {
+    min-width: 100px;
+    height: 40px;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
   }
   
   .nav-links {
@@ -1571,6 +2399,16 @@ const goToHome = () => {
     gap: 1.8rem;
   }
   
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 400px;
+  }
+  
+  .project-card {
+    height: 350px;
+  }
+  
   .card-image {
     height: 160px;
   }
@@ -1588,12 +2426,54 @@ const goToHome = () => {
     text-align: center;
     gap: 1.5rem;
   }
+  
+  .timeline-item,
+  .timeline-right {
+    width: calc(100% - 80px);
+    margin-left: auto;
+  }
+  
+  .timeline-marker,
+  .timeline-right .timeline-marker {
+    left: -40px;
+  }
+  
+  .timeline-line {
+    left: 30px;
+  }
+  
+  /* Mobile-specific improvements */
+  .about-section {
+    padding: 4rem 1.5rem;
+  }
+  
+  .terminal-3d-container {
+    max-width: 320px;
+    height: 240px;
+  }
+  
+  /* Touch improvements */
+  .clickable-card {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(64, 224, 208, 0.2);
+  }
 }
 
 /* Medium devices (tablets, 769px to 1024px) */
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .nav-content {
     max-width: 900px;
+  }
+  
+  .nav-user-name {
+    font-size: 1.05rem;
+  }
+  
+  .terminal-btn, .resume-btn, .language-btn {
+    min-width: 110px;
+    height: 42px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.85rem;
   }
   
   .nav-links {
@@ -1637,8 +2517,34 @@ const goToHome = () => {
     gap: 1.8rem;
   }
   
+  .projects-grid {
+    max-width: 800px;
+  }
+  
   .card-image {
     height: 180px;
+  }
+  
+  /* Tablet-specific optimizations */
+  .about-section {
+    padding: 5rem 2rem;
+  }
+  
+  /* Better tablet navigation */
+  .nav-left {
+    gap: 1.2rem;
+  }
+  
+  .hero-stats {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+  
+  .stat {
+    min-width: 200px;
+    max-width: 250px;
   }
 }
 
@@ -1800,6 +2706,368 @@ const goToHome = () => {
   }
 }
 
+/* Timeline styles for experience section */
+.experience-timeline {
+  position: relative;
+  padding-top: 7rem;
+  padding-bottom: 7rem;
+}
+
+.timeline-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, #40e0d0, #40e0d0, #40e0d0, transparent);
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 6rem;
+  width: 45%;
+  left: 0;
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.timeline-right {
+  left: 55%;
+  transform: translateX(50px);
+}
+
+.timeline-item.animate-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.modern-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.modern-card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-marker {
+  position: absolute;
+  top: 3rem;
+  right: -3.5rem;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.timeline-right .timeline-marker {
+  left: -3.5rem;
+  right: auto;
+}
+
+.marker-dot {
+  width: 12px;
+  height: 12px;
+  background: #00ff88;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.7);
+}
+
+.marker-pulse {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: rgba(0, 255, 136, 0.3);
+  border-radius: 50%;
+  animation: marker-pulse 2s ease-in-out infinite;
+}
+
+@keyframes marker-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+.timeline-card {
+  background: linear-gradient(135deg, rgba(0, 20, 25, 0.95), rgba(0, 35, 45, 0.85));
+  border: 1px solid rgba(64, 224, 208, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+}
+
+.timeline-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #40e0d0, #00ff88, #40e0d0, transparent);
+  animation: holo-scan 4s linear infinite;
+  z-index: 2;
+}
+
+.timeline-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 15px 40px rgba(64, 224, 208, 0.3),
+    0 0 20px rgba(0, 255, 136, 0.2);
+  border-color: #40e0d0;
+}
+
+.timeline-card-header {
+  display: flex;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(64, 224, 208, 0.2);
+}
+
+.card-image-section {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-right: 1.2rem;
+}
+
+.timeline-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(1) hue-rotate(160deg) saturate(1.5) brightness(1.1) contrast(1.2);
+  transition: all 0.3s ease;
+}
+
+.timeline-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(64, 224, 208, 0.1) 0%, rgba(0, 255, 136, 0.05) 50%, rgba(64, 224, 208, 0.1) 100%);
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+.timeline-card:hover .timeline-img {
+  transform: scale(1.1);
+  filter: sepia(1) hue-rotate(160deg) saturate(2) brightness(1.2) contrast(1.3);
+}
+
+.card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.company-title {
+  font-family: 'Courier New', monospace;
+  color: #e0f7ff;
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(224, 247, 255, 0.3);
+}
+
+.timeline-meta {
+  display: flex;
+  align-items: center;
+}
+
+.timeline-label {
+  color: #87ceeb;
+  font-size: 0.75rem;
+  margin-right: 0.5rem;
+  font-family: 'Courier New', monospace;
+}
+
+.timeline-status {
+  color: #00ff88;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
+  font-family: 'Courier New', monospace;
+}
+
+.timeline-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-skills {
+  margin-bottom: 1.5rem;
+}
+
+.skills-header-timeline {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+.terminal-prompt {
+  color: #00ff88;
+  margin-right: 0.5rem;
+}
+
+.skills-command {
+  color: #40e0d0;
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.timeline-skill-tag {
+  background: linear-gradient(135deg, rgba(64, 224, 208, 0.2), rgba(0, 255, 136, 0.1));
+  border: 1px solid rgba(64, 224, 208, 0.4);
+  color: #e0f7ff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  opacity: 0;
+  animation: skill-fade-in 0.6s ease forwards;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px rgba(224, 247, 255, 0.3);
+  display: inline-block;
+}
+
+@keyframes skill-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.timeline-skill-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(64, 224, 208, 0.3);
+  background: linear-gradient(135deg, rgba(64, 224, 208, 0.3), rgba(0, 255, 136, 0.2));
+  border-color: #00ff88;
+}
+
+.timeline-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+.action-text {
+  color: #40e0d0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  margin-right: 0.5rem;
+  text-transform: uppercase;
+}
+
+.action-arrow {
+  color: #40e0d0;
+  transition: all 0.3s ease;
+}
+
+.timeline-card:hover .action-text,
+.timeline-card:hover .action-arrow {
+  color: #00ff88;
+  text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
+}
+
+.timeline-card:hover .action-arrow {
+  transform: translateX(3px);
+}
+
+/* Responsive styles for timeline */
+@media screen and (max-width: 768px) {
+  .timeline-line {
+    left: 20px;
+  }
+
+  .timeline-item,
+  .timeline-right {
+    width: calc(100% - 60px);
+    margin-left: auto;
+    left: 0;
+    margin-bottom: 4rem;
+    animation: fade-in-up 0.8s ease-out forwards;
+  }
+  
+  .modern-card {
+    max-width: 100%;
+    height: auto;
+    min-height: 280px;
+  }
+  
+  .timeline-container {
+    padding: 1rem 0;
+  }
+  
+  .experience-timeline {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .timeline-marker,
+  .timeline-right .timeline-marker {
+    left: -30px;
+    right: auto;
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
 /* Ultra large devices (4K and beyond, 1921px+) */
 @media screen and (min-width: 1921px) {
   .nav-content {
@@ -1925,6 +3193,331 @@ const goToHome = () => {
   
   .social-link {
     font-size: 1.1rem;
+  }
+}
+
+/* About Section */
+.about-section {
+  padding: 6rem 2rem;
+  background: rgba(0, 15, 20, 0.3);
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-container-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 400px;
+}
+
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.about-header {
+  margin-bottom: 1rem;
+}
+
+.about-title {
+  font-family: 'Courier New', monospace;
+  font-size: 2rem;
+  color: #40e0d0;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(64, 224, 208, 0.3);
+}
+
+.about-description {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.about-description p {
+  color: #b0c4de;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0;
+  text-align: justify;
+}
+
+.about-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+/* 3D Terminal Styles */
+.terminal-3d-container {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 450px;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.terminal-3d {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.terminal-screen {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 20, 0.9));
+  border: 2px solid #40e0d0;
+  border-radius: 12px;
+  box-shadow: 
+    0 0 20px rgba(64, 224, 208, 0.3),
+    inset 0 0 20px rgba(0, 255, 136, 0.1);
+  overflow: hidden;
+  position: relative;
+  backdrop-filter: blur(10px);
+}
+
+.terminal-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #40e0d0, #00ff88, #40e0d0, transparent);
+  animation: terminal-scan 3s linear infinite;
+}
+
+@keyframes terminal-scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.terminal-header {
+  background: linear-gradient(135deg, rgba(64, 224, 208, 0.1), rgba(0, 255, 136, 0.05));
+  border-bottom: 1px solid rgba(64, 224, 208, 0.3);
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.terminal-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.terminal-button.close {
+  background: #ff5f56;
+  box-shadow: 0 0 8px rgba(255, 95, 86, 0.5);
+}
+
+.terminal-button.minimize {
+  background: #ffbd2e;
+  box-shadow: 0 0 8px rgba(255, 189, 46, 0.5);
+}
+
+.terminal-button.maximize {
+  background: #27ca3f;
+  box-shadow: 0 0 8px rgba(39, 202, 63, 0.5);
+}
+
+.terminal-title {
+  font-family: 'Courier New', monospace;
+  color: #e0f7ff;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(224, 247, 255, 0.3);
+}
+
+.terminal-body {
+  padding: 1.5rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  height: calc(100% - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.terminal-line {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.prompt-user {
+  color: #00ff88;
+  font-weight: bold;
+}
+
+.prompt-separator {
+  color: #e0f7ff;
+  margin: 0 2px;
+}
+
+.prompt-path {
+  color: #40e0d0;
+  font-weight: bold;
+}
+
+.prompt-symbol {
+  color: #e0f7ff;
+  margin: 0 4px;
+}
+
+.command {
+  color: #87ceeb;
+}
+
+.terminal-line.output {
+  color: #b0c4de;
+  padding-left: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.typing-cursor {
+  color: #00ff88;
+  animation: terminal-blink 1s step-end infinite;
+}
+
+@keyframes terminal-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Terminal Hover Effects */
+.terminal-3d-container:hover .terminal-screen {
+  box-shadow: 
+    0 0 30px rgba(64, 224, 208, 0.5),
+    inset 0 0 30px rgba(0, 255, 136, 0.2),
+    0 10px 40px rgba(0, 0, 0, 0.3);
+  border-color: #00ff88;
+}
+
+.terminal-3d-container:hover .terminal-title {
+  color: #00ff88;
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+}
+
+.terminal-3d-container:hover .prompt-user,
+.terminal-3d-container:hover .typing-cursor {
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+}
+
+/* Responsive About Section */
+@media screen and (max-width: 768px) {
+  .about-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+  
+  .about-title {
+    font-size: 1.5rem;
+  }
+  
+  .about-description p {
+    font-size: 0.9rem;
+    text-align: left;
+  }
+  
+  .terminal-3d-container {
+    max-width: 350px;
+    height: 280px;
+  }
+  
+  .terminal-body {
+    padding: 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .terminal-title {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .about-container {
+    gap: 3rem;
+  }
+  
+  .about-title {
+    font-size: 1.8rem;
+  }
+  
+  .terminal-3d-container {
+    max-width: 400px;
+    height: 320px;
+  }
+}
+
+@media screen and (min-width: 1441px) {
+  .about-section {
+    padding: 8rem 3rem;
+  }
+  
+  /* High-DPI display optimizations */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .glitch, .section-title {
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+  
+  .about-container {
+    gap: 5rem;
+  }
+  
+  .about-title {
+    font-size: 2.4rem;
+  }
+  
+  .about-description p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  
+  .terminal-3d-container {
+    max-width: 500px;
+    height: 400px;
+  }
+  
+  .terminal-body {
+    font-size: 1rem;
+    padding: 2rem;
+  }
+  
+  .terminal-title {
+    font-size: 1rem;
   }
 }
 </style>
