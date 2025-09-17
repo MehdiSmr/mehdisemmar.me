@@ -14,7 +14,7 @@
       <!-- Terminal Body -->
       <div class="terminal-body">
         <div class="terminal-line command-line slide-in-left" style="animation-delay: 0.1s;">
-          <span class="prompt-user">{{ t('terminal.prompt') }}</span><span class="prompt-separator">:</span><span class="prompt-path">~</span><span class="prompt-symbol">$</span>
+          <span class="prompt-user">mehdi@portfolio</span><span class="prompt-separator">:</span><span class="prompt-path">~</span><span class="prompt-symbol">$</span>
           <span class="command">{{ t('terminal.command') }}</span>
         </div>
         
@@ -34,7 +34,7 @@
         </div>
         
         <div class="terminal-line command-line slide-in-left" style="animation-delay: 2.7s;">
-          <span class="prompt-user">{{ t('terminal.prompt') }}</span><span class="prompt-separator">:</span><span class="prompt-path">~</span><span class="prompt-symbol">$</span>
+          <span class="prompt-user">mehdi@portfolio</span><span class="prompt-separator">:</span><span class="prompt-path">~</span><span class="prompt-symbol">$</span>
           <span class="cursor">_</span>
         </div>
       </div>

@@ -24,5 +24,5 @@ fix shortcut help description it is ctrl+h not ctrl+H
 -update images of cards
 -update the links
 -update actual content of termianl and cards
-
--change the logo of the website
+-in prod I can't see the dancing guy
+-update the background with cool animated 3d stuff

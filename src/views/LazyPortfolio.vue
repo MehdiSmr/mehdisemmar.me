@@ -1,206 +1,58 @@
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Terminal3D from '../components/Terminal3DSimple.vue'
+import { experienceData, projectData } from '../data/portfolio'
 
 const router = useRouter()
 const { t, locale } = useI18n()
 
-// Sections data structure with holographic card information
-const sections = {
-  experience: [
-    { 
-      name: "Raven Connected", 
-      period: "SEP 2025 - DEC 2025",
-      description: "AI/ML Engineer developing intelligent surveillance systems and computer vision solutions. Working on deep learning models for real-time video analytics and automated threat detection using TensorFlow and PyTorch.", 
-      image: "https://imgs.search.brave.com/fwsmOfTPxHGUqygMdSOKjDjTom-RK-C3eAS1OTyGjZ0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/Z2V0cm8uY29tL2Nv/bXBhbmllcy83ZWNh/ODg0OC1lNDM2LTU0/MWYtYjhkNS05ZTAw/NGM4Yzc0OWMtMTc0/NjQ5NTQ1Mw",
-      type: "AI_ML_ENGINEER_INTERN",
-      link: "https://ravenconnected.com",
-      skills: ["Python", "TensorFlow", "PyTorch", "Computer Vision", "Deep Learning", "AI/ML"]
-    },
-    { 
-      name: "Versaterm", 
-      period: "MAY 2025 - AUG 2025",
-      description: "Built dynamic record retrieval tool with PostgreSQL and 4JS GUI frontend for VRMS integration. Developed NCIC response parser using Linux environment (Vim, PuTTY) with dynamic column views, backup systems, and CSV import/export functionality, deployed to production. Created Electron-based platform for configuring VMobile forms used by officers, enabling JSON-driven mobile communication interfaces.", 
-      image: "https://imgs.search.brave.com/EZFUsOYfAdI2DxYn3g_aHpP-Yc47vwMhHrRkvogmi9M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5sYWJjb21wYXJl/LmNvbS9tLzUzL3Zl/bmRvci8xMDgwNDku/anBn",
-      type: "FULL_STACK_DEVELOPER_INTERN",
-      link: "https://versaterm.com",
-      skills: ["PostgreSQL", "4JS", "Electron", "Linux", "JSON", "Production"]
-    },
-    { 
-      name: "Wouessi Digital", 
-      period: "FEB 2025 - MAR 2025",
-      description: "Improved website visibility by implementing responsive blog page with pagination using React.js and Tailwind CSS. Migrated codebase to TypeScript and enhanced data flow across 3+ microservices with Express.js and MongoDB.", 
-      image: "https://imgs.search.brave.com/3LbSjAc7rvVJ8nu09kZycIRRHyLGH-qXiHi6Lq-__bk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zbWFy/dGhpcHBvLm9yZy93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8x/Mi93b3Vlc3Nzc3Mu/cG5n",
-      type: "SOFTWARE_DEVELOPER_INTERN",
-      link: "https://wouessi.com",
-      skills: ["React.js", "Tailwind CSS", "TypeScript", "Express.js", "MongoDB"]
-    },
-    { 
-      name: "ISED Canada", 
-      period: "JAN 2025 - APR 2025",
-      description: "Resolved 7+ critical frontend and backend bugs using JavaScript, LWC, Apex, and SOQL, improving web platform stability. Built CRM features and managed Salesforce admin tasks for 10,000+ users in agile environment.", 
-      image: "https://imgs.search.brave.com/HPAXn7LzT5LrOpS1d4sq2dn-VVsFM9BO0W7iJyOVrqE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/Y29oZXJlbnRjb21t/b25zLmNvbS8zMDB4/MjAwcGFkL29yZ2Fu/aXphdGlvbnMvb3Jn/YW5pemF0aW9uL2xv/Z28vY2Y4NmM1ZDEt/ZDAwMS00YThlLWI2/MTAtNmY4YWE4YTNm/YjU2LmpwZw",
-      type: "SALESFORCE_DEVELOPER_INTERN",
-      link: "https://ised-isde.canada.ca",
-      skills: ["JavaScript", "LWC", "Apex", "SOQL", "Salesforce", "CRM"]
-    },
-    { 
-      name: "Shared Services Canada", 
-      period: "JUL 2024 - AUG 2024",
-      description: "Cut data processing time by 70% by automating financial reconciliation in Excel using VB.NET. Created detailed documentation and demo video, presenting to 30+ stakeholders. Audited high-value invoices, identifying $10K+ billing discrepancies.", 
-      image: "https://imgs.search.brave.com/fm6UoB4eKGpQ1S12OJejCK8DDvmI73DlaTIhfGU31iU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9kMnE3/OWl1N3k3NDhqei5j/bG91ZGZyb250Lm5l/dC9zL19zcXVhcmVs/b2dvLzk2eDk2L2Yx/OGMzYzUzZjkzNzdi/YmMzNDI2ZDM2YWM0/ZTFiNmI0",
-      type: "DATA_ANALYST_INTERN",
-      link: "https://ssc-spc.gc.ca",
-      skills: ["VB.NET", "Excel", "Automation", "Data Analysis", "Financial Systems"]
-    }
-  ],
-  projects: [
-    { 
-      name: "RZO Sports", 
-      period: "2024 - ONGOING",
-      description: "Co-founded RZO Sports, a two-sided platform for amateur athletes and sports venues. Placed top 2 out of 40+ candidates in pitch competition. Leading MVP development with Spring Boot, React.js, MySQL, Docker, and Nginx using JWT/OAuth 2.0.", 
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&auto=format",
-      type: "STARTUP_PLATFORM",
-      link: "https://github.com/FtKuBo/rzo-sports",
-      skills: ["Spring Boot", "React.js", "MySQL", "Docker", "Nginx", "JWT/OAuth"]
-    },
-    { 
-      name: "DollaResume", 
-      period: "2024",
-      description: "Developed AI-powered resume generator using JavaScript, React.js, and Gadget. Integrated PDF generation ensuring 98% compatibility in ATS tests for optimized resume formatting. Won $300 cash prize in Gadget Challenge.", 
-      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop&auto=format",
-      type: "AI_RESUME_GENERATOR",
-      link: "https://github.com/FtKuBo/dollaresume",
-      skills: ["JavaScript", "React.js", "Gadget", "PDF Generation", "AI"]
-    },
-    { 
-      name: "SeekAndFind", 
-      period: "2024",
-      description: "Built event-driven web application connecting uOttawa students who lost and found items using Solace PubSub+ message broker, containerized Spring Boot API, and React.js frontend. Developed for uOttaHack 7 Solace challenge.", 
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop&auto=format",
-      type: "EVENT_DRIVEN_PLATFORM",
-      link: "https://github.com/FtKuBo/seekandfind",
-      skills: ["Spring Boot", "React.js", "Solace PubSub+", "Docker", "Event-Driven"]
-    },
-    { 
-      name: "Portfolio Website", 
-      period: "2024 - ONGOING",
-      description: "Dual-interface portfolio website featuring traditional scrollable view and terminal-based CLI experience. Built with Vue.js, TypeScript, and modern web technologies with responsive design and dynamic animations.", 
-      image: "https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?w=400&h=300&fit=crop&auto=format",
-      type: "PERSONAL_PORTFOLIO",
-      link: "https://github.com/FtKuBo/mehdisemmar.me",
-      skills: ["Vue.js", "TypeScript", "CSS3", "Responsive Design", "Animations"]
-    }
-  ],
-  skills: [
-    {
-      name: "Programming Languages",
-      period: "2022 - PRESENT",
-      description: "Python, Java, JavaScript, HTML5, CSS3, Dart, C/C++, NASM, SQL, Bash. Proficient in multiple paradigms including OOP, functional programming, and system-level programming.",
-      image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&h=300&fit=crop&auto=format",
-      type: "CORE_LANGUAGES",
-      link: "https://github.com/FtKuBo?tab=repositories"
-    },
-    {
-      name: "Frameworks & Libraries",
-      period: "2023 - PRESENT",
-      description: "Spring Boot, React.js, Express.js, Node.js, Tailwind CSS, Flutter, Django, TensorFlow. Experience building full-stack applications with modern web and mobile frameworks.",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop&auto=format",
-      type: "FRAMEWORKS_LIBRARIES",
-      link: "https://github.com/FtKuBo?tab=repositories"
-    },
-    {
-      name: "Cloud & DevOps",
-      period: "2023 - PRESENT",
-      description: "AWS, Google Cloud, Docker, Git, Linux, Vim, Postman. Experience with containerization, cloud deployment, version control, and API development/testing tools.",
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=300&fit=crop&auto=format",
-      type: "CLOUD_DEVOPS",
-      link: "https://github.com/FtKuBo?tab=repositories"
-    },
-    {
-      name: "Specialized Technologies",
-      period: "2024 - PRESENT",
-      description: "Salesforce (LWC, Apex, SOQL), Genero 4GL, PostgreSQL, MongoDB, PubSub+, VB.NET. Enterprise and specialized technology stack experience from professional internships.",
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop&auto=format",
-      type: "ENTERPRISE_TECH",
-      link: "https://linkedin.com/in/mehdisemmar"
-    }
-  ],
-  extracurriculars: [
-    { 
-      name: "Logistics Team Lead", 
-      period: "2025",
-      description: "Leading logistics operations for Software Engineering Student Association events. Coordinating tech talks, hackathons, and networking sessions with 500+ participants, managing event planning and execution for university's largest engineering student organization.", 
-      image: "https://imgs.search.brave.com/qVa0K62R3Pm79hMJQ1jwXGhxV4iwaeWeaISCrmQUL6k/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly96ZW5w/cm9zcGVjdC1wcm9k/dWN0aW9uLnMzLmFt/YXpvbmF3cy5jb20v/dXBsb2Fkcy9waWN0/dXJlcy82NWE5ZDI0/MWRiODEyMTAwMDFm/ZmNhMWEvcGljdHVy/ZQ",
-      type: "LEADERSHIP_ROLE",
-      link: "https://sesa.engineering.uottawa.ca"
-    },
-    { 
-      name: "uOttaHack 8 Dev Team", 
-      period: "2025",
-      description: "Core development team member for Ottawa's largest hackathon. Built registration platform, judging systems, and live dashboards serving 1000+ participants.", 
-      image: "https://imgs.search.brave.com/aWsVRwAO5OhYk-jp1lfDqo6aRB60xFEBCs7w1ENK6JI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/cHJvZC53ZWJzaXRl/LWZpbGVzLmNvbS82/MDc3M2M3YWViM2Zi/OTM3NTM0MTkzODAv/Njc5MTU1MzY0YjYw/YTllYTZkZWQ0ZDJi/X2hhY2sucG5n",
-      type: "HACKATHON_ORGANIZER",
-      link: "https://uottahack.ca"
-    },
-    { 
-      name: "Math Mentor", 
-      period: "2022 - 2023",
-      description: "Volunteer mathematics tutor for École des grands helping high school students excel in calculus and linear algebra. Developed interactive learning materials and conducted weekly study sessions.", 
-      image: "https://imgs.search.brave.com/QDxXucSk6HxRvHrzwljVrGDZH0YYJRirEeLF2qFrrwY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dW90dGF3YS5jYS9l/dHVkZXMvc2l0ZXMv/Zy9maWxlcy9iaHJz/a2QyOTYvZmlsZXMv/c3R5bGVzL21heF93/aWR0aF9sXzE0NzBw/eC9wdWJsaWMvMjAy/My0wOC9zY3JlZW5z/aG90JTIwZWNvbGUl/MjBkZXMlMjBncmFu/ZHMuanBnP2l0b2s9/UmpKRUlqRE8",
-      type: "COMMUNITY_SERVICE",
-      link: "https://ecoleddesgrandsuottawa.ca"
-    },
-    { 
-      name: "University of Ottawa", 
-      period: "2023 - 2027",
-      description: "BASc Software Engineering (Eng. Management & Entrepreneurship) Co-op - GPA: 4.0/4.0 - x4 Dean's List - TD Green Scholarship recipient. HarvardX CS50 AI certification.", 
-      image: "https://imgs.search.brave.com/57qPRpY3yu944Dr3WCJNC6Xsn_xexz7gHYJcFHIQbhI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dW90dGF3YS5jYS9h/Ym91dC11cy9zaXRl/cy9nL2ZpbGVzL2Jo/cnNrZDMzNi9maWxl/cy8yMDI1LTA1L3VP/dHRhd2FfbG9nby1n/d19nYXJuZXQucG5n",
-      type: "ACADEMIC_EXCELLENCE",
-      link: "https://engineering.uottawa.ca"
-    }
-  ]
-}
-
+// Reactive state
 const activeSection = ref(0)
-let typingInterval: any
+const scrollState = reactive({
+  lastScrollY: 0,
+  direction: 'down' as 'up' | 'down',
+  seenItems: new Set<Element>()
+})
+
 let scrollListener: (() => void) | null = null
 let observerInstances: IntersectionObserver[] = []
 
-// Scroll animation tracking
-let lastScrollY = 0
-let scrollDirection = 'down'
-const seenItems = new Set<Element>()
+// Static portfolio data - imported from separate file to avoid i18n parsing issues
+const experienceItems = ref(experienceData)
+const projectItems = ref(projectData)
 
+// Cached DOM elements
+const sectionElements = ref<{ [key: string]: HTMLElement }>({})
 
-// Function to update active section based on scroll position
+// Update scroll direction
+const updateScrollDirection = () => {
+  const currentScrollY = window.scrollY
+  scrollState.direction = currentScrollY > scrollState.lastScrollY ? 'down' : 'up'
+  scrollState.lastScrollY = currentScrollY
+}
+
+// Update active section based on scroll position
 const updateActiveSection = () => {
-  const sections = [
-    { id: 'section-0', index: 0 }, // About/Hero
-    { id: 'section-1', index: 1 }, // Experience
-    { id: 'section-2', index: 2 }  // Projects
-  ]
-  
   const scrollPosition = window.scrollY + window.innerHeight / 2
-  
   let currentSection = 0
   
+  const sections = ['section-0', 'section-1', 'section-2']
+  
   for (let i = 0; i < sections.length; i++) {
-    const element = document.getElementById(sections[i].id)
+    const element = sectionElements.value[sections[i]]
     if (element) {
       const elementTop = element.offsetTop
       const elementHeight = element.offsetHeight
       
       if (scrollPosition >= elementTop && scrollPosition < elementTop + elementHeight) {
-        currentSection = sections[i].index
+        currentSection = i
         break
       }
       
-      // If we're past the last section, keep it active
       if (i === sections.length - 1 && scrollPosition >= elementTop) {
-        currentSection = sections[i].index
+        currentSection = i
       }
     }
   }
@@ -208,78 +60,39 @@ const updateActiveSection = () => {
   activeSection.value = currentSection
 }
 
-// Track scroll direction
-const updateScrollDirection = () => {
-  const currentScrollY = window.scrollY
-  scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up'
-  lastScrollY = currentScrollY
-}
-
-// Setup scroll-triggered animations
+// Unified animation setup for all scroll-triggered elements
 const setupScrollAnimations = () => {
-  // Timeline items animation
-  const timelineItems = document.querySelectorAll('.timeline-item')
-  timelineItems.forEach((item) => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Item is entering viewport
-          if (scrollDirection === 'down' && !seenItems.has(entry.target)) {
-            // First time seeing this item while scrolling down - animate in
-            entry.target.classList.add('animate-in')
-            seenItems.add(entry.target)
-          } else if (seenItems.has(entry.target)) {
-            // Item has been seen before - just show it without animation
-            entry.target.classList.add('animate-in')
-          }
-        } else {
-          // Item is leaving viewport
-          if (scrollDirection === 'up' && seenItems.has(entry.target)) {
-            // Scrolling up and item is leaving - slide out
-            entry.target.classList.remove('animate-in')
-          }
-        }
-      })
-    }, { threshold: 0.2, rootMargin: '50px' })
-    
-    observer.observe(item)
-    observerInstances.push(observer)
-  })
+  const animatedElements = document.querySelectorAll('.timeline-item, .modern-card')
   
-  // Project cards animation
-  const projectCards = document.querySelectorAll('.modern-card')
-  projectCards.forEach((card, index) => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Item is entering viewport
-          if (scrollDirection === 'down' && !seenItems.has(entry.target)) {
-            // First time seeing this item while scrolling down - animate in with delay
-            setTimeout(() => {
-              entry.target.classList.add('animate-in')
-            }, index * 100)
-            seenItems.add(entry.target)
-          } else if (seenItems.has(entry.target)) {
-            // Item has been seen before - just show it without animation
-            entry.target.classList.add('animate-in')
-          }
-        } else {
-          // Item is leaving viewport
-          if (scrollDirection === 'up' && seenItems.has(entry.target)) {
-            // Scrolling up and item is leaving - slide out
-            entry.target.classList.remove('animate-in')
-          }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        if (scrollState.direction === 'down' && !scrollState.seenItems.has(entry.target)) {
+          const delay = entry.target.classList.contains('modern-card') ? index * 100 : 0
+          setTimeout(() => entry.target.classList.add('animate-in'), delay)
+          scrollState.seenItems.add(entry.target)
+        } else if (scrollState.seenItems.has(entry.target)) {
+          entry.target.classList.add('animate-in')
         }
-      })
-    }, { threshold: 0.2, rootMargin: '50px' })
-    
-    observer.observe(card)
-    observerInstances.push(observer)
-  })
+      } else if (scrollState.direction === 'up' && scrollState.seenItems.has(entry.target)) {
+        entry.target.classList.remove('animate-in')
+      }
+    })
+  }, { threshold: 0.2, rootMargin: '50px' })
+  
+  animatedElements.forEach(element => observer.observe(element))
+  observerInstances.push(observer)
 }
 
 onMounted(() => {
-  // Add scroll listener for dynamic section detection and scroll direction tracking
+  // Cache DOM elements
+  const sections = ['section-0', 'section-1', 'section-2']
+  sections.forEach(id => {
+    const element = document.getElementById(id)
+    if (element) sectionElements.value[id] = element
+  })
+  
+  // Setup scroll listener
   scrollListener = () => {
     updateScrollDirection()
     updateActiveSection()
@@ -287,50 +100,28 @@ onMounted(() => {
   
   window.addEventListener('scroll', scrollListener, { passive: true })
   
-  // Initial check
+  // Initialize animations after DOM is ready
   setTimeout(() => {
     updateActiveSection()
     setupScrollAnimations()
-  }, 500) // Wait for elements to be rendered
+  }, 500)
 })
 
 onUnmounted(() => {
-  if (scrollListener) {
-    window.removeEventListener('scroll', scrollListener)
-  }
-  if (typingInterval) {
-    clearInterval(typingInterval)
-  }
-  // Clean up observers
+  scrollListener && window.removeEventListener('scroll', scrollListener)
   observerInstances.forEach(observer => observer.disconnect())
-  observerInstances = []
 })
 
+// Helper functions
 const scrollToSection = (index: number) => {
   activeSection.value = index
-  const element = document.getElementById(`section-${index}`)
-  element?.scrollIntoView({ behavior: 'smooth' })
+  sectionElements.value[`section-${index}`]?.scrollIntoView({ behavior: 'smooth' })
 }
 
-const goToTerminal = () => {
-  router.push('/terminal-portfolio')
-}
-
-const toggleLanguage = () => {
-  locale.value = locale.value === 'en' ? 'fr' : 'en'
-}
-
-const scrollToTerminalSection = () => {
-  const element = document.querySelector('.about-section')
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' })
-  }
-}
-
-
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
+const goToTerminal = () => router.push('/terminal-portfolio')
+const toggleLanguage = () => locale.value = locale.value === 'en' ? 'fr' : 'en'
+const scrollToTerminalSection = () => document.querySelector('.about-section')?.scrollIntoView({ behavior: 'smooth' })
+const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
 </script>
 
@@ -345,16 +136,16 @@ const scrollToTop = () => {
     <nav class="nav-bar">
       <div class="nav-content">
         <div class="nav-left">
-          <div class="nav-user-name" @click="scrollToTop">{{ t('nav.mehdisemmar') }}</div>
-          <button @click="goToTerminal" class="terminal-btn">
+          <div class="nav-user-name" @click="scrollToTop">mehdi@portfolio</div>
+          <button @click="goToTerminal" class="nav-btn terminal-btn">
             <span class="terminal-icon">></span>
             <span class="terminal-icon">_</span>
             <span class="terminal-text">{{ t('nav.terminal') }}</span>
           </button>
-          <a href="https://drive.google.com/file/d/1yAeZgKOKwJ5VYsKCBAKyI-1YeKvt0BVP/view?usp=sharing" target="_blank" class="resume-btn">
+          <a href="https://drive.google.com/file/d/1yAeZgKOKwJ5VYsKCBAKyI-1YeKvt0BVP/view?usp=sharing" target="_blank" class="nav-btn">
             {{ t('nav.resume') }}
           </a>
-          <button @click="toggleLanguage" class="language-btn">
+          <button @click="toggleLanguage" class="nav-btn">
             {{ locale === 'en' ? 'FR' : 'EN' }}
           </button>
         </div>
@@ -416,7 +207,7 @@ const scrollToTop = () => {
         </h2>
         <div class="timeline-container">
           <div class="timeline-line"></div>
-          <div v-for="(item, index) in sections.experience" :key="index" class="timeline-item" :class="{ 'timeline-right': index % 2 === 1 }" :style="{ animationDelay: (index * 0.2) + 's' }">
+          <div v-for="(item, index) in experienceItems" :key="index" class="timeline-item" :class="{ 'timeline-right': index % 2 === 1 }" :style="{ animationDelay: (index * 0.2) + 's' }">
             <div class="timeline-marker">
               <div class="marker-dot"></div>
               <div class="marker-pulse"></div>
@@ -429,7 +220,7 @@ const scrollToTop = () => {
               <div class="card-hover-overlay">
                 <div class="hover-header">
                   <h3 class="hover-company-name">{{ item.name }}</h3>
-                  <p class="hover-position-title">{{ item.type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) }}</p>
+                  <p class="hover-position-title">{{ item.type.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) }}</p>
                 </div>
                 <div class="hover-footer">
                   <div class="hover-globe">
@@ -459,7 +250,7 @@ const scrollToTop = () => {
           <span class="prompt">$</span> ls ~/projects
         </h2>
         <div class="projects-grid">
-          <a v-for="(item, index) in sections.projects" :key="index" :href="item.link" target="_blank" class="modern-card clickable-card">
+          <a v-for="(item, index) in projectItems" :key="index" :href="item.link" target="_blank" class="modern-card clickable-card">
             <div class="card-background">
               <img :src="item.image" :alt="item.name" class="card-bg-img" />
               <div class="card-overlay"></div>
@@ -467,7 +258,7 @@ const scrollToTop = () => {
             <div class="card-hover-overlay">
               <div class="hover-header">
                 <h3 class="hover-project-name">{{ item.name }}</h3>
-                <p class="hover-project-type">{{ item.type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) }}</p>
+                <p class="hover-project-type">{{ item.type.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) }}</p>
               </div>
               <div class="hover-footer">
                 <div class="hover-github">
@@ -657,7 +448,8 @@ body {
   transform: translateY(-1px);
 }
 
-.terminal-btn {
+/* Base button styles - consolidated from 3 nearly identical classes */
+.nav-btn {
   background: transparent;
   border: 2px solid #40e0d0;
   color: #40e0d0;
@@ -671,14 +463,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.3rem;
-  position: relative;
-  overflow: hidden;
   min-width: 120px;
   height: 44px;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
 }
 
-.terminal-btn::before {
+.nav-btn::before {
   content: '';
   position: absolute;
   top: 0;
@@ -689,14 +481,19 @@ body {
   transition: left 0.3s ease;
 }
 
-.terminal-btn:hover::before {
+.nav-btn:hover::before {
   left: 0;
 }
 
-.terminal-btn:hover {
+.nav-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
   cursor: pointer !important;
+}
+
+/* Specific button variants */
+.terminal-btn {
+  gap: 0.3rem;
 }
 
 .terminal-icon {
@@ -709,89 +506,6 @@ body {
 .terminal-text {
   position: relative;
   z-index: 1;
-}
-
-.resume-btn {
-  background: transparent;
-  border: 2px solid #40e0d0;
-  color: #40e0d0;
-  padding: 0.6rem 1rem;
-  border-radius: 4px;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  cursor: pointer !important;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  min-width: 120px;
-  height: 44px;
-}
-
-.resume-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(64, 224, 208, 0.2);
-  transition: left 0.3s ease;
-}
-
-.resume-btn:hover::before {
-  left: 0;
-}
-
-.resume-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
-  cursor: pointer !important;
-}
-
-.language-btn {
-  background: transparent;
-  border: 2px solid #40e0d0;
-  color: #40e0d0;
-  padding: 0.6rem 1rem;
-  border-radius: 4px;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  cursor: pointer !important;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 120px;
-  height: 44px;
-  position: relative;
-  overflow: hidden;
-}
-
-.language-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(64, 224, 208, 0.2);
-  transition: left 0.3s ease;
-}
-
-.language-btn:hover::before {
-  left: 0;
-}
-
-.language-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
-  cursor: pointer !important;
 }
 
 .nav-logo {
@@ -910,12 +624,8 @@ body {
 .nav-links a,
 .cta-button,
 .cta-button *,
-.terminal-btn,
-.terminal-btn *,
-.resume-btn,
-.resume-btn *,
-.language-btn,
-.language-btn *,
+.nav-btn,
+.nav-btn *,
 .nav-user-name {
   cursor: pointer !important;
 }
@@ -1586,283 +1296,9 @@ body {
   text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
 }
 
-/* Holographic Cards */
-.holo-card {
-  background: linear-gradient(135deg, rgba(0, 20, 25, 0.95), rgba(0, 35, 45, 0.85));
-  border: 1px solid rgba(64, 224, 208, 0.3);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  text-decoration: none;
-  color: inherit;
-}
+/* Removed unused .holo-card styles - 273 lines of CSS deleted for better performance */
 
-/* Card section alignment - Enhanced for consistency */
-.card-image-section {
-  flex-shrink: 0;
-  height: 200px; /* Fixed height for all images */
-  overflow: hidden;
-}
-
-.card-content-section {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 1.5rem;
-  position: relative;
-  height: 450px; /* Fixed total height for all card content */
-}
-
-.card-header {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  right: 1.5rem;
-  height: 70px; /* Fixed height for header section */
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.card-period-section {
-  position: absolute;
-  top: 105px; /* 1.5rem + 70px + 1rem spacing */
-  left: 1.5rem;
-  right: 1.5rem;
-  height: 35px; /* Fixed height for period section */
-  display: flex;
-  align-items: center;
-}
-
-.card-description-section {
-  position: absolute;
-  top: 155px; /* Previous sections + spacing */
-  left: 1.5rem;
-  right: 1.5rem;
-  bottom: 70px; /* Leave space for footer */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  overflow: hidden;
-}
-
-.card-footer-section {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 1.5rem;
-  right: 1.5rem;
-  height: 50px; /* Fixed height for footer - ensures perfect alignment */
-  display: flex;
-  align-items: center;
-}
-
-.holo-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #40e0d0, #00ff88, #40e0d0, transparent);
-  animation: holo-scan 4s linear infinite;
-  z-index: 2;
-}
-
-@keyframes holo-scan {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-.holo-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 
-    0 15px 40px rgba(64, 224, 208, 0.3),
-    0 0 20px rgba(0, 255, 136, 0.2);
-  border-color: #40e0d0;
-}
-
-.card-image {
-  position: relative;
-  height: 200px;
-  overflow: hidden;
-  border-bottom: 1px solid rgba(64, 224, 208, 0.2);
-}
-
-.hologram-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: 
-    sepia(1) 
-    hue-rotate(160deg) 
-    saturate(2) 
-    brightness(1.1) 
-    contrast(1.2);
-  transition: all 0.3s ease;
-}
-
-.holo-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    linear-gradient(
-      45deg, 
-      rgba(64, 224, 208, 0.1) 0%, 
-      rgba(0, 255, 136, 0.05) 50%, 
-      rgba(64, 224, 208, 0.1) 100%
-    );
-  mix-blend-mode: screen;
-  opacity: 0.7;
-}
-
-.holo-overlay::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      rgba(64, 224, 208, 0.1) 2px,
-      rgba(64, 224, 208, 0.1) 4px
-    );
-  animation: holo-lines 3s linear infinite;
-}
-
-@keyframes holo-lines {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(20px); }
-}
-
-.holo-card:hover .hologram-img {
-  filter: 
-    sepia(1) 
-    hue-rotate(160deg) 
-    saturate(2.5) 
-    brightness(1.3) 
-    contrast(1.5);
-  transform: scale(1.05);
-}
-
-.holo-card:hover .holo-overlay {
-  opacity: 1;
-}
-
-.card-content {
-  padding: 1.5rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.card-title-group {
-  flex: 1;
-}
-
-.card-title-group h3 {
-  font-family: 'Courier New', monospace;
-  color: #e0f7ff;
-  font-size: 1.3rem;
-  margin: 0 0 0.5rem 0;
-  text-shadow: 0 0 10px rgba(224, 247, 255, 0.3);
-}
-
-.card-type {
-  font-family: 'Courier New', monospace;
-  font-size: 0.75rem;
-  color: #40e0d0;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  opacity: 0.8;
-  display: block;
-}
-
-.card-period {
-  margin: 0;
-  font-family: 'Courier New', monospace;
-  font-size: 0.8rem;
-}
-
-.period-label {
-  color: #87ceeb;
-  margin-right: 0.5rem;
-}
-
-.period-value {
-  color: #00ff88;
-  font-weight: bold;
-  text-shadow: 0 0 5px rgba(0, 255, 136, 0.3);
-}
-
-.holo-card .card-description {
-  color: #b0c4de;
-  line-height: 1.6;
-  margin: 0;
-  font-size: 0.9rem;
-  flex: 1;
-}
-
-.holo-card .card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0;
-  width: 100%;
-  position: relative;
-}
-
-.holo-card .status-indicator {
-  width: 10px;
-  height: 10px;
-  background: #00ff88;
-  border-radius: 50%;
-  animation: holo-pulse 2s ease-in-out infinite;
-  box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
-  flex-shrink: 0;
-}
-
-@keyframes holo-pulse {
-  0%, 100% { 
-    opacity: 1; 
-    transform: scale(1);
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
-  }
-  50% { 
-    opacity: 0.6; 
-    transform: scale(1.2);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.8);
-  }
-}
-
-.holo-card .card-link {
-  color: #40e0d0;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-left: auto;
-  flex-shrink: 0;
-}
-
-.holo-card:hover .card-link {
-  transform: translateX(8px);
-  color: #00ff88;
-  text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
-}
-
-/* Project Grid Styles */
+/* Project Grid Styles - consolidated with modern-card styles */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1871,171 +1307,7 @@ body {
   margin: 0 auto;
 }
 
-.project-card {
-  background: linear-gradient(135deg, rgba(0, 20, 25, 0.95), rgba(0, 35, 45, 0.85));
-  border: 1px solid rgba(64, 224, 208, 0.3);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  position: relative;
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-  height: 400px;
-}
-
-.project-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #40e0d0, #00ff88, #40e0d0, transparent);
-  animation: holo-scan 4s linear infinite;
-  z-index: 2;
-}
-
-.project-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 
-    0 15px 40px rgba(64, 224, 208, 0.3),
-    0 0 20px rgba(0, 255, 136, 0.2);
-  border-color: #40e0d0;
-}
-
-.project-image-section {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.project-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: sepia(1) hue-rotate(160deg) saturate(1.5) brightness(1.1) contrast(1.2);
-  transition: all 0.3s ease;
-}
-
-.project-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, rgba(64, 224, 208, 0.1) 0%, rgba(0, 255, 136, 0.05) 50%, rgba(64, 224, 208, 0.1) 100%);
-  mix-blend-mode: screen;
-  opacity: 0.7;
-}
-
-.project-name {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 1.5rem;
-  right: 1.5rem;
-  color: #e0f7ff;
-  font-family: 'Courier New', monospace;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7), 0 0 10px rgba(224, 247, 255, 0.5);
-  z-index: 3;
-}
-
-.project-skills-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(0, 20, 25, 0.98), rgba(0, 35, 45, 0.95));
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1.5rem;
-  opacity: 0;
-  transition: all 0.3s ease;
-  z-index: 4;
-}
-
-.project-card:hover .project-skills-overlay {
-  opacity: 1;
-}
-
-.project-skills-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-  font-family: 'Courier New', monospace;
-}
-
-.skills-icon {
-  font-size: 1.5rem;
-}
-
-.skills-title {
-  color: #40e0d0;
-  font-size: 1.3rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
-
-.project-skills-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  justify-content: center;
-  margin-bottom: 2rem;
-}
-
-.project-skill-tag {
-  background: linear-gradient(135deg, rgba(64, 224, 208, 0.2), rgba(0, 255, 136, 0.1));
-  border: 1px solid rgba(64, 224, 208, 0.4);
-  color: #e0f7ff;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
-  opacity: 0;
-  animation: skill-fade-in 0.6s ease forwards;
-  transition: all 0.3s ease;
-  text-shadow: 0 0 5px rgba(224, 247, 255, 0.3);
-}
-
-.project-skill-tag:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(64, 224, 208, 0.3);
-  background: linear-gradient(135deg, rgba(64, 224, 208, 0.3), rgba(0, 255, 136, 0.2));
-  border-color: #00ff88;
-}
-
-.project-hover-footer {
-  margin-top: auto;
-}
-
-.hover-action {
-  color: #40e0d0;
-  font-family: 'Courier New', monospace;
-  font-size: 1rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-}
-
-.project-card:hover .hover-action {
-  color: #00ff88;
-  text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
-}
-
-.project-card:hover .project-img {
-  transform: scale(1.1);
-  filter: sepia(1) hue-rotate(160deg) saturate(2) brightness(1.2) contrast(1.3);
-}
+/* Project cards now use the same .modern-card class as experience cards */
 
 /* Responsive Design */
 /* Ultra small devices (phones, 280px to 320px) */
@@ -2051,7 +1323,7 @@ body {
     max-width: 80px;
   }
   
-  .terminal-btn, .resume-btn, .language-btn {
+  .nav-btn {
     min-width: 60px;
     height: 32px;
     padding: 0.3rem 0.4rem;
@@ -2112,7 +1384,7 @@ body {
     max-width: 120px;
   }
   
-  .terminal-btn, .resume-btn, .language-btn {
+  .nav-btn {
     min-width: 80px;
     height: 36px;
     padding: 0.4rem 0.6rem;
@@ -2310,7 +1582,7 @@ body {
     touch-action: manipulation;
   }
   
-  .terminal-btn, .resume-btn, .language-btn, .cta-button {
+  .nav-btn, .cta-button {
     touch-action: manipulation;
     -webkit-tap-highlight-color: rgba(64, 224, 208, 0.2);
   }
@@ -2341,7 +1613,7 @@ body {
     font-size: 1rem;
   }
   
-  .terminal-btn, .resume-btn, .language-btn {
+  .nav-btn {
     min-width: 100px;
     height: 40px;
     padding: 0.5rem 0.8rem;
@@ -2469,7 +1741,7 @@ body {
     font-size: 1.05rem;
   }
   
-  .terminal-btn, .resume-btn, .language-btn {
+  .nav-btn {
     min-width: 110px;
     height: 42px;
     padding: 0.55rem 0.9rem;
