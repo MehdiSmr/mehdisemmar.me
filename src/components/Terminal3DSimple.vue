@@ -1,6 +1,14 @@
 <template>
   <div class="terminal-container">
-    <div class="terminal-window">
+    <div 
+      class="terminal-window"
+      @mouseenter="handleMouseEnter"
+      @mousemove="updateRotation"
+      @mouseleave="resetRotation"
+      :style="{
+        transform: `translateY(${isHovering ? -10 : 0}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+      }"
+    >
       <!-- Terminal Header -->
       <div class="terminal-header">
         <div class="terminal-buttons">
@@ -44,13 +52,122 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
 const { t } = useI18n()
 
 let observer: IntersectionObserver | null = null
 
+// Refs for dynamic 3D rotation
+const terminalRef = ref<HTMLElement | null>(null)
+const rotateX = ref(0)
+const rotateY = ref(0)
+const isHovering = ref(false)
+
+// Target rotation values (what we're animating towards)
+const targetRotateX = ref(0)
+const targetRotateY = ref(0)
+
+// Configuration for the 3D effect
+const MAX_ROTATION = 8 // Maximum rotation in degrees (reduced for subtlety)
+const SMOOTHING_FACTOR = 0.25 // Increased for faster response
+
+// Animation frame ID for cleanup
+let animationFrameId: number | null = null
+
+// Function to clamp values between min and max
+const clamp = (value: number, min: number, max: number): number => {
+  return Math.min(Math.max(value, min), max)
+}
+
+// Function to linear interpolate between current and target values
+const lerp = (current: number, target: number, factor: number): number => {
+  return current + (target - current) * factor
+}
+
+// Animation loop for smooth interpolation
+const animate = () => {
+  // Interpolate current values towards target values
+  rotateX.value = lerp(rotateX.value, targetRotateX.value, SMOOTHING_FACTOR)
+  rotateY.value = lerp(rotateY.value, targetRotateY.value, SMOOTHING_FACTOR)
+  
+  // Continue animation if hovering
+  if (isHovering.value) {
+    animationFrameId = requestAnimationFrame(animate)
+  }
+}
+
+// Function to update rotation based on mouse position
+const updateRotation = (event: MouseEvent) => {
+  if (!terminalRef.value) return
+  
+  // Get terminal dimensions and position
+  const terminal = terminalRef.value
+  const rect = terminal.getBoundingClientRect()
+  
+  // Calculate center point of the terminal
+  const centerX = rect.left + rect.width / 2
+  const centerY = rect.top + rect.height / 2
+  
+  // Calculate mouse position relative to center
+  const mouseX = event.clientX
+  const mouseY = event.clientY
+  
+  // Calculate percentage distance from center and clamp to prevent extreme values
+  const percentX = clamp((mouseX - centerX) / (rect.width / 2), -1, 1)
+  const percentY = clamp((mouseY - centerY) / (rect.height / 2), -1, 1)
+  
+  // Apply easing function for smoother transitions near edges
+  const easedX = percentX * Math.abs(percentX) // Quadratic easing
+  const easedY = percentY * Math.abs(percentY)
+  
+  // Update target rotation values - invert for natural feeling (negative = tilt away from cursor)
+  targetRotateY.value = -easedX * MAX_ROTATION
+  targetRotateX.value = easedY * MAX_ROTATION
+}
+
+// Function to reset rotation when mouse leaves
+const resetRotation = () => {
+  isHovering.value = false
+  targetRotateX.value = 0
+  targetRotateY.value = 0
+  
+  // Cancel existing animation frame
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId)
+    animationFrameId = null
+  }
+  
+  // Start reset animation
+  const resetAnimate = () => {
+    rotateX.value = lerp(rotateX.value, 0, SMOOTHING_FACTOR)
+    rotateY.value = lerp(rotateY.value, 0, SMOOTHING_FACTOR)
+    
+    // Continue until close to zero
+    if (Math.abs(rotateX.value) > 0.1 || Math.abs(rotateY.value) > 0.1) {
+      requestAnimationFrame(resetAnimate)
+    } else {
+      rotateX.value = 0
+      rotateY.value = 0
+    }
+  }
+  resetAnimate()
+}
+
+// Function to handle mouse enter
+const handleMouseEnter = () => {
+  isHovering.value = true
+  
+  // Start animation loop
+  if (!animationFrameId) {
+    animate()
+  }
+}
+
 onMounted(() => {
+  // Set terminal reference
+  terminalRef.value = document.querySelector('.terminal-window')
+  
   // Set up scroll-triggered animation for terminal elements
   const terminalElements = document.querySelectorAll('.slide-in-left')
   
@@ -71,6 +188,11 @@ onMounted(() => {
 
 onUnmounted(() => {
   observer?.disconnect()
+  
+  // Clean up animation frame
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId)
+  }
 })
 </script>
 
@@ -103,14 +225,13 @@ onUnmounted(() => {
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   transform-style: preserve-3d;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.1s ease-out, box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 }
 
 /* 3D Hover Effects */
 .terminal-window:hover {
-  transform: translateY(-10px) rotateX(2deg) rotateY(-2deg);
   box-shadow: 
     0 30px 80px rgba(0, 0, 0, 0.6),
     0 0 60px rgba(64, 224, 208, 0.4),

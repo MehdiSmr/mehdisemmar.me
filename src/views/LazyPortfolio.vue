@@ -2,6 +2,7 @@
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import * as THREE from 'three'
 import Terminal3D from '../components/Terminal3DSimple.vue'
 import { experienceData, projectData } from '../data/portfolio'
 
@@ -25,6 +26,30 @@ const projectItems = ref(projectData)
 
 // Cached DOM elements
 const sectionElements = ref<{ [key: string]: HTMLElement }>({})
+
+// 3D Holographic Background
+const holographicCanvas = ref<HTMLCanvasElement | null>(null)
+const prefersReducedMotion = ref(false)
+
+let scene: THREE.Scene
+let camera: THREE.PerspectiveCamera
+let renderer: THREE.WebGLRenderer
+let objectGroup: THREE.Group
+let mainObject: THREE.LineSegments
+let coreObject: THREE.LineSegments
+let particles: THREE.Mesh[] = []
+let mainMaterial: THREE.LineBasicMaterial
+let coreMaterial: THREE.LineBasicMaterial
+
+const baseRotationSpeed = 0.001
+const maxRotationSpeed = 0.02
+let currentRotationSpeed = baseRotationSpeed
+const baseScale = 1.0
+const maxScale = 3.0
+let currentScale = baseScale
+let scrollProgress = 0
+const objectColor = new THREE.Color(0x40e0d0)
+let animationFrameId: number
 
 // Update scroll direction
 const updateScrollDirection = () => {
@@ -85,6 +110,20 @@ const setupScrollAnimations = () => {
 }
 
 onMounted(() => {
+  // Check for reduced motion preference
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+  prefersReducedMotion.value = mediaQuery.matches
+  
+  // Listen for changes in reduced motion preference
+  mediaQuery.addListener((e) => {
+    prefersReducedMotion.value = e.matches
+    if (e.matches && animationFrameId) {
+      cancelAnimationFrame(animationFrameId)
+    } else if (!e.matches) {
+      animateHolographic()
+    }
+  })
+  
   // Cache DOM elements
   const sections = ['section-0', 'section-1', 'section-2']
   sections.forEach(id => {
@@ -99,17 +138,27 @@ onMounted(() => {
   }
   
   window.addEventListener('scroll', scrollListener, { passive: true })
+  window.addEventListener('resize', onHolographicResize)
   
   // Initialize animations after DOM is ready
   setTimeout(() => {
     updateActiveSection()
     setupScrollAnimations()
+    
+    // Initialize 3D background
+    if (!prefersReducedMotion.value) {
+      initHolographicBackground()
+      createHolographicObjects()
+      animateHolographic()
+    }
   }, 500)
 })
 
 onUnmounted(() => {
   scrollListener && window.removeEventListener('scroll', scrollListener)
+  window.removeEventListener('resize', onHolographicResize)
   observerInstances.forEach(observer => observer.disconnect())
+  cleanupHolographic()
 })
 
 // Helper functions
@@ -123,6 +172,150 @@ const toggleLanguage = () => locale.value = locale.value === 'en' ? 'fr' : 'en'
 const scrollToTerminalSection = () => document.querySelector('.about-section')?.scrollIntoView({ behavior: 'smooth' })
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
+const initHolographicBackground = () => {
+  if (!holographicCanvas.value || prefersReducedMotion.value) return
+
+  scene = new THREE.Scene()
+  scene.fog = new THREE.Fog(0x0a0f14, 10, 50)
+
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+  camera.position.z = 15
+
+  renderer = new THREE.WebGLRenderer({
+    canvas: holographicCanvas.value,
+    antialias: true,
+    alpha: true
+  })
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.setClearColor(0x0a0f14, 0.0)
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+  scene.add(new THREE.AmbientLight(0x40e0d0, 0.2))
+  const pointLight = new THREE.PointLight(0x00ff88, 0.5, 100)
+  pointLight.position.set(10, 10, 10)
+  scene.add(pointLight)
+}
+
+const createHolographicObjects = () => {
+  objectGroup = new THREE.Group()
+  scene.add(objectGroup)
+
+  mainMaterial = new THREE.LineBasicMaterial({ color: objectColor, transparent: true, opacity: 0.25 })
+  const wireframe = new THREE.WireframeGeometry(new THREE.DodecahedronGeometry(3, 1))
+  mainObject = new THREE.LineSegments(wireframe, mainMaterial)
+  objectGroup.add(mainObject)
+
+  coreMaterial = new THREE.LineBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.15 })
+  const coreWireframe = new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.5, 0))
+  coreObject = new THREE.LineSegments(coreWireframe, coreMaterial)
+  objectGroup.add(coreObject)
+
+  const particleCount = 1000
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = new THREE.Mesh(
+      new THREE.SphereGeometry(0.015, 4, 4),
+      new THREE.MeshBasicMaterial({ color: objectColor, transparent: true, opacity: 0.4 })
+    )
+    
+    const radius = 5 + Math.random() * 4
+    const theta = Math.random() * Math.PI * 2
+    const phi = Math.random() * Math.PI
+    
+    particle.position.set(
+      radius * Math.sin(phi) * Math.cos(theta),
+      radius * Math.sin(phi) * Math.sin(theta),
+      radius * Math.cos(phi)
+    )
+    
+    particle.userData = { radius, theta, phi, speed: 0.0005 + Math.random() * 0.001 }
+    particles.push(particle)
+    objectGroup.add(particle)
+  }
+
+}
+
+const calculateScrollProgress = () => {
+  const scrollTop = window.scrollY
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight
+  scrollProgress = Math.min(scrollTop / docHeight, 1)
+}
+
+const updateScrollBasedAnimation = () => {
+  calculateScrollProgress()
+  currentRotationSpeed = baseRotationSpeed + (maxRotationSpeed - baseRotationSpeed) * scrollProgress
+  currentScale = baseScale + (maxScale - baseScale) * scrollProgress
+}
+
+const onHolographicResize = () => {
+  if (!camera || !renderer) return
+  
+  camera.aspect = window.innerWidth / window.innerHeight
+  camera.updateProjectionMatrix()
+  renderer.setSize(window.innerWidth, window.innerHeight)
+}
+
+const updateHolographicAnimation = () => {
+  if (!objectGroup) return
+
+  updateScrollBasedAnimation()
+  
+  objectGroup.rotation.y += currentRotationSpeed
+  objectGroup.rotation.x += currentRotationSpeed * 0.3
+  
+  const time = Date.now() * 0.0005
+  const pulse = Math.sin(time * 2) * 0.02 + 0.98
+  objectGroup.scale.setScalar(currentScale * pulse)
+  
+  if (coreObject) {
+    coreObject.rotation.x += currentRotationSpeed * 1.2
+    coreObject.rotation.y -= currentRotationSpeed * 1.5
+  }
+  
+  particles.forEach((particle) => {
+    const userData = particle.userData
+    userData.theta += userData.speed * (1 + scrollProgress * 3)
+    
+    const radius = userData.radius
+    const theta = userData.theta
+    const phi = userData.phi + Math.sin(userData.theta * 2) * 0.05
+    
+    particle.position.set(
+      radius * Math.sin(phi) * Math.cos(theta),
+      radius * Math.sin(phi) * Math.sin(theta),
+      radius * Math.cos(phi)
+    )
+    
+    const targetOpacity = 0.4 + scrollProgress * 0.3
+    const material = particle.material as THREE.MeshBasicMaterial
+    material.opacity += (targetOpacity - material.opacity) * 0.1
+  })
+}
+
+const animateHolographic = () => {
+  if (prefersReducedMotion.value) return
+  
+  animationFrameId = requestAnimationFrame(animateHolographic)
+  
+  updateHolographicAnimation()
+  if (renderer && scene && camera) {
+    renderer.render(scene, camera)
+  }
+}
+
+
+const cleanupHolographic = () => {
+  if (animationFrameId) cancelAnimationFrame(animationFrameId)
+  if (renderer) renderer.dispose()
+  
+  particles.forEach(particle => {
+    particle.geometry.dispose()
+    const material = particle.material as THREE.MeshBasicMaterial
+    material.dispose()
+  })
+  
+  particles = []
+}
 </script>
 
 <template>
@@ -131,6 +324,12 @@ const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <!-- Background effect -->
     <div class="matrix-bg"></div>
+    <!-- 3D Holographic Background -->
+    <canvas 
+      ref="holographicCanvas"
+      class="holographic-background"
+      :class="{ 'reduced-motion': prefersReducedMotion }"
+    />
     
     <!-- Navigation -->
     <nav class="nav-bar">
@@ -211,6 +410,12 @@ const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
             <div class="timeline-marker">
               <div class="marker-dot"></div>
               <div class="marker-pulse"></div>
+            </div>
+            <!-- Timeline Date - positioned on opposite side of card -->
+            <div class="timeline-date" :class="{ 'timeline-date-left': index % 2 === 1, 'timeline-date-right': index % 2 === 0 }">
+              <div class="date-content">
+                <span class="date-period">{{ item.period }}</span>
+              </div>
             </div>
             <a :href="item.link" target="_blank" class="modern-card clickable-card">
               <div class="card-background">
@@ -371,8 +576,28 @@ body {
   width: 100%;
   height: 100%;
   background: #0a0f14;
-  z-index: -1;
+  z-index: -2;
   overflow: hidden;
+}
+
+/* 3D Holographic Background */
+.holographic-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: auto;
+  opacity: 0.6;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.holographic-background.reduced-motion {
+  display: none;
 }
 
 .matrix-bg::before {
@@ -386,18 +611,19 @@ body {
     repeating-linear-gradient(
       0deg,
       transparent,
-      transparent 2px,
-      rgba(64, 224, 208, 0.03) 2px,
-      rgba(64, 224, 208, 0.03) 4px
+      transparent 8px,
+      rgba(64, 224, 208, 0.02) 8px,
+      rgba(64, 224, 208, 0.02) 9px
     ),
     repeating-linear-gradient(
       90deg,
       transparent,
-      transparent 2px,
-      rgba(64, 224, 208, 0.03) 2px,
-      rgba(64, 224, 208, 0.03) 4px
+      transparent 8px,
+      rgba(64, 224, 208, 0.02) 8px,
+      rgba(64, 224, 208, 0.02) 9px
     );
-  animation: matrix-rain 20s linear infinite;
+  animation: matrix-rain 30s linear infinite;
+  will-change: transform;
 }
 
 @keyframes matrix-rain {
@@ -818,7 +1044,6 @@ body {
 }
 
 .content-section.alt-bg {
-  background: rgba(0, 20, 25, 0.5);
 }
 
 .section-container {
@@ -2199,6 +2424,52 @@ body {
   flex-direction: column;
 }
 
+/* Timeline Date Styles */
+.timeline-date {
+  position: absolute;
+  top: 3rem;
+  width: 180px; /* Slightly reduced width for better spacing */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Timeline date positioning - positioned with adequate spacing to avoid crossing timeline */
+.timeline-date-right {
+  right: -280px; /* Position to the right when card is on left - increased spacing */
+  transform: translateX(-20px);
+}
+
+.timeline-date-left {
+  left: -280px; /* Position to the left when card is on right - increased spacing */
+  transform: translateX(20px);
+}
+
+/* Show dates when timeline item animates in */
+.timeline-item.animate-in .timeline-date {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.date-content {
+  text-align: center;
+}
+
+.date-period {
+  font-family: 'Courier New', monospace;
+  color: #40e0d0;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(64, 224, 208, 0.3);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap; /* Ensure single line */
+  line-height: 1;
+}
+
 .timeline-skills {
   margin-bottom: 1.5rem;
 }
@@ -2471,7 +2742,6 @@ body {
 /* About Section */
 .about-section {
   padding: 6rem 2rem;
-  background: rgba(0, 15, 20, 0.3);
   min-height: 80vh;
   display: flex;
   align-items: center;
@@ -2790,6 +3060,65 @@ body {
   
   .terminal-title {
     font-size: 1rem;
+  }
+}
+
+/* Timeline Date Responsive Styles */
+@media screen and (max-width: 768px) {
+  .timeline-date {
+    display: none; /* Hide dates on mobile to avoid clutter */
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .timeline-date {
+    width: 150px;
+  }
+  
+  .timeline-date-right {
+    right: -200px;
+  }
+  
+  .timeline-date-left {
+    left: -200px;
+  }
+  
+  .date-period {
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+  }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  .timeline-date {
+    width: 180px;
+  }
+  
+  .timeline-date-right {
+    right: -250px;
+  }
+  
+  .timeline-date-left {
+    left: -250px;
+  }
+}
+
+@media screen and (min-width: 1441px) {
+  .timeline-date {
+    width: 220px;
+  }
+  
+  .timeline-date-right {
+    right: -320px;
+  }
+  
+  .timeline-date-left {
+    left: -320px;
+  }
+  
+  .date-period {
+    font-size: 1rem;
+    letter-spacing: 1.5px;
   }
 }
 </style>
