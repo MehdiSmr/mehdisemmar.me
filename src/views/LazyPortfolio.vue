@@ -680,12 +680,17 @@ select {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
 }
 
 .nav-user-name {
@@ -708,21 +713,22 @@ select {
   background: transparent;
   border: 2px solid #40e0d0;
   color: #40e0d0;
-  padding: 0.6rem 1rem;
+  padding: 0.5rem 0.8rem;
   border-radius: 4px;
   font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   letter-spacing: 1px;
   cursor: pointer !important;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 120px;
-  height: 44px;
+  min-width: 90px;
+  height: 38px;
   position: relative;
   overflow: hidden;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .nav-btn::before {
@@ -786,8 +792,9 @@ select {
 
 .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .nav-links a {
@@ -821,6 +828,99 @@ select {
 .nav-links a:hover::after,
 .nav-links a.active::after {
   width: 100%;
+}
+
+/* Responsive navigation for tablets and smaller screens */
+@media screen and (max-width: 1200px) {
+  .nav-content {
+    padding: 0 1.5rem;
+  }
+  
+  .nav-left {
+    gap: 0.8rem;
+  }
+  
+  .nav-btn {
+    min-width: 80px;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.8rem;
+  }
+  
+  .nav-links {
+    gap: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .nav-content {
+    padding: 0 1rem;
+  }
+  
+  .nav-left {
+    gap: 0.6rem;
+  }
+  
+  .nav-btn {
+    min-width: 70px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+    height: 36px;
+  }
+  
+  .nav-user-name {
+    font-size: 1rem;
+  }
+  
+  .nav-links {
+    gap: 1rem;
+  }
+  
+  .nav-links a {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .nav-content {
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .nav-bar {
+    padding: 0.8rem 0;
+  }
+  
+  .nav-left {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .nav-links {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .nav-content {
+    padding: 0.5rem 0.8rem;
+  }
+  
+  .nav-btn {
+    min-width: 60px;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.7rem;
+    height: 32px;
+  }
+  
+  .nav-user-name {
+    font-size: 0.9rem;
+  }
+  
+  .nav-links a {
+    font-size: 0.75rem;
+  }
 }
 
 .home-btn {
