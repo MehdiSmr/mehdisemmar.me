@@ -62,9 +62,7 @@ let targetColor = baseColor.clone()
 let animationFrameId: number
 
 // Define component emits
-const emit = defineEmits<{
-  loaded: []
-}>
+const emit = defineEmits(['loaded'])
 
 const init = () => {
   if (!threeCanvas.value) return
