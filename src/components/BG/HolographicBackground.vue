@@ -2,7 +2,10 @@
   <canvas 
     ref="threeCanvas"
     class="holographic-background"
-    :class="{ 'reduced-motion': prefersReducedMotion }"
+    :class="{ 
+      'reduced-motion': prefersReducedMotion,
+      'loaded': isLoaded
+    }"
   />
 </template>
 
@@ -28,6 +31,8 @@ const props = withDefaults(defineProps<Props>(), {
 // Refs
 const threeCanvas = ref<HTMLCanvasElement | null>(null)
 const prefersReducedMotion = ref(false)
+const isLoaded = ref(false)
+const isLoading = ref(true)
 
 // 3D Scene variables
 let scene: THREE.Scene
@@ -56,8 +61,15 @@ let targetColor = baseColor.clone()
 // Animation frame ID for cleanup
 let animationFrameId: number
 
+// Define component emits
+const emit = defineEmits<{
+  loaded: []
+}>
+
 const init = () => {
   if (!threeCanvas.value) return
+
+  isLoading.value = true
 
   // Scene setup
   scene = new THREE.Scene()
@@ -89,6 +101,13 @@ const init = () => {
   const pointLight = new THREE.PointLight(0x00ff88, 1, 100)
   pointLight.position.set(10, 10, 10)
   scene.add(pointLight)
+
+  // Mark as loaded after a short delay to ensure everything is ready
+  setTimeout(() => {
+    isLoaded.value = true
+    isLoading.value = false
+    emit('loaded')
+  }, 100)
 }
 
 const createObjects = () => {
@@ -347,6 +366,11 @@ onUnmounted(() => {
   height: 100%;
   z-index: -1;
   pointer-events: auto;
+  opacity: 0;
+  transition: opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.holographic-background.loaded {
   opacity: 0.6;
 }
 

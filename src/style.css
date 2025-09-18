@@ -106,3 +106,33 @@ html, body, * {
   50% { transform: translateY(-12px) scale(1.01); }
   100% { transform: translateY(0px) scale(1); }
 }
+
+/* Hide scrollbar for all browsers */
+/* Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+html::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* For any other scrollable elements */
+* {
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+}

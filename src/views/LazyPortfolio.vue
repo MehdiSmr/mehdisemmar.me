@@ -30,6 +30,7 @@ const sectionElements = ref<{ [key: string]: HTMLElement }>({})
 // 3D Holographic Background
 const holographicCanvas = ref<HTMLCanvasElement | null>(null)
 const prefersReducedMotion = ref(false)
+const holographicBackgroundLoaded = ref(false)
 
 let scene: THREE.Scene
 let camera: THREE.PerspectiveCamera
@@ -194,6 +195,11 @@ const initHolographicBackground = () => {
   const pointLight = new THREE.PointLight(0x00ff88, 0.5, 100)
   pointLight.position.set(10, 10, 10)
   scene.add(pointLight)
+  
+  // Mark as loaded after a short delay to ensure everything is ready
+  setTimeout(() => {
+    holographicBackgroundLoaded.value = true
+  }, 100)
 }
 
 const createHolographicObjects = () => {
@@ -328,7 +334,10 @@ const cleanupHolographic = () => {
     <canvas 
       ref="holographicCanvas"
       class="holographic-background"
-      :class="{ 'reduced-motion': prefersReducedMotion }"
+      :class="{ 
+        'reduced-motion': prefersReducedMotion,
+        'loaded': holographicBackgroundLoaded
+      }"
     />
     
     <!-- Navigation -->
@@ -393,7 +402,7 @@ const cleanupHolographic = () => {
             <span class="prompt">$</span> open -a Terminal
         </h2>
         <div class="about-container-centered">
-            <Terminal3D />
+            <Terminal3D v-if="holographicBackgroundLoaded || prefersReducedMotion" />
         </div>
       </div>
     </section>
@@ -568,6 +577,18 @@ body {
   cursor: pointer !important;
 }
 
+button,
+.nav-btn,
+.cta-button,
+.clickable-card,
+.social-link,
+a,
+input,
+textarea,
+select {
+  outline: none !important;
+}
+
 /* Matrix background effect */
 .matrix-bg {
   position: fixed;
@@ -589,7 +610,15 @@ body {
   height: 100%;
   z-index: -1;
   pointer-events: auto;
+  opacity: 0;
+  transition: opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.holographic-background.loaded {
   opacity: 0.6;
+}
+
+.holographic-background {
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;

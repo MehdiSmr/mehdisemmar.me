@@ -23,4 +23,3 @@ fix shortcut help description it is ctrl+h not ctrl+H
 ------- lazy portfolio
 -update the links
 -update actual content of termianl and cards
--update the background with cool animated 3d stuff
