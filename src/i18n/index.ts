@@ -12,14 +12,10 @@ const messages = {
     terminal: {
       command: 'cat ~/whoami.txt',
       title: 'Software Engineer | AI/ML Enthusiast',
-      education: 'University of Ottawa - GPA: 4.0/4.0',
-      specialization: 'Specialization: Full-Stack & AI/ML Development',
-      focus: 'Current Focus: Deep Learning & Computer Vision',
-      leadership: 'Leading logistics for Software Engineering Student',
-      events: 'Association events and contributing to major hackathons.',
-      innovation: 'Building innovative solutions that bridge cutting-edge',
-      applications: 'technology and real-world applications.',
-      motto: '🚀 Always learning, always building, always innovating.'
+      education: 'Hey, I’m Mehdi Semmar, a Software Engineering student at the University of Ottawa, Canada. 🇨🇦',
+      specialization: 'I’m driven by the thrill of turning complex problems into elegant software solutions. Whether it’s AI/ML, full-stack development, or building tools for real-world applications, I aim to create impact with every line of code. 🚀',
+      outside: 'Outside of coding, I enjoy mentoring students, leading events for Software Engineering Student Association, and staying active through sports and music.',
+      connect: 'Always up for a conversation about tech, innovation, or the latest in AI, let’s connect! 💻',
     },
     footer: {
       built: 'Built with Vue.js | © 2025 Mehdi Semmar'
@@ -36,14 +32,10 @@ const messages = {
     terminal: {
       command: 'cat ~/quijesuis.txt',
       title: 'Ingénieur Logiciel | Spécialiste IA/ML',
-      education: 'Université d’Ottawa - MPC: 4.0/4.0',
-      specialization: 'Spécialisation: Développement Full-Stack & IA/ML',
-      focus: 'Focus Actuel: Apprentissage Profond & Vision par Ordinateur',
-      leadership: 'Direction de la logistique pour l’Association des Étudiants',
-      events: 'en Génie Logiciel et contribution aux hackathons majeurs.',
-      innovation: 'Création de solutions innovantes qui lient les technologies',
-      applications: 'de pointe aux applications du monde réel.',
-      motto: '🚀 Toujours apprendre, toujours construire, toujours innover.'
+      education:'Salut, je suis Mehdi Semmar, étudiant en Génie Logiciel à l’Université d’Ottawa, Canada. 🇨🇦', 
+      specialization: 'Je suis passionné par la transformation de problèmes complexes en solutions logicielles élégantes. De l’IA/ML au développement full-stack et aux outils pour le monde réel, je m’efforce de créer un impact à chaque ligne de code. 🚀',
+      outside: 'En dehors du codage, j’aime encadrer des étudiants, organiser des événements pour l’Association des Étudiants en Génie Logiciel et rester actif grâce au sport et à la musique.',
+      connect: 'Toujours partant pour discuter de tech, d’innovation ou des dernières avancées en IA, n’hésitez pas à me joindre! 💻', 
     },
     footer: {
       built: 'Construit avec Vue.js | © 2025 Mehdi Semmar'

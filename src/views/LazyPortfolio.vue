@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
+//import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import * as THREE from 'three'
 import Terminal3D from '../components/Terminal3DSimple.vue'
 import { experienceData, projectData } from '../data/portfolio'
 
-const router = useRouter()
+//const router = useRouter()
 const { t, locale } = useI18n()
 
 // Reactive state
@@ -168,7 +168,7 @@ const scrollToSection = (index: number) => {
   sectionElements.value[`section-${index}`]?.scrollIntoView({ behavior: 'smooth' })
 }
 
-const goToTerminal = () => router.push('/terminal-portfolio')
+//const goToTerminal = () => router.push('/terminal-portfolio')
 const toggleLanguage = () => locale.value = locale.value === 'en' ? 'fr' : 'en'
 const scrollToTerminalSection = () => document.querySelector('.about-section')?.scrollIntoView({ behavior: 'smooth' })
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -345,12 +345,12 @@ const cleanupHolographic = () => {
       <div class="nav-content">
         <div class="nav-left">
           <div class="nav-user-name" @click="scrollToTop">mehdi@portfolio</div>
-          <button @click="goToTerminal" class="nav-btn terminal-btn">
+         <!-- <button @click="goToTerminal" class="nav-btn terminal-btn">
             <span class="terminal-icon">></span>
             <span class="terminal-icon">_</span>
             <span class="terminal-text">{{ t('nav.terminal') }}</span>
-          </button>
-          <a href="https://drive.google.com/file/d/1yAeZgKOKwJ5VYsKCBAKyI-1YeKvt0BVP/view?usp=sharing" target="_blank" class="nav-btn">
+         </button> -->
+          <a href="https://drive.google.com/file/d/1JrU8KFuf08TUqRCJ4uShRZ3PCklILJcc/view?usp=sharing" target="_blank" class="nav-btn">
             {{ t('nav.resume') }}
           </a>
           <button @click="toggleLanguage" class="nav-btn">
@@ -500,10 +500,9 @@ const cleanupHolographic = () => {
           <span class="prompt">$</span> echo "Built with Vue.js | © 2025 Mehdi Semmar"
         </div>
         <div class="footer-links">
-          <a href="https://github.com/FtKuBo" target="_blank" class="social-link">GITHUB</a>
-          <a href="https://linkedin.com/in/mehdisemmar" target="_blank" class="social-link">LINKEDIN</a>
-          <a href="https://codewars.com/users/FtKuBo" target="_blank" class="social-link">CODEWARS</a>
           <a href="mailto:msemm031@uottawa.ca" class="social-link">EMAIL</a>
+          <a href="https://www.linkedin.com/in/mehdi-semmar-946a1b27b/" target="_blank" class="social-link">LINKEDIN</a>
+          <a href="https://github.com/FtKuBo" target="_blank" class="social-link">GITHUB</a>
         </div>
       </div>
     </footer>

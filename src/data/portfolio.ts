@@ -3,10 +3,10 @@ export const experienceData = [
     name: 'Raven Connected',
     period: 'SEP 2025 - DEC 2025',
     description: 'AI/ML Engineer developing intelligent surveillance systems and computer vision solutions. Working on deep learning models for real-time video analytics and automated threat detection using TensorFlow and PyTorch.',
-    image: 'https://imgs.search.brave.com/fwsmOfTPxHGUqygMdSOKjDjTom-RK-C3eAS1OTyGjZ0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/Z2V0cm8uY29tL2Nv/bXBhbmllcy83ZWNh/ODg0OC1lNDM2LTU0/MWYtYjhkNS05ZTAw/NGM4Yzc0OWMtMTc0/NjQ5NTQ1Mw',
+    image: 'https://imgs.search.brave.com/bWYBmApHtIm3O4QBHMDr5u0WduB1GKcFFPmpvMZBgK4/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4u/c2FuaXR5LmlvL2lt/YWdlcy81amt6eXRh/eS9wcm9kdWN0aW9u/LzY4NGE2NmJjN2Vi/ZjFmMDcwNGQwZjFj/MGI3NTA1ODA2M2Zl/YThjYjAtNjAweDYw/MC53ZWJwP3c9NjQw/Jmg9ODAwJnE9ODUm/YXV0bz1mb3JtYXQ',
     type: 'AI_ML_ENGINEER_INTERN',
     link: 'https://ravenconnected.com',
-    skills: ['Python', 'TensorFlow', 'PyTorch', 'Computer Vision', 'Deep Learning', 'AI/ML']
+    skills: ['Python', 'PyTorch', 'AWS', 'Computer Vision', 'Deep Learning']
   },
   {
     name: 'Versaterm',
@@ -15,34 +15,34 @@ export const experienceData = [
     image: 'https://imgs.search.brave.com/EZFUsOYfAdI2DxYn3g_aHpP-Yc47vwMhHrRkvogmi9M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5sYWJjb21wYXJl/LmNvbS9tLzUzL3Zl/bmRvci8xMDgwNDku/anBn',
     type: 'FULL_STACK_DEVELOPER_INTERN',
     link: 'https://versaterm.com',
-    skills: ['PostgreSQL', '4JS', 'Electron', 'Linux', 'JSON', 'Production']
+    skills: ['4JS', 'JavaScript', 'Electron.js', 'CSS3', 'PostgreSQL', 'Linux']
   },
   {
     name: 'Wouessi Digital',
     period: 'FEB 2025 - MAR 2025',
     description: 'Improved website visibility by implementing responsive blog page with pagination using React.js and Tailwind CSS. Migrated codebase to TypeScript and enhanced data flow across 3+ microservices with Express.js and MongoDB.',
-    image: 'https://imgs.search.brave.com/3LbSjAc7rvVJ8nu09kZycIRRHyLGH-qXiHi6Lq-__bk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zbWFy/dGhpcHBvLm9yZy93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8x/Mi93b3Vlc3Nzc3Mu/cG5n',
+    image: 'https://imgs.search.brave.com/GPrk8ivofBV6uIkE79B_606HN5pSrPCrCHvpf5Agq6c/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9yaWlw/ZW4tcGxhdGZvcm0y/LWNhLWNlbnRyYWwt/MS1wcm9kdWN0aW9u/LnMzLmNhLWNlbnRy/YWwtMS5hbWF6b25h/d3MuY29tL3VwbG9h/ZHMvY29tcGFueS81/MTQxL2F2YXRhci9s/YXJnZS03MGVjNzQx/ZTA4ODc4N2I3ZjUw/YjMxZGU4YzU0ZWRm/NC5wbmc',
     type: 'SOFTWARE_DEVELOPER_INTERN',
     link: 'https://wouessi.com',
-    skills: ['React.js', 'Tailwind CSS', 'TypeScript', 'Express.js', 'MongoDB']
+    skills: ['TypeScript', 'Express.js', 'React.js', 'Tailwind CSS', 'MongoDB']
   },
   {
     name: 'ISED Canada',
     period: 'JAN 2025 - APR 2025',
     description: 'Resolved 7+ critical frontend and backend bugs using JavaScript, LWC, Apex, and SOQL, improving web platform stability. Built CRM features and managed Salesforce admin tasks for 10,000+ users in agile environment.',
-    image: 'https://imgs.search.brave.com/HPAXn7LzT5LrOpS1d4sq2dn-VVsFM9BO0W7iJyOVrqE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/Y29oZXJlbnRjb21t/b25zLmNvbS8zMDB4/MjAwcGFkL29yZ2Fu/aXphdGlvbnMvb3Jn/YW5pemF0aW9uL2xv/Z28vY2Y4NmM1ZDEt/ZDAwMS00YThlLWI2/MTAtNmY4YWE4YTNm/YjU2LmpwZw',
+    image: 'https://imgs.search.brave.com/E32rYhfcHfUEsFCmot264XzwWAFvs3QEK-T2uiZ-yEA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/Y29oZXJlbnRjb21t/b25zLmNvbS8zMDB4/MjAwcGFkL29yZ2Fu/aXphdGlvbnMvb3Jn/YW5pemF0aW9uL2xv/Z28vY2Y4NmM1ZDEt/ZDAwMS00YThlLWI2/MTAtNmY4YWE4YTNm/YjU2LmpwZw',
     type: 'SALESFORCE_DEVELOPER_INTERN',
     link: 'https://ised-isde.canada.ca',
-    skills: ['JavaScript', 'LWC', 'Apex', 'SOQL', 'Salesforce', 'CRM']
+    skills: ['JavaScript', 'Salesforce', 'LWC', 'Apex', 'SOQL']
   },
   {
     name: 'Shared Services Canada',
     period: 'JUL 2024 - AUG 2024',
     description: 'Cut data processing time by 70% by automating financial reconciliation in Excel using VB.NET. Created detailed documentation and demo video, presenting to 30+ stakeholders. Audited high-value invoices, identifying 10K+ billing discrepancies.',
-    image: 'https://imgs.search.brave.com/fm6UoB4eKGpQ1S12OJejCK8DDvmI73DlaTIhfGU31iU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9kMnE3/OWl1N3k3NDhqei5j/bG91ZGZyb250Lm5l/dC9zL19zcXVhcmVs/b2dvLzk2eDk2L2Yx/OGMzYzUzZjkzNzdi/YmMzNDI2ZDM2YWM0/ZTFiNmI0',
+    image: 'https://imgs.search.brave.com/hTUK2BEbwF9PwFNn6IHm296eDUvo57MKfm1bLVO3HLw/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/Y2FuYWRhLmNhL2Nv/bnRlbnQvZGFtL3Nz/Yy1zcGMvaW1hZ2Vz/L3doYXQtd2UtZG8v/Y29ycG9yYXRlLXZp/ZGVvLWVuLmpwZw',
     type: 'DATA_ANALYST_INTERN',
     link: 'https://ssc-spc.gc.ca',
-    skills: ['VB.NET', 'Excel', 'Automation', 'Data Analysis', 'Financial Systems']
+    skills: ['VB.NET', 'Excel', 'Automation', 'Data Analysis', 'Financial Auditing']
   }
 ]
 

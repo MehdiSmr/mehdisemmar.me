@@ -31,14 +31,9 @@
           <div class="output-line highlight slide-in-left" style="animation-delay: 0.5s;">{{ t('terminal.title') }}</div>
           <div class="output-line slide-in-left" style="animation-delay: 0.7s;">{{ t('terminal.education') }}</div>
           <div class="output-line slide-in-left" style="animation-delay: 0.9s;">{{ t('terminal.specialization') }}</div>
-          <div class="output-line slide-in-left" style="animation-delay: 1.1s;">{{ t('terminal.focus') }}</div>
-          <div class="output-line slide-in-left" style="animation-delay: 1.3s;"></div>
-          <div class="output-line slide-in-left" style="animation-delay: 1.5s;">{{ t('terminal.leadership') }}</div>
-          <div class="output-line slide-in-left" style="animation-delay: 1.7s;">{{ t('terminal.events') }}</div>
-          <div class="output-line slide-in-left" style="animation-delay: 1.9s;">{{ t('terminal.innovation') }}</div>
-          <div class="output-line slide-in-left" style="animation-delay: 2.1s;">{{ t('terminal.applications') }}</div>
+          <div class="output-line slide-in-left" style="animation-delay: 1.1s;">{{ t('terminal.outside') }}</div>
+          <div class="output-line slide-in-left" style="animation-delay: 1.5s;">{{ t('terminal.connect') }}</div>
           <div class="output-line slide-in-left" style="animation-delay: 2.3s;"></div>
-          <div class="output-line slide-in-left" style="animation-delay: 2.5s;">{{ t('terminal.motto') }}</div>
         </div>
         
         <div class="terminal-line command-line slide-in-left" style="animation-delay: 2.7s;">
