@@ -18,6 +18,10 @@ const router = createRouter({
       path: '/terminal-portfolio',
       name: 'terminal-portfolio',
       component: TerminalPortfolio
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/'
     }
   ]
 })
