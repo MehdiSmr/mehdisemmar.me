@@ -21,5 +21,4 @@ fix shortcut help description it is ctrl+h not ctrl+H
 
 
 ------- lazy portfolio
--update the links
--update actual content of termianl and cards
+-add a router fallback to avoid people going to other pages or non existing pages

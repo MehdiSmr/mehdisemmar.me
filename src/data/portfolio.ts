@@ -32,7 +32,7 @@ export const experienceData = [
     description: 'Resolved 7+ critical frontend and backend bugs using JavaScript, LWC, Apex, and SOQL, improving web platform stability. Built CRM features and managed Salesforce admin tasks for 10,000+ users in agile environment.',
     image: 'https://imgs.search.brave.com/E32rYhfcHfUEsFCmot264XzwWAFvs3QEK-T2uiZ-yEA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/Y29oZXJlbnRjb21t/b25zLmNvbS8zMDB4/MjAwcGFkL29yZ2Fu/aXphdGlvbnMvb3Jn/YW5pemF0aW9uL2xv/Z28vY2Y4NmM1ZDEt/ZDAwMS00YThlLWI2/MTAtNmY4YWE4YTNm/YjU2LmpwZw',
     type: 'SALESFORCE_DEVELOPER_INTERN',
-    link: 'https://ised-isde.canada.ca',
+    link: 'https://ised-isde.canada.ca/site/ised/en',
     skills: ['JavaScript', 'Salesforce', 'LWC', 'Apex', 'SOQL']
   },
   {
@@ -41,7 +41,7 @@ export const experienceData = [
     description: 'Cut data processing time by 70% by automating financial reconciliation in Excel using VB.NET. Created detailed documentation and demo video, presenting to 30+ stakeholders. Audited high-value invoices, identifying 10K+ billing discrepancies.',
     image: 'https://imgs.search.brave.com/hTUK2BEbwF9PwFNn6IHm296eDUvo57MKfm1bLVO3HLw/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/Y2FuYWRhLmNhL2Nv/bnRlbnQvZGFtL3Nz/Yy1zcGMvaW1hZ2Vz/L3doYXQtd2UtZG8v/Y29ycG9yYXRlLXZp/ZGVvLWVuLmpwZw',
     type: 'DATA_ANALYST_INTERN',
-    link: 'https://ssc-spc.gc.ca',
+    link: 'https://www.canada.ca/en/shared-services.html',
     skills: ['VB.NET', 'Excel', 'Automation', 'Data Analysis', 'Financial Auditing']
   }
 ]
@@ -49,41 +49,65 @@ export const experienceData = [
 export const projectData = [
   {
     name: 'RZO Sports',
-    period: '2024 - ONGOING',
-    description: 'Co-founded RZO Sports, a two-sided platform for amateur athletes and sports venues. Placed top 2 out of 40+ candidates in pitch competition. Leading MVP development with Spring Boot, React.js, MySQL, Docker, and Nginx using JWT/OAuth 2.0.',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&auto=format',
-    type: 'STARTUP_PLATFORM',
-    link: 'https://github.com/FtKuBo/rzo-sports',
-    skills: ['Spring Boot', 'React.js', 'MySQL', 'Docker', 'Nginx', 'JWT/OAuth']
+    period: '2025 - ONGOING',
+    image: './assets/images/RZO SPORTS - Logo.png',
+    type: 'UBEREATS_FOR_SPORT_VENUES',
+    link: 'https://rzo-sports.com/',
+    skills: ['Java', 'JavaScript', 'Spring Boot', 'React.js', 'MySQL', 'Docker', 'Nginx', 'AWS']
   },
   {
     name: 'DollaResume',
-    period: '2024',
-    description: 'Developed AI-powered resume generator using JavaScript, React.js, and Gadget. Integrated PDF generation ensuring 98% compatibility in ATS tests for optimized resume formatting. Won 300 USD cash prize in Gadget Challenge.',
-    image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400&h=300&fit=crop&auto=format',
+    period: '2025',
+    image: './assets/images/dollaresume.png',
     type: 'AI_RESUME_GENERATOR',
     link: 'https://github.com/FtKuBo/dollaresume',
-    skills: ['JavaScript', 'React.js', 'Gadget', 'PDF Generation', 'AI']
+    skills: ['JavaScript', 'React.js', 'Gadget', 'OpenAI API', 'Tailwind CSS']
+  },
+  {
+    name: 'FindMyBook',
+    period: '2024',
+    image: './assets/images/findmybook.png',
+    type: 'CHROME_EXTENSION',
+    link: 'https://github.com/FtKuBo/FindMyBook',
+    skills: ['JavaScript', 'HTML5', 'CSS3', 'Web Scraping']
   },
   {
     name: 'SeekAndFind',
+    period: '2025',
+    image: './assets/images/seekandfind.png',
+    type: 'LOST_ITEM_FINDER',
+    link: 'https://github.com/FtKuBo/SeekAndFind?tab=readme-ov-file',
+    skills: ['Java', 'JavaScript', 'Spring Boot', 'React.js', 'Solace PubSub+', 'Docker']
+  }, {
+    name: 'HeavenRun',
     period: '2024',
-    description: 'Built event-driven web application connecting uOttawa students who lost and found items using Solace PubSub+ message broker, containerized Spring Boot API, and React.js frontend. Developed for uOttaHack 7 Solace challenge.',
-    image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop&auto=format',
-    type: 'EVENT_DRIVEN_PLATFORM',
-    link: 'https://github.com/FtKuBo/seekandfind',
-    skills: ['Spring Boot', 'React.js', 'Solace PubSub+', 'Docker', 'Event-Driven']
-  },
-  {
-    name: 'Portfolio Website',
-    period: '2024 - ONGOING',
-    description: 'Dual-interface portfolio website featuring traditional scrollable view and terminal-based CLI experience. Built with Vue.js, TypeScript, and modern web technologies with responsive design and dynamic animations.',
-    image: 'https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?w=400&h=300&fit=crop&auto=format',
-    type: 'PERSONAL_PORTFOLIO',
-    link: 'https://github.com/FtKuBo/mehdisemmar.me',
-    skills: ['Vue.js', 'TypeScript', 'CSS3', 'Responsive Design', 'Animations']
+    image: './assets/images/heavenrun.png',
+    type: 'RUNNING_MOBILE_APP',
+    link: 'https://github.com/FtKuBo/HEAVENRUN',
+    skills: ['Python', 'Dart', 'Django', 'Flutter', 'PostgreSQL', 'Docker', 'GCP']
+  }, {
+    name: 'MedOS',
+    period: '2024',
+    image: './assets/images/medos.png',
+    type: 'OPERATING_SYSTEM',
+    link: 'https://github.com/FtKuBo/MEDOS',
+    skills: ['C', 'NASM', 'GRUB']
+  }, {
+    name: 'QuadtreeCompression',
+    period: '2024',
+    image: './assets/images/qc.png',
+    type: 'IMAGE_COMPRESSION_ALGORITHM',
+    link: 'https://github.com/FtKuBo/QuadtreeCompression',
+    skills: ['Python']
+  }, {
+    name: 'KingKong',
+    period: '2024',
+    image: './assets/images/kingkong.png',
+    type: '2D_GAME',
+    link: 'https://github.com/FtKuBo/KINGKONG-GAME',
+    skills: ['Python', 'Pygame']    
   }
-]
+ ]
 
 export const skillsData = [
   {
