@@ -18,7 +18,7 @@ export const experienceData = [
     skills: ['4JS', 'JavaScript', 'Electron.js', 'CSS3', 'PostgreSQL', 'Linux']
   },
   {
-    name: 'Wouessi Digital',
+    name: 'Wouessi Inc.',
     period: 'FEB 2025 - MAR 2025',
     description: 'Improved website visibility by implementing responsive blog page with pagination using React.js and Tailwind CSS. Migrated codebase to TypeScript and enhanced data flow across 3+ microservices with Express.js and MongoDB.',
     image: 'https://imgs.search.brave.com/GPrk8ivofBV6uIkE79B_606HN5pSrPCrCHvpf5Agq6c/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9yaWlw/ZW4tcGxhdGZvcm0y/LWNhLWNlbnRyYWwt/MS1wcm9kdWN0aW9u/LnMzLmNhLWNlbnRy/YWwtMS5hbWF6b25h/d3MuY29tL3VwbG9h/ZHMvY29tcGFueS81/MTQxL2F2YXRhci9s/YXJnZS03MGVjNzQx/ZTA4ODc4N2I3ZjUw/YjMxZGU4YzU0ZWRm/NC5wbmc',
