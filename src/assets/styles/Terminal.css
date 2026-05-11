@@ -163,11 +163,35 @@
   line-height: 1.4;
   opacity: 0.8;
   text-shadow: 0 0 3px rgba(64, 224, 208, 0.3);
+  font-family: 'Courier New', monospace;
+  font-variant-ligatures: none;
+  width: min(68ch, 100%);
 }
 
 .banner-line {
   margin: 2px 0;
   text-align: left;
+}
+
+.banner-edge {
+  white-space: pre;
+  overflow: hidden;
+}
+
+.banner-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: 1ch;
+}
+
+.banner-content {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.banner-side {
+  line-height: 1;
 }
 
 /* Command Line */
@@ -232,6 +256,26 @@
   white-space: pre-wrap;
   text-shadow: 0 0 2px rgba(224, 247, 255, 0.2);
   text-align: left;
+}
+
+.command-output .ls-output {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding-bottom: 2px;
+}
+
+.command-output .ls-entry {
+  display: inline-block;
+  margin-right: 30px;
+  white-space: nowrap;
+  color: #d7f4ff;
+}
+
+.command-output .ls-entry:last-child {
+  margin-right: 0;
 }
 
 /* Terminal Footer */

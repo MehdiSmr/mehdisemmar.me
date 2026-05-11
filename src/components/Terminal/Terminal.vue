@@ -1,15 +1,25 @@
 <script lang="ts" setup>
 import { onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { executeCommand, currentDirectory } from './CLI'
+import { executeCommand, autocompleteInput, currentDirectory } from './CLI'
+import { playSound, toggleSoundEnabled } from '../../utils/sound'
 
 const router = useRouter()
 
 // Keyboard shortcut handler
 const handleKeyboardShortcut = (e: KeyboardEvent) => {
-  if (e.ctrlKey && e.key === 'h') {
+  if (e.ctrlKey && e.key.toLowerCase() === 'h') {
     e.preventDefault()
     router.push('/')
+    return
+  }
+
+  if (e.ctrlKey && e.key.toLowerCase() === 'm') {
+    e.preventDefault()
+    const enabled = toggleSoundEnabled()
+    if (enabled) {
+      playSound('terminalSuccess', 0.32)
+    }
   }
 }
 
@@ -17,6 +27,11 @@ onMounted(() => {
   // Add keyboard shortcut listener
   window.addEventListener('keydown', handleKeyboardShortcut)
   
+  const OPEN_URL_PREFIX = '__OPEN_URL__:'
+  const EXIT_SIGNAL = '__EXIT__'
+  let pendingExternalUrl: string | null = null
+  let pendingExit = false
+
   var cmdout : string = ""
   var terminalInput : HTMLInputElement = document.getElementById('terminal-input') as HTMLInputElement
   var output : HTMLSpanElement = document.getElementById('cmd-output') as HTMLSpanElement
@@ -26,7 +41,7 @@ onMounted(() => {
   const terminalHeight = terminal.scrollHeight
   line.querySelector(".directory-info")!.innerHTML = '<Right>'+ currentDirectory.value + '&nbsp';
  
- function newLine(){
+function newLine(){
     // creating a new line
     const newLine : HTMLElement = line.cloneNode(true) as HTMLElement;
     newLine.querySelector(".directory-info")!.innerHTML= '<Right>'+ currentDirectory.value + '&nbsp';
@@ -61,14 +76,45 @@ onMounted(() => {
               secondChild.remove()
             }
           }
-          console.log(terminal.scrollHeight)
+
+          if (pendingExternalUrl) {
+            window.open(pendingExternalUrl as string, '_blank', 'noopener,noreferrer')
+            pendingExternalUrl = null
+          }
+
+          if (pendingExit) {
+            router.push('/')
+            pendingExit = false
+          }
         }
       })
       
-      terminalInput.addEventListener('keydown', (e) => {
+      terminalInput.addEventListener('keydown', async (e) => {
+        if (e.key === 'Tab') {
+          e.preventDefault()
+          const completed = autocompleteInput(terminalInput!.value)
+          terminalInput!.value = completed
+          typer!.innerHTML = completed
+          return
+        }
+
         if (e.key === 'Enter') {
           if (terminalInput!.value !== "") {
-            cmdout = executeCommand(terminalInput!.value)
+            cmdout = await executeCommand(terminalInput!.value)
+            if (cmdout.startsWith(OPEN_URL_PREFIX)) {
+              pendingExternalUrl = cmdout.slice(OPEN_URL_PREFIX.length)
+              output!.innerHTML = `opening ${pendingExternalUrl}`
+              playSound('terminalSuccess', 0.3)
+              return
+            }
+
+            if (cmdout === EXIT_SIGNAL) {
+              pendingExit = true
+              output!.innerHTML = 'returning to portfolio...'
+              playSound('terminalSuccess', 0.28)
+              return
+            }
+
             switch (cmdout) {
               case "clear":
                 terminal!.innerHTML = ''
@@ -76,12 +122,21 @@ onMounted(() => {
                 break
               case "false":
                 output!.innerHTML = "command not valid"
+                playSound('terminalError', 0.3)
                 break
               case "":
               case "true":
+                playSound('terminalSuccess', 0.18)
                 break
               default:
                 output!.innerHTML = cmdout
+                if (cmdout.startsWith('command not found') || cmdout.includes('could not find') || cmdout.includes('is not a directory')) {
+                  playSound('terminalError', 0.3)
+                } else if (cmdout === 'hologram closed') {
+                  // keep modal-close hologram SFX clean, no overlapping terminal sounds
+                } else {
+                  playSound('terminalSuccess', 0.2)
+                }
                 break
             }
           }
@@ -120,12 +175,28 @@ onUnmounted(() => {
       
       <!-- Welcome Message -->
       <div class="welcome-banner">
-        <div class="banner-line">╔═══════════════════════════════════════════════════════════════╗</div>
-        <div class="banner-line">║  STARSHIP NAVIGATION SYSTEM - AUTHENTICATED ACCESS GRANTED   ║</div>
-        <div class="banner-line">║  User: visitors@mehdisemmar.me | Clearance Level: VISITOR     ║</div>
-        <div class="banner-line">║  System Status: OPERATIONAL | All systems nominal            ║</div>
-        <div class="banner-line">║  Type 'help' for commands | Press CTRL+H for portfolio       ║</div>
-        <div class="banner-line">╚═══════════════════════════════════════════════════════════════╝</div>
+        <div class="banner-line banner-edge">╔══════════════════════════════════════════════════════════════════╗</div>
+        <div class="banner-line banner-row">
+          <span class="banner-side">║</span>
+          <span class="banner-content">STARSHIP NAVIGATION SYSTEM    -    AUTHENTICATED ACCESS GRANTED</span>
+          <span class="banner-side">║</span>
+        </div>
+        <div class="banner-line banner-row">
+          <span class="banner-side">║</span>
+          <span class="banner-content">User: visitors@mehdisemmar.me -    Clearance Level: VISITOR</span>
+          <span class="banner-side">║</span>
+        </div>
+        <div class="banner-line banner-row">
+          <span class="banner-side">║</span>
+          <span class="banner-content">System Status: OPERATIONAL    -    All systems nominal</span>
+          <span class="banner-side">║</span>
+        </div>
+        <div class="banner-line banner-row">
+          <span class="banner-side">║</span>
+          <span class="banner-content">Type 'help' for commands      -    Press Ctrl+H for portfolio</span>
+          <span class="banner-side">║</span>
+        </div>
+        <div class="banner-line banner-edge">╚══════════════════════════════════════════════════════════════════╝</div>
       </div>
 
       <div id="line" class="command-line">

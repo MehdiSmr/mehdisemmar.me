@@ -1,86 +1,83 @@
 <script lang="ts" setup>
+import { onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import Terminal from '../components/Terminal/Terminal.vue'
 import Hologramme from '../components/Hologramme/Hologramme.vue'
-import Assistant from '../components/Assistant/Assistant.vue'
-import Bubble from '../components/Assistant/Bubble.vue'
-import { updateText, showBubble, hideBubble } from '../components/Assistant/Assistant.ts'
+import { isTerminalExperienceAllowed } from '../utils/device'
 import '../style.css'
 
-var mouseWarningDisplayed : boolean = false;
+const router = useRouter()
+const enforceTerminalAvailability = () => {
+  if (!isTerminalExperienceAllowed()) {
+    router.replace('/')
+  }
+}
 
-setTimeout(() => {
-    addEventListener("mousemove", (event) => {
-        if (!mouseWarningDisplayed) {
-            showBubble();
-            handleMouseMove(event);
-       } else {
-            removeEventListener("mousemove", handleMouseMove);
-        } 
-    });
-}, 5000);
+onMounted(() => {
+  enforceTerminalAvailability()
+  window.addEventListener('resize', enforceTerminalAvailability)
+})
 
-const handleMouseMove = (_event: MouseEvent) => {
-    mouseWarningDisplayed = true;
-    updateText("This application is designed to be used without a mouse. Please use keyboard controls.");
-    setTimeout(() => {
-        updateText("");
-        hideBubble();
-    }, 5000);
-};
-
+onUnmounted(() => {
+  window.removeEventListener('resize', enforceTerminalAvailability)
+})
 </script>
 
 <template>
   <div id="container">
-    <video autoplay loop muted playsinline class="background-video">
-      <source src="../assets/bg.mp4" type="video/mp4"/>
-    </video>
-    
+    <div class="matrix-bg"></div>
     <div class="terminal-container">
       <Terminal/>
     </div>
     <div class="hologramme-container">
       <Hologramme />
     </div>
-    <div class="assistant-container">
-      <Assistant />
-    </div>
-    <div class="bubble-container">
-      <Bubble />
-    </div>
   </div>
 </template>
 
 <style scoped>
-.background-video {
+.matrix-bg {
   position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%; 
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -1;
-  object-fit: cover;
-  filter: blur(2px) brightness(0.8);
-  opacity: 0.9;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0a0f14;
+  z-index: -2;
+  overflow: hidden;
 }
 
-@media screen and (max-width: 1024px) {
-  .background-video {
-    width: 100%;
-    height: 100%;
-    object-position: center;
-  }
+.matrix-bg::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  left: 0;
+  right: 0;
+  bottom: -120px;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 8px,
+      rgba(64, 224, 208, 0.02) 8px,
+      rgba(64, 224, 208, 0.02) 9px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 8px,
+      rgba(64, 224, 208, 0.02) 8px,
+      rgba(64, 224, 208, 0.02) 9px
+    );
+  animation: matrix-rain 30s linear infinite;
+}
+
+@keyframes matrix-rain {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100px); }
 }
 
 @media screen and (max-width: 768px) {
-  .background-video,
-  video {
-    filter: blur(1px) brightness(0.7);
-    object-position: center;
-  }
-  
   .terminal-container,
   .hologramme-container {
     width: 100%;
@@ -124,11 +121,4 @@ const handleMouseMove = (_event: MouseEvent) => {
   opacity: 0;
 }
 
-.bubble-container {
-  z-index: 2;
-}
-
-.assistant-container {
-  z-index: 1;
-}
 </style>

@@ -7,7 +7,16 @@ const messages = {
       resume: 'RESUME',
       about: 'ABOUT',
       experience: 'EXPERIENCE',
-      projects: 'PROJECTS'
+      projects: 'PROJECTS',
+      recommendations: 'RECOMMENDATIONS'
+    },
+    hero: {
+      role: 'SOFTWARE_ENGINEER',
+      statusLabel: 'STATUS:',
+      statusValue: 'ONLINE',
+      locationLabel: 'LOCATION:',
+      gpaLabel: 'GPA:',
+      cta: 'EXPLORE_PORTFOLIO'
     },
     terminal: {
       command: 'cat ~/whoami.txt',
@@ -27,7 +36,16 @@ const messages = {
       resume: 'CV',
       about: 'À PROPOS',
       experience: 'EXPÉRIENCE',
-      projects: 'PROJETS'
+      projects: 'PROJETS',
+      recommendations: 'RECOMMANDATIONS'
+    },
+    hero: {
+      role: 'INGÉNIEUR_LOGICIEL',
+      statusLabel: 'STATUT :',
+      statusValue: 'EN LIGNE',
+      locationLabel: 'LOCALISATION :',
+      gpaLabel: 'MPC :',
+      cta: 'EXPLORER_PORTFOLIO'
     },
     terminal: {
       command: 'cat ~/quijesuis.txt',
