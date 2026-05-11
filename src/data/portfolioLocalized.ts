@@ -10,6 +10,7 @@ type SupportedLocale = 'en' | 'fr'
 const typeLabels: Record<string, { en: string; fr: string }> = {
   AI_ML_ENGINEER_INTERN: { en: 'AI/ML Engineer Intern', fr: 'Stagiaire Ingénieur IA/ML' },
   FULL_STACK_DEVELOPER_INTERN: { en: 'Full-Stack Developer Intern', fr: 'Stagiaire Développeur Full-Stack' },
+  SOFTWARE_ENGINEER_INTERN: { en: 'Software Engineer Intern', fr: 'Stagiaire Ingénieur Logiciel' },
   SOFTWARE_DEVELOPER_INTERN: { en: 'Software Developer Intern', fr: 'Stagiaire Développeur Logiciel' },
   SALESFORCE_DEVELOPER_INTERN: { en: 'Salesforce Developer Intern', fr: 'Stagiaire Développeur Salesforce' },
   DATA_ANALYST_INTERN: { en: 'Data Analyst Intern', fr: 'Stagiaire Analyste de Données' },
@@ -29,6 +30,7 @@ const typeLabels: Record<string, { en: string; fr: string }> = {
 }
 
 const frExperienceDescriptions: Record<string, string> = {
+  'Vertex Inc.': 'Stagiaire ingénieur logiciel (poste entrant, été 2026).',
   'Raven Connected': 'Prévision du volume de tas de feuilles à partir d’images avec SAM3/SAM3D, contribuant à conclure un contrat client à 4 chiffres. Génération de données synthétiques et entraînement d’un modèle de segmentation sur des millions d’images Raven. Conception d’un pipeline IA intégrant segmentation, génération 3D (VGGT), Gaussian splatting et estimation de hauteur avec Depth Pro pour corriger la position 3D de Raven en remplacement d’une calibration gyroscope.',
   Versaterm: 'Conception d’un outil dynamique de récupération d’enregistrements avec PostgreSQL et une interface 4JS pour l’intégration VRMS. Développement d’un parseur de réponses NCIC sous Linux (Vim, PuTTY) avec vues de colonnes dynamiques, sauvegardes et import/export CSV, déployé en production. Création d’une plateforme Electron pour configurer les formulaires VMobile utilisés par les agents.',
   'Wouessi Inc.': 'Amélioration de la visibilité du site en implémentant une page blog responsive avec pagination en React.js et Tailwind CSS. Migration du code vers TypeScript et amélioration des flux de données sur plus de 3 microservices avec Express.js et MongoDB.',

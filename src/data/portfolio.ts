@@ -1,5 +1,14 @@
 export const experienceData = [
   {
+    name: 'Vertex Inc.',
+    period: 'MAY 2026 - SEP 2026',
+    description: 'Incoming Software Engineer Intern.',
+    image: '/assets/images/vertex.png',
+    type: 'SOFTWARE_ENGINEER_INTERN',
+    link: 'https://www.vertexinc.com/',
+    skills: []
+  },
+  {
     name: 'Raven Connected',
     period: 'SEP 2025 - DEC 2025',
     description: 'Forecasted leaf pile volumes from images using SAM3/SAM3D, helping close a 4-figure client contract. Generated synthetic data and trained a segmentation model on millions of Raven frames. Built an AI pipeline integrating segmentation, VGGT-based 3D generation, Gaussian splatting, and Depth Pro height estimation to correct Raven\'s 3D position as a gyroscope-calibration substitute.',
