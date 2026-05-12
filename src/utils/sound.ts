@@ -19,8 +19,8 @@ const SOUND_SOURCES: Record<SoundKey, string> = {
 
 const hasWindow = typeof window !== 'undefined'
 const initialEnabled = hasWindow
-  ? window.localStorage.getItem(SOUND_STORAGE_KEY) !== 'false'
-  : true
+  ? window.localStorage.getItem(SOUND_STORAGE_KEY) === 'true'
+  : false
 
 const soundEnabled = ref(initialEnabled)
 const audioCache = new Map<SoundKey, HTMLAudioElement>()
