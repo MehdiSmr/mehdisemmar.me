@@ -234,7 +234,7 @@ select {
 }
 
 .nav-btn:hover {
-  transform: translateY(-2px);
+  transform: none;
   box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
   cursor: pointer !important;
 }
@@ -454,7 +454,7 @@ select {
 }
 
 .home-btn:hover {
-  transform: translateY(-2px);
+  transform: none;
   box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
 }
 
@@ -470,7 +470,7 @@ select {
   transform: translateX(-3px);
 }
 
-/* Ensure all navigation elements have pointer cursor */
+/* Ensure all interactive elements keep a stable pointer cursor */
 .home-btn,
 .home-btn *,
 .nav-links a,
@@ -478,7 +478,13 @@ select {
 .cta-button *,
 .nav-btn,
 .nav-btn *,
-.nav-user-name {
+.nav-user-name,
+.modern-card,
+.modern-card *,
+.recommendation-card,
+.recommendation-card *,
+.hover-action-btn,
+.hover-action-btn * {
   cursor: pointer !important;
 }
 
@@ -660,7 +666,7 @@ select {
 }
 
 .cta-button:hover {
-  transform: translateY(-2px);
+  transform: none;
   box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
 }
 
@@ -746,7 +752,7 @@ select {
 }
 
 .modern-card:hover {
-  transform: translateY(-8px) rotateX(6deg) rotateY(-6deg);
+  transform: none;
   box-shadow: 
     0 15px 40px rgba(64, 224, 208, 0.3),
     0 0 20px rgba(0, 255, 136, 0.2);
@@ -2851,7 +2857,7 @@ select {
 
 
 .recommendation-card:hover {
-  transform: translateY(-4px);
+  transform: none;
   box-shadow: 0 12px 30px rgba(64, 224, 208, 0.15);
   border-color: rgba(0, 255, 136, 0.6);
 }

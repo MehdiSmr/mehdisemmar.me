@@ -19,28 +19,87 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onUnmounted, ref } from 'vue'
 
 const imageSrc = ref('/me.jpeg')
 const rotationY = ref(0)
 const dragging = ref(false)
 const lastX = ref(0)
+const activePointerId = ref<number | null>(null)
+const angularVelocity = ref(0)
+
+let inertiaFrameId: number | null = null
+
+const ROTATION_SENSITIVITY = 0.7
+const INERTIA_DAMPING = 0.94
+const MIN_INERTIA_SPEED = 0.02
+
+const stopInertia = () => {
+  if (inertiaFrameId) {
+    cancelAnimationFrame(inertiaFrameId)
+    inertiaFrameId = null
+  }
+}
+
+const startInertia = () => {
+  stopInertia()
+
+  const animate = () => {
+    if (dragging.value) return
+
+    if (Math.abs(angularVelocity.value) < MIN_INERTIA_SPEED) {
+      angularVelocity.value = 0
+      inertiaFrameId = null
+      return
+    }
+
+    rotationY.value += angularVelocity.value
+    angularVelocity.value *= INERTIA_DAMPING
+    inertiaFrameId = requestAnimationFrame(animate)
+  }
+
+  inertiaFrameId = requestAnimationFrame(animate)
+}
 
 const onPointerDown = (event: PointerEvent) => {
+  const element = event.currentTarget as HTMLElement | null
+
   dragging.value = true
+  activePointerId.value = event.pointerId
   lastX.value = event.clientX
+  angularVelocity.value = 0
+  stopInertia()
+
+  element?.setPointerCapture?.(event.pointerId)
 }
 
 const onPointerMove = (event: PointerEvent) => {
-  if (!dragging.value) return
+  if (!dragging.value || activePointerId.value !== event.pointerId) return
+
   const delta = event.clientX - lastX.value
   lastX.value = event.clientX
-  rotationY.value += delta * 0.7
+
+  const step = delta * ROTATION_SENSITIVITY
+  rotationY.value += step
+  angularVelocity.value = step
+
+  event.preventDefault()
 }
 
-const onPointerUp = () => {
+const onPointerUp = (event: PointerEvent) => {
+  if (activePointerId.value !== event.pointerId) return
+
+  const element = event.currentTarget as HTMLElement | null
+  element?.releasePointerCapture?.(event.pointerId)
+
   dragging.value = false
+  activePointerId.value = null
+  startInertia()
 }
+
+onUnmounted(() => {
+  stopInertia()
+})
 </script>
 
 <style scoped>
@@ -52,7 +111,7 @@ const onPointerUp = () => {
   align-items: center;
   gap: 0.8rem;
   user-select: none;
-  touch-action: pan-y;
+  touch-action: none;
   animation: floatScene 4s ease-in-out infinite;
 }
 
@@ -76,7 +135,8 @@ const onPointerUp = () => {
   border: 1px solid rgba(64, 224, 208, 0.5);
   background: linear-gradient(160deg, rgba(10, 16, 20, 0.8), rgba(5, 8, 12, 0.92));
   transform-style: preserve-3d;
-  transition: transform 0.06s linear;
+  transition: none;
+  will-change: transform;
   box-shadow:
     0 12px 24px rgba(0, 0, 0, 0.35),
     0 0 28px rgba(64, 224, 208, 0.25),
