@@ -305,11 +305,36 @@ KEYBOARD SHORTCUTS:
 
     case 'aboutme':
       if (hasArgument) return 'aboutme takes no arguments'
-      return 'Software Engineering student at the University of Ottawa, focused on building interactive products.'
+      return `Hey, I’m Mehdi Semmar 👋
+
+I’m a BASc Software Engineering student (Engineering Management & Entrepreneurship) in Co-op at the University of Ottawa.
+CGPA: 3.7/4.0 | x6 Dean’s List | TD Green Scholarship recipient.
+
+Outside of classes and coding, I love building community:
+- x4 hackathon participant
+- uoTutorat math tutor
+- Active in clubs/associations: Tennis, Chess, uOttaHack, and SESA
+
+I’m passionate about turning ideas into useful products, mentoring others, and combining software + entrepreneurship to create real-world impact.`
 
     case 'skills':
       if (hasArgument) return 'skills takes no arguments'
-      return 'Skills: TypeScript, Vue, JavaScript, Three.js, backend fundamentals, and problem solving.'
+      return `TECHNICAL STACK
+
+Languages:
+- Python, Java, JavaScript, TypeScript, C/C++, Lua, SQL, Bash, HTML/CSS, 4JS, VB.NET
+
+Frameworks & Libraries:
+- PyTorch, TensorFlow, React, Vue, Node.js, Express, Electron, Spring Boot, Django, Flutter
+
+Cloud / DevOps / Tools:
+- AWS, GCP, Docker, Linux, Git, Vim/Neovim, Postman, Jupyter, Excel
+
+Specialized:
+- Computer Vision, Machine Learning, Neural Networks, Salesforce (LWC, Apex, SOQL), Process Automation
+
+Collaboration:
+- Agile workflows, Jira/ClickUp, mentoring, teamwork`
 
     case 'cd': {
       const resolvedDirectory = resolveDirectoryPath(argument || '.', currentDirectory.value)
