@@ -470,7 +470,7 @@ select {
   transform: translateX(-3px);
 }
 
-/* Ensure all interactive elements keep a stable pointer cursor */
+/* Ensure interactive controls keep a stable pointer cursor */
 .home-btn,
 .home-btn *,
 .nav-links a,
@@ -479,12 +479,22 @@ select {
 .nav-btn,
 .nav-btn *,
 .nav-user-name,
-.modern-card,
-.modern-card *,
 .recommendation-card,
 .recommendation-card *,
 .hover-action-btn,
 .hover-action-btn * {
+  cursor: pointer !important;
+}
+
+/* Experience/Project cards are not clickable as a whole */
+.modern-card,
+.modern-card * {
+  cursor: auto !important;
+}
+
+/* Only explicit action controls inside cards should be clickable */
+.modern-card .hover-action-btn,
+.modern-card .hover-action-btn * {
   cursor: pointer !important;
 }
 
