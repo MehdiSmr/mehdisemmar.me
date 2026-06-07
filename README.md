@@ -1,5 +1,7 @@
 # mehdisemmar.me
 
+Live at [mehdisemmar.me](https://mehdisemmar.me)
+
 Source for my personal portfolio site. It ships two ways to look at the same content:
 
 - A standard scrolling portfolio with experience, projects, recommendations and a 3D terminal teaser.
@@ -65,4 +67,6 @@ The site is served as static assets from `dist/`. Cloudflare configuration is in
 
 ## License
 
-No license is granted for reuse. The code is published for reference; the content, images and personal information are mine.
+The source code is released under the [MIT License](LICENSE).
+
+The license covers the code only. The personal content under `public/assets/` and `src/data/` (text, images, photos, and the recommendation quotes and avatars) is all rights reserved and may not be reused.
