@@ -66,14 +66,13 @@ export const projectData = [
     skills: ['Java', 'JavaScript', 'Spring Boot', 'React.js', 'MySQL', 'Docker', 'Nginx', 'AWS']
   },
   {
-    name: 'DollaResume',
+    name: 'MedServ',
     period: '2025',
-    image: './assets/images/dollaresume.png',
-    type: 'AI_RESUME_GENERATOR',
-    link: 'https://dollaresume.gadget.app/',
-    githubLink: 'https://github.com/MehdiSmr/dollaresume',
-    websiteLink: 'https://dollaresume.gadget.app/',
-    skills: ['JavaScript', 'React.js', 'Gadget', 'OpenAI API', 'Tailwind CSS']
+    image: './assets/images/medserv.png',
+    type: 'REAL_TIME_CHAT_APPLICATION',
+    link: 'https://github.com/MehdiSmr/MedServ',
+    githubLink: 'https://github.com/MehdiSmr/MedServ',
+    skills: ['C++', 'Sockets', 'TCP', 'Multithreading', 'Concurrency']
   },
   {
     name: 'FindMyBook',
@@ -84,39 +83,6 @@ export const projectData = [
     githubLink: 'https://github.com/MehdiSmr/FindMyBook',
     websiteLink: 'https://chromewebstore.google.com/detail/findmybook/kbboembamaojonoienbijlalbnejdiao?utm_source=item-share-cb',
     skills: ['JavaScript', 'HTML5', 'CSS3', 'Web Scraping']
-  },
-  {
-    name: 'SeekAndFind',
-    period: '2025',
-    image: './assets/images/seekandfind.png',
-    type: 'LOST_ITEM_FINDER',
-    link: 'https://github.com/MehdiSmr/SeekAndFind?tab=readme-ov-file',
-    githubLink: 'https://github.com/MehdiSmr/SeekAndFind?tab=readme-ov-file',
-    skills: ['Java', 'JavaScript', 'Spring Boot', 'React.js', 'Solace PubSub+', 'Docker']
-  }, {
-    name: 'HeavenRun',
-    period: '2024',
-    image: './assets/images/heavenrun.png',
-    type: 'RUNNING_MOBILE_APP',
-    link: 'https://github.com/MehdiSmr/HEAVENRUN',
-    githubLink: 'https://github.com/MehdiSmr/HEAVENRUN',
-    skills: ['Python', 'Dart', 'Django', 'Flutter', 'PostgreSQL', 'Docker', 'GCP']
-  }, {
-    name: 'MedOS',
-    period: '2024',
-    image: './assets/images/medos.png',
-    type: 'OPERATING_SYSTEM',
-    link: 'https://github.com/MehdiSmr/MEDOS',
-    githubLink: 'https://github.com/MehdiSmr/MEDOS',
-    skills: ['C', 'NASM', 'GRUB']
-  }, {
-    name: 'QuadtreeCompression',
-    period: '2024',
-    image: './assets/images/qc.png',
-    type: 'IMAGE_COMPRESSION_ALGORITHM',
-    link: 'https://github.com/MehdiSmr/QuadtreeCompression',
-    githubLink: 'https://github.com/MehdiSmr/QuadtreeCompression',
-    skills: ['Python']
   }, {
     name: 'KingKong',
     period: '2024',
@@ -124,7 +90,7 @@ export const projectData = [
     type: '2D_GAME',
     link: 'https://github.com/MehdiSmr/KINGKONG-GAME',
     githubLink: 'https://github.com/MehdiSmr/KINGKONG-GAME',
-    skills: ['Python', 'Pygame']    
+    skills: ['Python', 'Pygame']
   }
  ]
 
