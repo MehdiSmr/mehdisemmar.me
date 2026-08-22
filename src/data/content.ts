@@ -1,0 +1,355 @@
+export type Lang = 'en' | 'fr'
+
+export type SectionKey =
+  | 'work'
+  | 'projects'
+  | 'education'
+  | 'certifications'
+  | 'volunteering'
+  | 'cv'
+  | 'coffee'
+  | 'running'
+
+export interface EntryLink {
+  label: string
+  href: string
+}
+
+export interface Entry {
+  /** Left column: year, date or role marker. */
+  a: string
+  /** Title. */
+  b: string
+  /** Body. */
+  c: string
+  link?: EntryLink
+}
+
+export interface LangContent {
+  role: string
+  intro: string
+  back: string
+  entriesWord: string
+  /** Shown when a section has no entries yet. */
+  empty: string
+  labels: Record<SectionKey, string>
+  blurbs: Record<PageSection, string>
+  plates: Record<PageSection, string>
+  entries: Record<SectionKey, Entry[]>
+}
+
+/** Sections that open as their own page instead of expanding in place. */
+export const PAGE_SECTIONS = ['coffee', 'running'] as const
+export type PageSection = (typeof PAGE_SECTIONS)[number]
+
+export const links = {
+  email: 'mailto:msemm031@uottawa.ca',
+  github: 'https://github.com/MehdiSmr',
+  linkedin: 'https://www.linkedin.com/in/mehdi-semmar-946a1b27b/',
+  /** Served from public/ — replace that file when the résumé changes. */
+  resume: '/Mehdi-Semmar-Resume.pdf'
+}
+
+/**
+ * How each index row behaves:
+ *  - accordion — expands in place (hidden entirely while it has no entries)
+ *  - external  — opens `href` in a new tab
+ *  - page      — routes to its own log page
+ */
+export type SectionKind = 'accordion' | 'external' | 'page'
+
+export interface Section {
+  key: SectionKey
+  kind: SectionKind
+  href?: string
+}
+
+/** Index rows are numbered by their position in this list. */
+
+export const SECTIONS: Section[] = [
+  { key: 'work', kind: 'accordion' },
+  { key: 'projects', kind: 'accordion' },
+  { key: 'education', kind: 'accordion' },
+  { key: 'certifications', kind: 'accordion' },
+  { key: 'volunteering', kind: 'accordion' },
+  { key: 'cv', kind: 'external', href: links.resume },
+  { key: 'coffee', kind: 'page' },
+  { key: 'running', kind: 'page' }
+]
+
+// The coffee and running entries below are seed content from the design — placeholders
+// meant to be replaced with real ones. Running entries have no `link` yet; add
+// `link: { label: 'strava', href: '…' }` once the Strava URLs are in hand.
+//
+// `certifications` is empty in both languages: fill it in and the row appears in the
+// index on its own. Empty accordion sections are not rendered.
+export const content: Record<Lang, LangContent> = {
+  en: {
+    role: 'Software Engineer',
+    intro:
+      'I build systems that hold engineering teams to their contracts. Currently in software engineering at uOttawa, between internships. I run in the mornings and take coffee seriously.',
+    back: '← index',
+    entriesWord: 'entries',
+    empty: 'Nothing here yet.',
+    labels: {
+      work: 'work',
+      projects: 'projects',
+      education: 'education',
+      certifications: 'certifications',
+      volunteering: 'volunteering',
+      cv: 'résumé',
+      coffee: 'coffee log',
+      running: 'running log'
+    },
+    blurbs: {
+      coffee: 'Every cup worth writing down, where I found it, and whether I would go back.',
+      running: 'Mornings, splits, and what the run actually felt like.'
+    },
+    plates: {
+      coffee: 'photo of the cup',
+      running: 'photo from the run'
+    },
+    entries: {
+      work: [
+        {
+          a: '2026',
+          b: 'University of Ottawa',
+          c: 'Research assistant on reinforcement learning for autonomous drones, with Dr. Bellinger.'
+        },
+        {
+          a: '2026',
+          b: 'Vertex Inc.',
+          c: 'Built an OpenAPI governance platform of four repositories — a Go engine on PostgreSQL, Terraform infrastructure, a developer portal, and an audit agent — that enforces API compatibility across every engineering team. Won an internal hackathon among 30 engineers.'
+        },
+        {
+          a: '2025',
+          b: 'Raven Connected',
+          c: 'Forecasted leaf-pile volumes from images with SAM3/SAM3D, closing a four-figure client contract. Built the pipeline: segmentation, VGGT 3D generation, Gaussian splatting, Depth Pro height estimation.'
+        },
+        {
+          a: '2025',
+          b: 'Versaterm',
+          c: 'Electron desktop app for VMobile that turned JSON form configuration into an interface customer success teams could actually use. A parser GUI cut rule-writing time in half.'
+        }
+      ],
+      projects: [
+        {
+          a: 'ongoing',
+          b: 'RZO Sports',
+          c: 'Co-founded a two-sided marketplace connecting athletes with venues. Top 2 of 40+ teams at a pitch competition. Spring Boot, React, MySQL, Docker on EC2.',
+          link: { label: 'rzosports.com', href: 'https://rzo-sports.com/' }
+        },
+        {
+          a: '2025',
+          b: 'uOttaHack 8',
+          c: 'Admin tool for on-site operations — check-in and meal tracking for 3,000+ users — and the official event site.',
+          link: { label: 'github', href: 'https://github.com/MehdiSmr' }
+        }
+      ],
+      education: [
+        {
+          a: '2023–27',
+          b: 'BASc Software Engineering, uOttawa',
+          c: "Engineering Management & Entrepreneurship, co-op. GPA 4.0/4.0, six-time Dean's List, TD Green and J-D Hearnshaw scholarships.",
+          link: { label: 'uottawa', href: 'https://www.uottawa.ca/en' }
+        }
+      ],
+      certifications: [],
+      volunteering: [
+        {
+          a: '2025',
+          b: 'SESA — Events team lead',
+          c: 'Led a team of six delivering technical workshops with Amazon, Ciena, Deloitte and National Bank.',
+          link: { label: 'sesa', href: 'https://www.sesa-aegl.ca/en' }
+        },
+        {
+          a: '2022–23',
+          b: 'École des grands — math mentor',
+          c: 'Weekly calculus and linear algebra sessions for high school students, with interactive material I built for the group.',
+          link: { label: 'école des grands', href: 'https://ecoleddesgrandsuottawa.ca' }
+        }
+      ],
+      cv: [],
+      coffee: [
+        {
+          a: '08.14',
+          b: 'Happy Goat, Laurier',
+          c: 'Ethiopian single origin as a pour-over. Bright enough that I skipped my second cup and regretted it by noon.',
+          link: {
+            label: 'map',
+            href: 'https://www.google.com/maps/search/?api=1&query=Happy+Goat+Coffee+Laurier+Ottawa'
+          }
+        },
+        {
+          a: '08.02',
+          b: 'Bridgehead, Elgin',
+          c: 'Cortado. Reliable rather than remarkable, which is most of what I want at 7am.',
+          link: {
+            label: 'map',
+            href: 'https://www.google.com/maps/search/?api=1&query=Bridgehead+Elgin+Ottawa'
+          }
+        },
+        {
+          a: '07.21',
+          b: 'Little Victories',
+          c: 'Best flat white I have had in Ottawa. Milk texture like paint.',
+          link: {
+            label: 'map',
+            href: 'https://www.google.com/maps/search/?api=1&query=Little+Victories+Coffee+Ottawa'
+          }
+        }
+      ],
+      running: [
+        {
+          a: '08.19',
+          b: '18 km — Ottawa River path',
+          c: 'Long run at 4:52/km. Cold for August, empty path, negative split by accident.'
+        },
+        {
+          a: '08.16',
+          b: '6 × 800 m — Terry Fox',
+          c: 'Intervals at 3:30/km. Fourth rep was the wall; held on for two more.'
+        },
+        {
+          a: '08.11',
+          b: '10 km — Gatineau Park',
+          c: 'Hills. Slower than flat by a minute a kilometre and worth every second.'
+        }
+      ]
+    }
+  },
+  fr: {
+    role: 'Ingénieur logiciel',
+    intro:
+      "Je construis des systèmes qui tiennent les équipes à leurs contrats d'API. Génie logiciel à l'Université d'Ottawa, entre deux stages. Je cours le matin et je prends le café au sérieux.",
+    back: '← index',
+    entriesWord: 'entrées',
+    empty: "Rien pour l'instant.",
+    labels: {
+      work: 'expérience',
+      projects: 'projets',
+      education: 'formation',
+      certifications: 'certifications',
+      volunteering: 'bénévolat',
+      cv: 'cv',
+      coffee: 'journal de café',
+      running: 'journal de course'
+    },
+    blurbs: {
+      coffee: "Chaque tasse qui mérite une note, où je l'ai trouvée, et si j'y retourne.",
+      running: 'Les matins, les temps de passage, et ce que la sortie a vraiment donné.'
+    },
+    plates: {
+      coffee: 'photo de la tasse',
+      running: 'photo de la sortie'
+    },
+    entries: {
+      work: [
+        {
+          a: '2026',
+          b: "Université d'Ottawa",
+          c: 'Assistant de recherche en apprentissage par renforcement appliqué aux drones autonomes, avec le Dr Bellinger.'
+        },
+        {
+          a: '2026',
+          b: 'Vertex Inc.',
+          c: "Plateforme de gouvernance OpenAPI en quatre dépôts — moteur Go sur PostgreSQL, infrastructure Terraform, portail développeur et agent d'audit — qui impose la compatibilité des API à toutes les équipes. Gagnant d'un hackathon interne parmi 30 ingénieurs."
+        },
+        {
+          a: '2025',
+          b: 'Raven Connected',
+          c: 'Estimation du volume de tas de feuilles à partir d’images avec SAM3/SAM3D, un contrat client à quatre chiffres à la clé. Pipeline complet : segmentation, génération 3D VGGT, splatting gaussien.'
+        },
+        {
+          a: '2025',
+          b: 'Versaterm',
+          c: "Application Electron pour VMobile transformant la configuration JSON en interface utilisable. Un GUI de parseur a réduit de moitié le temps d'écriture des règles."
+        }
+      ],
+      projects: [
+        {
+          a: 'en cours',
+          b: 'RZO Sports',
+          c: "Cofondateur d'une place de marché reliant athlètes et terrains. Top 2 sur plus de 40 équipes en concours de pitch. Spring Boot, React, MySQL, Docker sur EC2.",
+          link: { label: 'rzosports.com', href: 'https://rzo-sports.com/' }
+        },
+        {
+          a: '2025',
+          b: 'uOttaHack 8',
+          c: "Outil d'administration pour les opérations sur place — arrivées et repas pour plus de 3 000 personnes — et le site officiel de l'événement.",
+          link: { label: 'github', href: 'https://github.com/MehdiSmr' }
+        }
+      ],
+      education: [
+        {
+          a: '2023–27',
+          b: 'BASc génie logiciel, uOttawa',
+          c: "Gestion de l'ingénierie et entrepreneuriat, coop. Moyenne 4,0/4,0, six fois au tableau d'honneur, bourses TD Green et J-D Hearnshaw.",
+          link: { label: 'uottawa', href: 'https://www.uottawa.ca/fr' }
+        }
+      ],
+      certifications: [],
+      volunteering: [
+        {
+          a: '2025',
+          b: 'SESA — responsable des événements',
+          c: 'Équipe de six, ateliers techniques avec Amazon, Ciena, Deloitte et la Banque Nationale.',
+          link: { label: 'sesa', href: 'https://www.sesa-aegl.ca/en' }
+        },
+        {
+          a: '2022–23',
+          b: 'École des grands — mentor en mathématiques',
+          c: "Séances hebdomadaires de calcul différentiel et d'algèbre linéaire pour des élèves du secondaire, avec du matériel interactif conçu pour le groupe.",
+          link: { label: 'école des grands', href: 'https://ecoleddesgrandsuottawa.ca' }
+        }
+      ],
+      cv: [],
+      coffee: [
+        {
+          a: '14.08',
+          b: 'Happy Goat, Laurier',
+          c: "Origine unique éthiopienne en filtre. Assez vif pour que je saute la deuxième tasse, ce que j'ai regretté à midi.",
+          link: {
+            label: 'carte',
+            href: 'https://www.google.com/maps/search/?api=1&query=Happy+Goat+Coffee+Laurier+Ottawa'
+          }
+        },
+        {
+          a: '02.08',
+          b: 'Bridgehead, Elgin',
+          c: 'Cortado. Fiable plutôt que remarquable, ce qui suffit à 7 h.',
+          link: {
+            label: 'carte',
+            href: 'https://www.google.com/maps/search/?api=1&query=Bridgehead+Elgin+Ottawa'
+          }
+        },
+        {
+          a: '21.07',
+          b: 'Little Victories',
+          c: "Le meilleur flat white d'Ottawa. Une mousse comme de la peinture.",
+          link: {
+            label: 'carte',
+            href: 'https://www.google.com/maps/search/?api=1&query=Little+Victories+Coffee+Ottawa'
+          }
+        }
+      ],
+      running: [
+        {
+          a: '19.08',
+          b: '18 km — sentier de la rivière',
+          c: 'Sortie longue à 4:52/km. Frais pour août, sentier vide, negative split par accident.'
+        },
+        {
+          a: '16.08',
+          b: '6 × 800 m — Terry Fox',
+          c: 'Intervalles à 3:30/km. Le mur à la quatrième; deux de plus quand même.'
+        },
+        {
+          a: '11.08',
+          b: '10 km — parc de la Gatineau',
+          c: "Des côtes. Une minute au kilomètre plus lent qu'à plat, et ça valait chaque seconde."
+        }
+      ]
+    }
+  }
+}

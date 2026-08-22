@@ -1,5 +1,7 @@
 # mehdisemmar.me
 
+//TODO: add my portfolio as project + add uottahack website as project
+
 Live at [mehdisemmar.me](https://mehdisemmar.me)
 
 Source for my personal portfolio site. It ships two ways to look at the same content:

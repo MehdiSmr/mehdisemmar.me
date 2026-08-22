@@ -2,40 +2,18 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import './style.css'
 import App from './App.vue'
-import LazyPortfolio from './views/LazyPortfolio.vue'
-import TerminalPortfolio from './views/TerminalPortfolio.vue'
-import i18n from './i18n'
-import { isTerminalExperienceAllowed } from './utils/device'
+import IndexView from './views/IndexView.vue'
+import LogView from './views/LogView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
+  scrollBehavior: () => ({ top: 0 }),
   routes: [
-    {
-      path: '/',
-      name: 'lazy-portfolio',
-      component: LazyPortfolio
-    },
-    {
-      path: '/terminal-portfolio',
-      name: 'terminal-portfolio',
-      component: TerminalPortfolio
-    },
-    {
-      path: '/:pathMatch(.*)*',
-      redirect: '/'
-    }
+    { path: '/', name: 'index', component: IndexView },
+    { path: '/coffee', name: 'coffee', component: LogView, props: { kind: 'coffee' } },
+    { path: '/running', name: 'running', component: LogView, props: { kind: 'running' } },
+    { path: '/:pathMatch(.*)*', redirect: '/' }
   ]
 })
 
-router.beforeEach((to) => {
-  if (to.name === 'terminal-portfolio' && !isTerminalExperienceAllowed()) {
-    return { name: 'lazy-portfolio' }
-  }
-
-  return true
-})
-
-const app = createApp(App)
-app.use(router)
-app.use(i18n)
-app.mount('#app')
+createApp(App).use(router).mount('#app')

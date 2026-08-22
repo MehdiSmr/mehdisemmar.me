@@ -1,8 +1,12 @@
 <script lang="ts" setup>
-import GlobalAmbientAudio from './components/GlobalAmbientAudio.vue'
+import SiteHeader from './components/SiteHeader.vue'
 </script>
 
 <template>
-  <GlobalAmbientAudio />
-  <router-view />
+  <main class="shell">
+    <SiteHeader />
+    <router-view v-slot="{ Component, route }">
+      <component :is="Component" :key="route.path" />
+    </router-view>
+  </main>
 </template>
