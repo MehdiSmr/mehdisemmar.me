@@ -1,11 +1,18 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import EntryDetail from '../components/EntryDetail.vue'
 import { lang } from '../composables/useLang'
 import { SECTIONS, content, links, type Section, type SectionKey } from '../data/content'
 
 const router = useRouter()
 const open = ref<SectionKey | null>('work')
+
+/**
+ * Which entry's popup is showing. Held as a section plus a position so the
+ * popup can walk that section — and only that section.
+ */
+const detail = ref<{ key: SectionKey; i: number } | null>(null)
 
 const d = computed(() => content[lang.value])
 
@@ -17,6 +24,10 @@ const sections = SECTIONS
 function mark(section: Section, i: number) {
   const n = String(i + 1).padStart(2, '0')
   return section.kind === 'accordion' ? n : `${n}  →`
+}
+
+function moveDetail(i: number) {
+  if (detail.value) detail.value.i = i
 }
 
 function activate(section: Section) {
@@ -66,8 +77,23 @@ function activate(section: Section) {
           <p v-if="rows(section.key).length === 0" class="empty">{{ d.empty }}</p>
 
           <div v-else class="entries">
-            <div v-for="row in rows(section.key)" :key="row.b" class="entry">
+            <div v-for="(row, ri) in rows(section.key)" :key="row.b" class="entry">
               <div class="a">{{ row.a }}</div>
+              <button
+                type="button"
+                class="thumb"
+                :aria-label="`${row.b} — details`"
+                @click="detail = { key: section.key, i: ri }"
+              >
+                <img
+                  v-if="row.images?.[0]"
+                  :src="row.images[0]"
+                  :alt="row.b"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div v-else class="hatch" aria-hidden="true"></div>
+              </button>
               <div class="rest">
                 <div class="b">{{ row.b }}</div>
                 <p v-if="row.c" class="c">{{ row.c }}</p>
@@ -80,6 +106,15 @@ function activate(section: Section) {
         </div>
       </div>
     </div>
+
+    <EntryDetail
+      v-if="detail"
+      :entries="rows(detail.key)"
+      :index="detail.i"
+      :kicker="d.labels[detail.key]"
+      @update:index="moveDetail"
+      @close="detail = null"
+    />
 
     <nav class="foot" aria-label="Elsewhere">
       <a :href="links.email">email</a>
@@ -122,7 +157,6 @@ function activate(section: Section) {
   width: 100%;
   padding: 22px 2px;
   padding-left: 2px;
-  cursor: pointer;
   color: var(--ink);
   transition:
     padding-left 0.35s var(--ease),
@@ -172,15 +206,53 @@ function activate(section: Section) {
 
 .entry {
   display: grid;
-  grid-template-columns: 88px 1fr;
-  gap: 24px;
-  align-items: baseline;
+  grid-template-columns: 74px 56px 1fr;
+  gap: 22px;
+  align-items: start;
 }
 
 .a {
   font: 400 11px/1.5 var(--mono);
   font-feature-settings: 'tnum';
   color: rgba(32, 31, 29, 0.45);
+  padding-top: 4px;
+}
+
+/* A 56px square plate — the log plate's mat and hairline at index scale.
+   Clicking it opens the entry's detail popup. */
+.thumb {
+  display: block;
+  width: 100%;
+  padding: 4px;
+  background: #f3f0ec;
+  border: 1px solid rgba(32, 31, 29, 0.14);
+  transition: border-color 0.3s ease;
+}
+
+.thumb:hover {
+  border-color: var(--gold);
+}
+
+.thumb img,
+.hatch {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.thumb img {
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.03);
+  transition: filter 0.4s var(--ease);
+}
+
+.thumb:hover img,
+.thumb:focus-visible img {
+  filter: none;
+}
+
+.hatch {
+  background: repeating-linear-gradient(135deg, #e7e2db 0 5px, #f1ece5 5px 10px);
 }
 
 .rest {
@@ -222,9 +294,15 @@ function activate(section: Section) {
     gap: 40px;
   }
 
+  /* Date takes its own line; the plate sits beside the text below it. */
   .entry {
-    grid-template-columns: 1fr;
-    gap: 6px;
+    grid-template-columns: 56px 1fr;
+    gap: 8px 16px;
+  }
+
+  .a {
+    grid-column: 1 / -1;
+    padding-top: 0;
   }
 }
 </style>

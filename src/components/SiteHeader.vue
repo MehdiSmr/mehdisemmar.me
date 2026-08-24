@@ -50,7 +50,6 @@ import { lang, setLang } from '../composables/useLang'
 }
 
 .langs button {
-  cursor: pointer;
   color: rgba(32, 31, 29, 0.42);
   transition: color 0.3s ease;
 }

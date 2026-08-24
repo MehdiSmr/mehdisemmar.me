@@ -15,6 +15,16 @@ export interface EntryLink {
   href: string
 }
 
+/** Extra material shown only in the entry's detail popup. */
+export interface EntryDetail {
+  /** Mono line under the title. Falls back to the entry's `a`. */
+  meta?: string
+  /** Long-form body. Falls back to the entry's `c`. */
+  body?: string
+  /** Chips under the rule. Omitted entirely when absent. */
+  skills?: string[]
+}
+
 export interface Entry {
   /** Left column: year, date or role marker. */
   a: string
@@ -23,6 +33,12 @@ export interface Entry {
   /** Body. */
   c: string
   link?: EntryLink
+  /**
+   * Photos, in order. Feeds the index thumbnail (`images[0]`), the detail
+   * popup's grid, and the log carousel. Absent falls back to blank plates.
+   */
+  images?: string[]
+  detail?: EntryDetail
 }
 
 export interface LangContent {
@@ -32,6 +48,12 @@ export interface LangContent {
   entriesWord: string
   /** Shown when a section has no entries yet. */
   empty: string
+  /** Dismiss control in the detail popup. */
+  close: string
+  /** Heading above the skill chips. */
+  skills: string
+  /** Caption stem on a blank plate in the detail popup. */
+  photo: string
   labels: Record<SectionKey, string>
   blurbs: Record<PageSection, string>
   plates: Record<PageSection, string>
@@ -46,8 +68,11 @@ export const links = {
   email: 'mailto:msemm031@uottawa.ca',
   github: 'https://github.com/MehdiSmr',
   linkedin: 'https://www.linkedin.com/in/mehdi-semmar-946a1b27b/',
-  /** Served from public/ — replace that file when the résumé changes. */
-  resume: '/Mehdi-Semmar-Resume.pdf'
+  /**
+   * Google Drive, not public/ — the file is swapped in Drive without a redeploy.
+   * Requires the file to stay shared as "anyone with the link".
+   */
+  resume: 'https://drive.google.com/file/d/1YUbbRJ3UaRxa_8-T3BiMeN-EsW04bigT/view?usp=sharing'
 }
 
 /**
@@ -91,6 +116,9 @@ export const content: Record<Lang, LangContent> = {
     back: '← index',
     entriesWord: 'entries',
     empty: 'Nothing here yet.',
+    close: 'close',
+    skills: 'skills',
+    photo: 'photo',
     labels: {
       work: 'work',
       projects: 'projects',
@@ -114,22 +142,26 @@ export const content: Record<Lang, LangContent> = {
         {
           a: '2026',
           b: 'University of Ottawa',
-          c: 'Research assistant on reinforcement learning for autonomous drones, with Dr. Bellinger.'
+          c: 'Research assistant on reinforcement learning for autonomous drones, with Dr. Bellinger.',
+          detail: { skills: ['Reinforcement Learning', 'Autonomous Drones', 'Python'] }
         },
         {
           a: '2026',
           b: 'Vertex Inc.',
-          c: 'Built an OpenAPI governance platform of four repositories — a Go engine on PostgreSQL, Terraform infrastructure, a developer portal, and an audit agent — that enforces API compatibility across every engineering team. Won an internal hackathon among 30 engineers.'
+          c: 'Built an OpenAPI governance platform of four repositories — a Go engine on PostgreSQL, Terraform infrastructure, a developer portal, and an audit agent — that enforces API compatibility across every engineering team. Won an internal hackathon among 30 engineers.',
+          detail: { skills: ['Go', 'PostgreSQL', 'Terraform', 'OpenAPI'] }
         },
         {
           a: '2025',
           b: 'Raven Connected',
-          c: 'Forecasted leaf-pile volumes from images with SAM3/SAM3D, closing a four-figure client contract. Built the pipeline: segmentation, VGGT 3D generation, Gaussian splatting, Depth Pro height estimation.'
+          c: 'Forecasted leaf-pile volumes from images with SAM3/SAM3D, closing a four-figure client contract. Built the pipeline: segmentation, VGGT 3D generation, Gaussian splatting, Depth Pro height estimation.',
+          detail: { skills: ['SAM3 / SAM3D', 'VGGT', 'Gaussian Splatting', 'Depth Pro'] }
         },
         {
           a: '2025',
           b: 'Versaterm',
-          c: 'Electron desktop app for VMobile that turned JSON form configuration into an interface customer success teams could actually use. A parser GUI cut rule-writing time in half.'
+          c: 'Electron desktop app for VMobile that turned JSON form configuration into an interface customer success teams could actually use. A parser GUI cut rule-writing time in half.',
+          detail: { skills: ['Electron', 'JSON', 'Desktop UI'] }
         }
       ],
       projects: [
@@ -137,13 +169,8 @@ export const content: Record<Lang, LangContent> = {
           a: 'ongoing',
           b: 'RZO Sports',
           c: 'Co-founded a two-sided marketplace connecting athletes with venues. Top 2 of 40+ teams at a pitch competition. Spring Boot, React, MySQL, Docker on EC2.',
-          link: { label: 'rzosports.com', href: 'https://rzo-sports.com/' }
-        },
-        {
-          a: '2025',
-          b: 'uOttaHack 8',
-          c: 'Admin tool for on-site operations — check-in and meal tracking for 3,000+ users — and the official event site.',
-          link: { label: 'github', href: 'https://github.com/MehdiSmr' }
+          link: { label: 'rzosports.com', href: 'https://rzo-sports.com/' },
+          detail: { skills: ['Spring Boot', 'React', 'MySQL', 'Docker', 'EC2'] }
         }
       ],
       education: [
@@ -161,6 +188,12 @@ export const content: Record<Lang, LangContent> = {
           b: 'SESA — Events team lead',
           c: 'Led a team of six delivering technical workshops with Amazon, Ciena, Deloitte and National Bank.',
           link: { label: 'sesa', href: 'https://www.sesa-aegl.ca/en' }
+        },
+        {
+          a: '2025',
+          b: 'uOttaHack 8',
+          c: 'Admin tool for on-site operations — check-in and meal tracking for 3,000+ users — and the official event site.',
+          link: { label: 'github', href: 'https://github.com/MehdiSmr' }
         },
         {
           a: '2022–23',
@@ -225,6 +258,9 @@ export const content: Record<Lang, LangContent> = {
     back: '← index',
     entriesWord: 'entrées',
     empty: "Rien pour l'instant.",
+    close: 'fermer',
+    skills: 'compétences',
+    photo: 'photo',
     labels: {
       work: 'expérience',
       projects: 'projets',
@@ -248,22 +284,26 @@ export const content: Record<Lang, LangContent> = {
         {
           a: '2026',
           b: "Université d'Ottawa",
-          c: 'Assistant de recherche en apprentissage par renforcement appliqué aux drones autonomes, avec le Dr Bellinger.'
+          c: 'Assistant de recherche en apprentissage par renforcement appliqué aux drones autonomes, avec le Dr Bellinger.',
+          detail: { skills: ['Apprentissage par renforcement', 'Drones autonomes', 'Python'] }
         },
         {
           a: '2026',
           b: 'Vertex Inc.',
-          c: "Plateforme de gouvernance OpenAPI en quatre dépôts — moteur Go sur PostgreSQL, infrastructure Terraform, portail développeur et agent d'audit — qui impose la compatibilité des API à toutes les équipes. Gagnant d'un hackathon interne parmi 30 ingénieurs."
+          c: "Plateforme de gouvernance OpenAPI en quatre dépôts — moteur Go sur PostgreSQL, infrastructure Terraform, portail développeur et agent d'audit — qui impose la compatibilité des API à toutes les équipes. Gagnant d'un hackathon interne parmi 30 ingénieurs.",
+          detail: { skills: ['Go', 'PostgreSQL', 'Terraform', 'OpenAPI'] }
         },
         {
           a: '2025',
           b: 'Raven Connected',
-          c: 'Estimation du volume de tas de feuilles à partir d’images avec SAM3/SAM3D, un contrat client à quatre chiffres à la clé. Pipeline complet : segmentation, génération 3D VGGT, splatting gaussien.'
+          c: 'Estimation du volume de tas de feuilles à partir d’images avec SAM3/SAM3D, un contrat client à quatre chiffres à la clé. Pipeline complet : segmentation, génération 3D VGGT, splatting gaussien.',
+          detail: { skills: ['SAM3 / SAM3D', 'VGGT', 'Splatting gaussien', 'Depth Pro'] }
         },
         {
           a: '2025',
           b: 'Versaterm',
-          c: "Application Electron pour VMobile transformant la configuration JSON en interface utilisable. Un GUI de parseur a réduit de moitié le temps d'écriture des règles."
+          c: "Application Electron pour VMobile transformant la configuration JSON en interface utilisable. Un GUI de parseur a réduit de moitié le temps d'écriture des règles.",
+          detail: { skills: ['Electron', 'JSON', 'Interface bureau'] }
         }
       ],
       projects: [
@@ -271,13 +311,8 @@ export const content: Record<Lang, LangContent> = {
           a: 'en cours',
           b: 'RZO Sports',
           c: "Cofondateur d'une place de marché reliant athlètes et terrains. Top 2 sur plus de 40 équipes en concours de pitch. Spring Boot, React, MySQL, Docker sur EC2.",
-          link: { label: 'rzosports.com', href: 'https://rzo-sports.com/' }
-        },
-        {
-          a: '2025',
-          b: 'uOttaHack 8',
-          c: "Outil d'administration pour les opérations sur place — arrivées et repas pour plus de 3 000 personnes — et le site officiel de l'événement.",
-          link: { label: 'github', href: 'https://github.com/MehdiSmr' }
+          link: { label: 'rzosports.com', href: 'https://rzo-sports.com/' },
+          detail: { skills: ['Spring Boot', 'React', 'MySQL', 'Docker', 'EC2'] }
         }
       ],
       education: [
@@ -295,6 +330,12 @@ export const content: Record<Lang, LangContent> = {
           b: 'SESA — responsable des événements',
           c: 'Équipe de six, ateliers techniques avec Amazon, Ciena, Deloitte et la Banque Nationale.',
           link: { label: 'sesa', href: 'https://www.sesa-aegl.ca/en' }
+        },
+        {
+          a: '2025',
+          b: 'uOttaHack 8',
+          c: "Outil d'administration pour les opérations sur place — arrivées et repas pour plus de 3 000 personnes — et le site officiel de l'événement.",
+          link: { label: 'github', href: 'https://github.com/MehdiSmr' }
         },
         {
           a: '2022–23',
