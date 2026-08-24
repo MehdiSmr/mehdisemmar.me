@@ -45,7 +45,6 @@ export interface LangContent {
   role: string
   intro: string
   back: string
-  entriesWord: string
   /** Shown when a section has no entries yet. */
   empty: string
   /** Dismiss control in the detail popup. */
@@ -54,6 +53,12 @@ export interface LangContent {
   skills: string
   /** Caption stem on a blank plate in the detail popup. */
   photo: string
+  /** Link label on a log entry that carries a maps URL. */
+  map: string
+  /** Shown while a log page is waiting on its sheet. */
+  loading: string
+  /** Shown when a log's sheet could not be reached at all. */
+  error: string
   labels: Record<SectionKey, string>
   blurbs: Record<PageSection, string>
   plates: Record<PageSection, string>
@@ -114,11 +119,13 @@ export const content: Record<Lang, LangContent> = {
     intro:
       'I build systems that hold engineering teams to their contracts. Currently in software engineering at uOttawa, between internships. I run in the mornings and take coffee seriously.',
     back: '← index',
-    entriesWord: 'entries',
     empty: 'Nothing here yet.',
     close: 'close',
     skills: 'skills',
     photo: 'photo',
+    map: 'map',
+    loading: 'Loading…',
+    error: 'Oupsy, this log would not load. Try again in a moment.',
     labels: {
       work: 'work',
       projects: 'projects',
@@ -148,7 +155,7 @@ export const content: Record<Lang, LangContent> = {
         {
           a: '2026',
           b: 'Vertex Inc.',
-          c: 'Built an OpenAPI governance platform of four repositories — a Go engine on PostgreSQL, Terraform infrastructure, a developer portal, and an audit agent — that enforces API compatibility across every engineering team. Won an internal hackathon among 30 engineers.',
+          c: 'Built an OpenAPI governance platform of four repositories: a Go engine on PostgreSQL, Terraform infrastructure, a developer portal, and an audit agent. It enforces API compatibility across every engineering team. Won an internal hackathon among 30 engineers.',
           detail: { skills: ['Go', 'PostgreSQL', 'Terraform', 'OpenAPI'] }
         },
         {
@@ -185,70 +192,28 @@ export const content: Record<Lang, LangContent> = {
       volunteering: [
         {
           a: '2025',
-          b: 'SESA — Events team lead',
+          b: 'SESA, Events team lead',
           c: 'Led a team of six delivering technical workshops with Amazon, Ciena, Deloitte and National Bank.',
           link: { label: 'sesa', href: 'https://www.sesa-aegl.ca/en' }
         },
         {
           a: '2025',
           b: 'uOttaHack 8',
-          c: 'Admin tool for on-site operations — check-in and meal tracking for 3,000+ users — and the official event site.',
+          c: 'Admin tool for on-site operations, covering check-in and meal tracking for 3,000+ users, plus the official event site.',
           link: { label: 'github', href: 'https://github.com/MehdiSmr' }
         },
         {
           a: '2022–23',
-          b: 'École des grands — math mentor',
+          b: 'École des grands, math mentor',
           c: 'Weekly calculus and linear algebra sessions for high school students, with interactive material I built for the group.',
           link: { label: 'école des grands', href: 'https://ecoleddesgrandsuottawa.ca' }
         }
       ],
       cv: [],
-      coffee: [
-        {
-          a: '08.14',
-          b: 'Happy Goat, Laurier',
-          c: 'Ethiopian single origin as a pour-over. Bright enough that I skipped my second cup and regretted it by noon.',
-          link: {
-            label: 'map',
-            href: 'https://www.google.com/maps/search/?api=1&query=Happy+Goat+Coffee+Laurier+Ottawa'
-          }
-        },
-        {
-          a: '08.02',
-          b: 'Bridgehead, Elgin',
-          c: 'Cortado. Reliable rather than remarkable, which is most of what I want at 7am.',
-          link: {
-            label: 'map',
-            href: 'https://www.google.com/maps/search/?api=1&query=Bridgehead+Elgin+Ottawa'
-          }
-        },
-        {
-          a: '07.21',
-          b: 'Little Victories',
-          c: 'Best flat white I have had in Ottawa. Milk texture like paint.',
-          link: {
-            label: 'map',
-            href: 'https://www.google.com/maps/search/?api=1&query=Little+Victories+Coffee+Ottawa'
-          }
-        }
-      ],
-      running: [
-        {
-          a: '08.19',
-          b: '18 km — Ottawa River path',
-          c: 'Long run at 4:52/km. Cold for August, empty path, negative split by accident.'
-        },
-        {
-          a: '08.16',
-          b: '6 × 800 m — Terry Fox',
-          c: 'Intervals at 3:30/km. Fourth rep was the wall; held on for two more.'
-        },
-        {
-          a: '08.11',
-          b: '10 km — Gatineau Park',
-          c: 'Hills. Slower than flat by a minute a kilometre and worth every second.'
-        }
-      ]
+      // Both logs are fetched from their Google Sheet at runtime — see
+      // useSheetLog. Nothing renders from here, so nothing is kept here.
+      coffee: [],
+      running: []
     }
   },
   fr: {
@@ -256,11 +221,13 @@ export const content: Record<Lang, LangContent> = {
     intro:
       "Je construis des systèmes qui tiennent les équipes à leurs contrats d'API. Génie logiciel à l'Université d'Ottawa, entre deux stages. Je cours le matin et je prends le café au sérieux.",
     back: '← index',
-    entriesWord: 'entrées',
     empty: "Rien pour l'instant.",
     close: 'fermer',
     skills: 'compétences',
     photo: 'photo',
+    map: 'carte',
+    loading: 'Chargement…',
+    error: "Oupsy, ce journal n'a pas pu charger. Réessayez dans un instant.",
     labels: {
       work: 'expérience',
       projects: 'projets',
@@ -290,7 +257,7 @@ export const content: Record<Lang, LangContent> = {
         {
           a: '2026',
           b: 'Vertex Inc.',
-          c: "Plateforme de gouvernance OpenAPI en quatre dépôts — moteur Go sur PostgreSQL, infrastructure Terraform, portail développeur et agent d'audit — qui impose la compatibilité des API à toutes les équipes. Gagnant d'un hackathon interne parmi 30 ingénieurs.",
+          c: "Plateforme de gouvernance OpenAPI en quatre dépôts : moteur Go sur PostgreSQL, infrastructure Terraform, portail développeur et agent d'audit. Elle impose la compatibilité des API à toutes les équipes. Gagnant d'un hackathon interne parmi 30 ingénieurs.",
           detail: { skills: ['Go', 'PostgreSQL', 'Terraform', 'OpenAPI'] }
         },
         {
@@ -327,70 +294,27 @@ export const content: Record<Lang, LangContent> = {
       volunteering: [
         {
           a: '2025',
-          b: 'SESA — responsable des événements',
+          b: 'SESA, responsable des événements',
           c: 'Équipe de six, ateliers techniques avec Amazon, Ciena, Deloitte et la Banque Nationale.',
           link: { label: 'sesa', href: 'https://www.sesa-aegl.ca/en' }
         },
         {
           a: '2025',
           b: 'uOttaHack 8',
-          c: "Outil d'administration pour les opérations sur place — arrivées et repas pour plus de 3 000 personnes — et le site officiel de l'événement.",
+          c: "Outil d'administration pour les opérations sur place, arrivées et repas pour plus de 3 000 personnes, ainsi que le site officiel de l'événement.",
           link: { label: 'github', href: 'https://github.com/MehdiSmr' }
         },
         {
           a: '2022–23',
-          b: 'École des grands — mentor en mathématiques',
+          b: 'École des grands, mentor en mathématiques',
           c: "Séances hebdomadaires de calcul différentiel et d'algèbre linéaire pour des élèves du secondaire, avec du matériel interactif conçu pour le groupe.",
           link: { label: 'école des grands', href: 'https://ecoleddesgrandsuottawa.ca' }
         }
       ],
       cv: [],
-      coffee: [
-        {
-          a: '14.08',
-          b: 'Happy Goat, Laurier',
-          c: "Origine unique éthiopienne en filtre. Assez vif pour que je saute la deuxième tasse, ce que j'ai regretté à midi.",
-          link: {
-            label: 'carte',
-            href: 'https://www.google.com/maps/search/?api=1&query=Happy+Goat+Coffee+Laurier+Ottawa'
-          }
-        },
-        {
-          a: '02.08',
-          b: 'Bridgehead, Elgin',
-          c: 'Cortado. Fiable plutôt que remarquable, ce qui suffit à 7 h.',
-          link: {
-            label: 'carte',
-            href: 'https://www.google.com/maps/search/?api=1&query=Bridgehead+Elgin+Ottawa'
-          }
-        },
-        {
-          a: '21.07',
-          b: 'Little Victories',
-          c: "Le meilleur flat white d'Ottawa. Une mousse comme de la peinture.",
-          link: {
-            label: 'carte',
-            href: 'https://www.google.com/maps/search/?api=1&query=Little+Victories+Coffee+Ottawa'
-          }
-        }
-      ],
-      running: [
-        {
-          a: '19.08',
-          b: '18 km — sentier de la rivière',
-          c: 'Sortie longue à 4:52/km. Frais pour août, sentier vide, negative split par accident.'
-        },
-        {
-          a: '16.08',
-          b: '6 × 800 m — Terry Fox',
-          c: 'Intervalles à 3:30/km. Le mur à la quatrième; deux de plus quand même.'
-        },
-        {
-          a: '11.08',
-          b: '10 km — parc de la Gatineau',
-          c: "Des côtes. Une minute au kilomètre plus lent qu'à plat, et ça valait chaque seconde."
-        }
-      ]
+      // Same as the English side: the sheet is the only source.
+      coffee: [],
+      running: []
     }
   }
 }

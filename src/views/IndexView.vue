@@ -82,7 +82,7 @@ function activate(section: Section) {
               <button
                 type="button"
                 class="thumb"
-                :aria-label="`${row.b} — details`"
+                :aria-label="`${row.b}, details`"
                 @click="detail = { key: section.key, i: ri }"
               >
                 <img
@@ -91,6 +91,7 @@ function activate(section: Section) {
                   :alt="row.b"
                   loading="lazy"
                   decoding="async"
+                  referrerpolicy="no-referrer"
                 />
                 <div v-else class="hatch" aria-hidden="true"></div>
               </button>

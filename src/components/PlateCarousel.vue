@@ -3,16 +3,16 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    /** Real images, in order. Empty or absent falls back to `placeholders` blank plates. */
+    /** Real images, in order. However many there are is however many slides. */
     images?: string[]
     /** Mono caption shown on a blank plate. */
     caption: string
-    /** How many blank plates to stand in with while there are no photos yet. */
-    placeholders?: number
+    /** Single stand-in shown when an entry has no images of its own. */
+    fallback?: string
     /** Alt text stem; each slide gets its index appended. */
     alt?: string
   }>(),
-  { images: () => [], placeholders: 3, alt: '' }
+  { images: () => [], fallback: '', alt: '' }
 )
 
 /** A slot carries its real index, so clones still caption and number correctly. */
@@ -25,9 +25,18 @@ const track = ref<HTMLElement | null>(null)
 /** Index into `view`, including the cloned ends. */
 const slot = ref(0)
 
+/** Slides that failed to load, so a missing fallback file shows the hatch. */
+const broken = ref(new Set<string>())
+
 const real = computed<Slot[]>(() => {
-  const src = props.images.length > 0 ? props.images : Array<string>(props.placeholders).fill('')
-  return src.map((s, n) => ({ src: s, n }))
+  const src =
+    props.images.length > 0
+      ? props.images
+      : props.fallback
+        ? [props.fallback]
+        : // Neither photos nor a stand-in: one blank plate rather than nothing.
+          ['']
+  return src.map((s, n) => ({ src: broken.value.has(s) ? '' : s, n }))
 })
 
 const many = computed(() => real.value.length > 1)
@@ -129,12 +138,14 @@ onBeforeUnmount(() => {
           v-if="s.src"
           class="shot"
           :src="s.src"
-          :alt="alt ? `${alt} — ${s.n + 1}` : ''"
+          :alt="alt ? `${alt}, photo ${s.n + 1}` : ''"
           loading="lazy"
           decoding="async"
+          referrerpolicy="no-referrer"
+          @error="broken = new Set(broken).add(s.src)"
         />
-        <div v-else class="hatch" :class="`h${s.n % 3}`">
-          <div class="caption">{{ caption }} · {{ String(s.n + 1).padStart(2, '0') }}</div>
+        <div v-else class="hatch">
+          <div class="caption">{{ caption }}</div>
         </div>
       </div>
     </div>
@@ -177,23 +188,10 @@ onBeforeUnmount(() => {
 
 .hatch {
   height: 230px;
+  background: repeating-linear-gradient(135deg, #e7e2db 0 6px, #f1ece5 6px 12px);
   display: flex;
   align-items: flex-end;
   padding: 10px;
-}
-
-/* Blank plates vary by hatch direction so the carousel reads as moving
-   while there are no photos in it yet. */
-.h0 {
-  background: repeating-linear-gradient(135deg, #e7e2db 0 6px, #f1ece5 6px 12px);
-}
-
-.h1 {
-  background: repeating-linear-gradient(45deg, #e4dfd7 0 6px, #efe9e1 6px 12px);
-}
-
-.h2 {
-  background: repeating-linear-gradient(90deg, #e9e4dd 0 6px, #f2ede6 6px 12px);
 }
 
 .caption {
@@ -205,7 +203,11 @@ onBeforeUnmount(() => {
   display: block;
   width: 100%;
   height: 230px;
-  object-fit: cover;
+  /* `contain`, not `cover`: the whole frame stays visible and the leftover
+     space is the mat's own colour, so a tall photo reads as mounted rather
+     than cropped. The fixed height keeps slides from jumping as you move. */
+  object-fit: contain;
+  background: #f3f0ec;
   /* Desaturated at rest so heterogeneous photos read as one system. */
   filter: grayscale(1) contrast(1.03);
   transition: filter 0.4s var(--ease);
