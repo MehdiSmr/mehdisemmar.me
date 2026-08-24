@@ -39,12 +39,7 @@ const mark = computed(() => (loading.value ? d.value.loading : ''))
     <article v-for="post in posts" :key="post.b" class="post">
       <div class="date">{{ post.a }}</div>
       <h2 class="head">{{ post.b }}</h2>
-      <PlateCarousel
-        :images="post.images"
-        :caption="d.plates[kind]"
-        :alt="post.b"
-        :fallback="`/placeholder-${kind}.png`"
-      />
+      <PlateCarousel :images="post.images" :caption="d.plates[kind]" :alt="post.b" />
       <p class="body">{{ post.c }}</p>
       <a v-if="post.link" class="link" :href="post.link.href" target="_blank" rel="noopener">
         {{ post.link.label }}

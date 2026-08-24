@@ -5,14 +5,12 @@ const props = withDefaults(
   defineProps<{
     /** Real images, in order. However many there are is however many slides. */
     images?: string[]
-    /** Mono caption shown on a blank plate. */
+    /** Mono caption shown on the blank plate. */
     caption: string
-    /** Single stand-in shown when an entry has no images of its own. */
-    fallback?: string
     /** Alt text stem; each slide gets its index appended. */
     alt?: string
   }>(),
-  { images: () => [], fallback: '', alt: '' }
+  { images: () => [], alt: '' }
 )
 
 /** A slot carries its real index, so clones still caption and number correctly. */
@@ -29,13 +27,8 @@ const slot = ref(0)
 const broken = ref(new Set<string>())
 
 const real = computed<Slot[]>(() => {
-  const src =
-    props.images.length > 0
-      ? props.images
-      : props.fallback
-        ? [props.fallback]
-        : // Neither photos nor a stand-in: one blank plate rather than nothing.
-          ['']
+  // No photos yet: a single blank plate, not a strip of them.
+  const src = props.images.length > 0 ? props.images : ['']
   return src.map((s, n) => ({ src: broken.value.has(s) ? '' : s, n }))
 })
 
