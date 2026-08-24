@@ -92,9 +92,10 @@ onBeforeUnmount(() => {
               v-if="src"
               class="shot"
               :src="src"
-              :alt="`${entry.b} — ${i + 1}`"
+              :alt="`${entry.b}, photo ${i + 1}`"
               loading="lazy"
               decoding="async"
+              referrerpolicy="no-referrer"
             />
             <div v-else class="hatch">
               <div class="caption">{{ d.photo }} · {{ String(i + 1).padStart(2, '0') }}</div>
@@ -238,7 +239,8 @@ onBeforeUnmount(() => {
   display: block;
   width: 100%;
   height: 170px;
-  object-fit: cover;
+  object-fit: contain;
+  background: #f3f0ec;
   filter: grayscale(1) contrast(1.03);
   transition: filter 0.4s var(--ease);
 }
