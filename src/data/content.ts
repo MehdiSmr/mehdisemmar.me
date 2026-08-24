@@ -117,7 +117,7 @@ export const content: Record<Lang, LangContent> = {
   en: {
     role: 'Software Engineer',
     intro:
-      'I build systems that hold engineering teams to their contracts. Currently in software engineering at uOttawa, between internships. I run in the mornings and take coffee seriously.',
+      'Currently in software engineering at uOttawa, between internships. I run in the mornings and take coffee seriously.',
     back: '← index',
     empty: 'Nothing here yet.',
     close: 'close',
@@ -219,7 +219,7 @@ export const content: Record<Lang, LangContent> = {
   fr: {
     role: 'Ingénieur logiciel',
     intro:
-      "Je construis des systèmes qui tiennent les équipes à leurs contrats d'API. Génie logiciel à l'Université d'Ottawa, entre deux stages. Je cours le matin et je prends le café au sérieux.",
+      "Génie logiciel à l'Université d'Ottawa, entre deux stages. Je cours le matin et je prends le café au sérieux.",
     back: '← index',
     empty: "Rien pour l'instant.",
     close: 'fermer',
