@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
+import PlateCarousel from '../components/PlateCarousel.vue'
 import { lang } from '../composables/useLang'
 import { content, type PageSection } from '../data/content'
 
@@ -26,11 +27,7 @@ const mark = computed(
     <article v-for="post in posts" :key="post.b" class="post">
       <div class="date">{{ post.a }}</div>
       <h2 class="head">{{ post.b }}</h2>
-      <div class="plate">
-        <div class="hatch">
-          <div class="caption">{{ d.plates[kind] }}</div>
-        </div>
-      </div>
+      <PlateCarousel :images="post.images" :caption="d.plates[kind]" :alt="post.b" />
       <p class="body">{{ post.c }}</p>
       <a v-if="post.link" class="link" :href="post.link.href" target="_blank" rel="noopener">
         {{ post.link.label }}
@@ -111,27 +108,6 @@ const mark = computed(
   text-wrap: pretty;
 }
 
-.plate {
-  padding: 9px;
-  background: #f3f0ec;
-  border: 1px solid rgba(32, 31, 29, 0.12);
-  max-width: 540px;
-  margin: 6px 0;
-}
-
-.hatch {
-  height: 230px;
-  background: repeating-linear-gradient(135deg, #e7e2db 0 6px, #f1ece5 6px 12px);
-  display: flex;
-  align-items: flex-end;
-  padding: 10px;
-}
-
-.caption {
-  font: 400 9.5px/1.4 var(--mono);
-  color: #7d7979;
-}
-
 .body {
   margin: 0;
   max-width: 560px;
@@ -168,10 +144,6 @@ const mark = computed(
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-  }
-
-  .hatch {
-    height: 180px;
   }
 
   .body {
