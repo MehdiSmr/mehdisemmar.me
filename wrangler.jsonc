@@ -2,6 +2,10 @@
   "name": "mehdisemmar",
   "compatibility_date": "2025-06-07",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    // The router uses HTML5 history mode, so /coffee and /running have no file
+    // on disk. Serve index.html for any unmatched path and let the router take
+    // over, otherwise a direct load or reload 404s.
+    "not_found_handling": "single-page-application"
   }
 }
