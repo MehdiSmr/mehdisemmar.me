@@ -35,7 +35,7 @@ export interface Entry {
   link?: EntryLink
   /**
    * Photos, in order. Feeds the index thumbnail (`images[0]`), the detail
-   * popup's grid, and the log carousel. Absent falls back to blank plates.
+   * popup's grid, and the log carousel. A log entry without any shows no plate.
    */
   images?: string[]
   detail?: EntryDetail
@@ -53,15 +53,14 @@ export interface LangContent {
   skills: string
   /** Caption stem on a blank plate in the detail popup. */
   photo: string
-  /** Link label on a log entry that carries a maps URL. */
-  map: string
+  /** Link label under a log entry, named for wherever its URL points. */
+  linkLabel: Record<PageSection, string>
   /** Shown while a log page is waiting on its sheet. */
   loading: string
   /** Shown when a log's sheet could not be reached at all. */
   error: string
   labels: Record<SectionKey, string>
   blurbs: Record<PageSection, string>
-  plates: Record<PageSection, string>
   entries: Record<SectionKey, Entry[]>
 }
 
@@ -123,7 +122,7 @@ export const content: Record<Lang, LangContent> = {
     close: 'close',
     skills: 'skills',
     photo: 'photo',
-    map: 'map',
+    linkLabel: { coffee: 'map', running: 'strava' },
     loading: 'Loading…',
     error: 'Oupsy, this log would not load. Try again in a moment.',
     labels: {
@@ -139,10 +138,6 @@ export const content: Record<Lang, LangContent> = {
     blurbs: {
       coffee: 'Every cup worth writing down, where I found it, and whether I would go back.',
       running: 'Mornings, splits, and what the run actually felt like.'
-    },
-    plates: {
-      coffee: 'photo of the cup',
-      running: 'photo from the run'
     },
     entries: {
       work: [
@@ -225,7 +220,7 @@ export const content: Record<Lang, LangContent> = {
     close: 'fermer',
     skills: 'compétences',
     photo: 'photo',
-    map: 'carte',
+    linkLabel: { coffee: 'carte', running: 'strava' },
     loading: 'Chargement…',
     error: "Oupsy, ce journal n'a pas pu charger. Réessayez dans un instant.",
     labels: {
@@ -241,10 +236,6 @@ export const content: Record<Lang, LangContent> = {
     blurbs: {
       coffee: "Chaque tasse qui mérite une note, où je l'ai trouvée, et si j'y retourne.",
       running: 'Les matins, les temps de passage, et ce que la sortie a vraiment donné.'
-    },
-    plates: {
-      coffee: 'photo de la tasse',
-      running: 'photo de la sortie'
     },
     entries: {
       work: [
