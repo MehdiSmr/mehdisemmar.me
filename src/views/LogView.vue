@@ -15,7 +15,7 @@ const { rows: sheetRows, loading, failed } = useSheetLog(props.kind)
  * fetch says so plainly rather than showing something that is not real.
  */
 const posts = computed(() =>
-  sheetRows.value ? toEntries(sheetRows.value, lang.value, d.value.map) : []
+  sheetRows.value ? toEntries(sheetRows.value, lang.value, d.value.linkLabel[props.kind]) : []
 )
 
 /** Only ever the loading note now; the entry count is not shown. */
@@ -36,10 +36,11 @@ const mark = computed(() => (loading.value ? d.value.loading : ''))
     <p v-if="failed" class="empty">{{ d.error }}</p>
     <p v-else-if="!loading && posts.length === 0" class="empty">{{ d.empty }}</p>
 
-    <article v-for="post in posts" :key="post.b" class="post">
+    <!-- Keyed by position, not name: two runs can share a title. -->
+    <article v-for="(post, i) in posts" :key="i" class="post">
       <div class="date">{{ post.a }}</div>
       <h2 class="head">{{ post.b }}</h2>
-      <PlateCarousel :images="post.images" :caption="d.plates[kind]" :alt="post.b" />
+      <PlateCarousel :images="post.images" :alt="post.b" />
       <p class="body">{{ post.c }}</p>
       <a v-if="post.link" class="link" :href="post.link.href" target="_blank" rel="noopener">
         {{ post.link.label }}

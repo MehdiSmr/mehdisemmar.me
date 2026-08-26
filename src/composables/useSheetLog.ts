@@ -166,12 +166,14 @@ function byNewest(a: SheetRow, b: SheetRow) {
   return (b.date || '').localeCompare(a.date || '')
 }
 
+/** Day and month swap by language; the year always trails, as both locales write it. */
 function mark(iso: string, lang: Lang): string {
   if (!iso) return ''
   const d = new Date(iso)
   const mm = String(d.getMonth() + 1).padStart(2, '0')
   const dd = String(d.getDate()).padStart(2, '0')
-  return lang === 'fr' ? `${dd}.${mm}` : `${mm}.${dd}`
+  const yyyy = String(d.getFullYear())
+  return lang === 'fr' ? `${dd}.${mm}.${yyyy}` : `${mm}.${dd}.${yyyy}`
 }
 
 /** Shapes cached rows into the same `Entry` the rest of the site renders. */

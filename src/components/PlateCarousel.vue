@@ -3,17 +3,15 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    /** Real images, in order. However many there are is however many slides. */
+    /** Photos, in order. However many there are is however many slides. */
     images?: string[]
-    /** Mono caption shown on the blank plate. */
-    caption: string
     /** Alt text stem; each slide gets its index appended. */
     alt?: string
   }>(),
   { images: () => [], alt: '' }
 )
 
-/** A slot carries its real index, so clones still caption and number correctly. */
+/** A slot carries its real index, so clones still number correctly. */
 interface Slot {
   src: string
   n: number
@@ -23,21 +21,21 @@ const track = ref<HTMLElement | null>(null)
 /** Index into `view`, including the cloned ends. */
 const slot = ref(0)
 
-/** Slides that failed to load, so a missing fallback file shows the hatch. */
+/** Photos that failed to load; they drop out rather than leaving a gap. */
 const broken = ref(new Set<string>())
 
-const real = computed<Slot[]>(() => {
-  // No photos yet: a single blank plate, not a strip of them.
-  const src = props.images.length > 0 ? props.images : ['']
-  return src.map((s, n) => ({ src: broken.value.has(s) ? '' : s, n }))
-})
+const real = computed<Slot[]>(() =>
+  props.images
+    .map((src, n) => ({ src, n }))
+    .filter((s) => s.src !== '' && !broken.value.has(s.src))
+)
 
 const many = computed(() => real.value.length > 1)
 
 /**
  * The last slide is cloned before the first and the first after the last, so a
  * wrap scrolls forward into a clone and is silently repositioned once it
- * settles. That makes 03 → 01 animate like any other step.
+ * settles. That makes the last-to-first step animate like any other.
  */
 const view = computed<Slot[]>(() => {
   const r = real.value
@@ -115,7 +113,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <figure class="plate">
+  <!-- No photos, no plate: an entry without images shows nothing at all. -->
+  <figure v-if="real.length" class="plate">
     <div
       ref="track"
       class="track"
@@ -128,7 +127,6 @@ onBeforeUnmount(() => {
     >
       <div v-for="(s, i) in view" :key="i" class="slide">
         <img
-          v-if="s.src"
           class="shot"
           :src="s.src"
           :alt="alt ? `${alt}, photo ${s.n + 1}` : ''"
@@ -137,9 +135,6 @@ onBeforeUnmount(() => {
           referrerpolicy="no-referrer"
           @error="broken = new Set(broken).add(s.src)"
         />
-        <div v-else class="hatch">
-          <div class="caption">{{ caption }}</div>
-        </div>
       </div>
     </div>
 
@@ -169,7 +164,7 @@ onBeforeUnmount(() => {
   overscroll-behavior-x: contain;
 }
 
-/* A lone plate should behave exactly as it did before the carousel existed. */
+/* A lone photo should behave exactly as a plain plate would. */
 .track.single {
   overflow-x: hidden;
 }
@@ -177,19 +172,6 @@ onBeforeUnmount(() => {
 .slide {
   flex: 0 0 100%;
   scroll-snap-align: start;
-}
-
-.hatch {
-  height: 230px;
-  background: repeating-linear-gradient(135deg, #e7e2db 0 6px, #f1ece5 6px 12px);
-  display: flex;
-  align-items: flex-end;
-  padding: 10px;
-}
-
-.caption {
-  font: 400 9.5px/1.4 var(--mono);
-  color: #7d7979;
 }
 
 .shot {
@@ -201,14 +183,6 @@ onBeforeUnmount(() => {
      than cropped. The fixed height keeps slides from jumping as you move. */
   object-fit: contain;
   background: #f3f0ec;
-  /* Desaturated at rest so heterogeneous photos read as one system. */
-  filter: grayscale(1) contrast(1.03);
-  transition: filter 0.4s var(--ease);
-}
-
-.plate:hover .shot,
-.track:focus-visible .shot {
-  filter: none;
 }
 
 .bar {
@@ -243,7 +217,6 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 720px) {
-  .hatch,
   .shot {
     height: 180px;
   }

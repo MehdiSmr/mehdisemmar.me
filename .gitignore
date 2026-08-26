@@ -21,6 +21,11 @@ dist-ssr
 .env.*
 !.env.example
 
+# Strava bulk export and anything derived from it: GPS traces, contacts,
+# logins and message history. Local working data, not repo content.
+export_*/
+running-log.csv
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
