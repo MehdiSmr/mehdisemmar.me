@@ -1,9 +1,13 @@
 # mehdisemmar.me
 
-Live at [mehdisemmar.me](https://mehdisemmar.me)
+Source for my personal site — live at [mehdisemmar.me](https://mehdisemmar.me).
 
-Source for my personal site: a home page, a blog of write-ups on places I have
-worked, and a running log. Monochrome, serif, deliberately plain.
+A home page, a blog of write-ups on places I have worked, and a running log that
+reads itself out of a Google Sheet. Black, white, one grey, one typeface.
+
+> **Using this repo:** the code is MIT and yours to fork. The writing and the
+> photographs are not — see [LICENSE](LICENSE). Fork it and put your own content
+> in; that is what it is for.
 
 ## Stack
 
@@ -12,16 +16,49 @@ worked, and a running log. Monochrome, serif, deliberately plain.
 - Vue Router
 - `markdown-it` for blog post bodies
 
-## Routes
+No CSS framework, no component library, no state management. Four runtime
+dependencies in total.
+
+## Getting it running
+
+```bash
+npm install
+npm run dev
+```
+
+Then open the URL Vite prints. The home page and blog work immediately; the
+running log needs a sheet id (below) and shows an empty state without one.
+
+```bash
+npm run build      # vue-tsc type-check, then a static build into dist/
+npm run preview    # serve that build locally
+```
+
+## How it fits together
+
+```
+src/
+  main.ts               routes
+  style.css             the three colours, one typeface, and .underlink
+  data/content.ts       site chrome and the home page's copy, en + fr
+  content/posts/        blog posts, as markdown
+  composables/
+    usePosts.ts         reads the markdown at build time
+    useSheetLog.ts      reads the running log at run time
+    useLang.ts          the en/fr toggle
+  views/                one file per route
+  components/           header, and the running log's photo carousel
+```
 
 | Path | View | Notes |
 | --- | --- | --- |
 | `/` | `HomeView.vue` | Portrait, bio, contact links |
 | `/blog` | `BlogView.vue` | Every post as title and date, newest first |
 | `/blog/:slug` | `PostView.vue` | One post |
-| `/running` | `LogView.vue` | Running log, backed by a Google Sheet |
+| `/running` | `LogView.vue` | Running log, from a Google Sheet |
 
-Unknown paths redirect to `/`.
+Unknown paths redirect to `/`. The router uses history mode, so the host has to
+serve `index.html` for unmatched paths — see `wrangler.jsonc`.
 
 ## Writing a blog post
 
@@ -43,8 +80,6 @@ Body prose, **bold**, *italic*, [links](https://example.com), lists, quotes.
 ![Caption text](/assets/posts/vertex/office.jpg)
 ```
 
-Frontmatter fields:
-
 | Field | Meaning |
 | --- | --- |
 | `title` | Post title, and the whole of its row on the blog index. Defaults to the slug. |
@@ -53,29 +88,27 @@ Frontmatter fields:
 | `order` | Sort key — higher is newer. Ties fall back to the slug. |
 | `skills` | Listed at the foot of the post. Optional. |
 
-The parser accepts `key: value` and `key: [a, b, c]`, one per line — a small
-YAML subset, not the whole language.
+The frontmatter parser accepts `key: value` and `key: [a, b, c]`, one per line —
+a small YAML subset, not the whole language. It lives in `usePosts.ts` and is
+about thirty lines; extend it there if you need more.
 
 ### Images
 
 Put them anywhere under `public/assets/` and reference them by path. An image
 alone in a paragraph becomes a `<figure>`, with its alt text set beneath as the
-caption. Images elsewhere in a paragraph render inline.
-
-Photographs sit on the page directly — no mat, no border — and keep their own
-colour. Everything else is black, white, and one grey for controls that are not
-currently selected.
+caption; images elsewhere in a paragraph render inline.
 
 ### French
 
 A post with no `.fr.md` falls back to its English file and is labelled as
-untranslated, so French can be added one post at a time.
+untranslated, so French can be added one post at a time. Site chrome is
+translated in `src/data/content.ts`.
 
-## Running log
+## The running log
 
-The running log reads from a Google Sheet at runtime, so a new entry needs no
-rebuild. Set `VITE_RUNNING_LOG` to the sheet id (see `.env.example`). The
-sheet's first row must be the header:
+The running log reads from a Google Sheet at run time, so a new entry needs no
+rebuild. Copy `.env.example` to `.env` and set `VITE_RUNNING_LOG` to the sheet
+id. The sheet's first row must be exactly:
 
 ```
 name | date | thoughts | image1 | image2 | image3 | maps
@@ -84,33 +117,35 @@ name | date | thoughts | image1 | image2 | image3 | maps
 Rows are cached in `localStorage` for a day. While editing the sheet, flip
 `CACHE_ENABLED` in `src/composables/useSheetLog.ts` to `false`.
 
-## Local development
+Two things that will bite you:
 
-```bash
-npm install
-npm run dev
-```
+- **The sheet must be readable by anyone with the link**, or the fetch fails and
+  the page says so.
+- **So must every photo.** Drive share links are rewritten to the thumbnail
+  endpoint, which serves a sign-in page rather than an image for anything not
+  publicly shared. A photo that fails to load is dropped, and an entry whose
+  only photo fails shows no carousel at all — which looks identical to an entry
+  that never had one.
 
-Then open the URL Vite prints.
+## Design notes
 
-## Build
+Three colours, defined once in `style.css`: white, black, and one grey for any
+control that is not currently selected. Photographs keep their own colour and
+sit on the page with no mat or border. There are no rules or separators —
+spacing does that work. One typeface, Lora, at every size.
 
-```bash
-npm run build
-```
-
-`vue-tsc` type-checks the project and Vite outputs the static site to `dist/`.
-Preview the production build with `npm run preview`.
+Outbound links that need to read as controls use `.underlink`, which draws its
+underline twice so the rule can erase itself on hover rather than merely
+changing colour.
 
 ## Deployment
 
-Served as static assets from `dist/`. Cloudflare configuration is in
-`wrangler.jsonc`.
+Static assets from `dist/`, on Cloudflare. Configuration is in `wrangler.jsonc`.
+`VITE_RUNNING_LOG` is read at build time, so it has to be set wherever the build
+runs — it ends up in the bundle, which is fine: the sheet has to be world
+readable for the fetch to work at all.
 
 ## License
 
-The source code is released under the [MIT License](LICENSE).
-
-The license covers the code only. The personal content under `public/assets/`,
-`src/content/` and `src/data/` (text, images and photos) is all rights reserved
-and may not be reused.
+Two licenses, one file. Code is MIT; the writing and photographs are all rights
+reserved. See [LICENSE](LICENSE) for exactly which files fall on which side.
