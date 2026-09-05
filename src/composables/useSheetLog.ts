@@ -1,22 +1,19 @@
 import { ref, type Ref } from 'vue'
-import type { Entry, Lang, PageSection } from '../data/content'
+import type { Lang } from '../data/content'
 
 /**
- * Log pages read their entries from a Google Sheet at runtime, so adding a row
- * to the sheet publishes it without a rebuild. Results are cached in
- * localStorage for a day; a failed fetch leaves the caller on its seed content.
+ * The running log reads its entries from a Google Sheet at runtime, so adding a
+ * row to the sheet publishes it without a rebuild. Results are cached in
+ * localStorage for a day; a failed fetch says so rather than showing nothing.
  *
- * Each sheet's first row must be:
+ * The sheet's first row must be:
  *   name | date | thoughts | image1 | image2 | image3 | maps
  */
 
-const SHEET_IDS: Record<PageSection, string | undefined> = {
-  coffee: import.meta.env.VITE_COFFEE_LOG,
-  running: import.meta.env.VITE_RUNNING_LOG
-}
+const SHEET_ID: string | undefined = import.meta.env.VITE_RUNNING_LOG
 
 const DAY = 24 * 60 * 60 * 1000
-const CACHE_PREFIX = 'log-cache:'
+const CACHE_KEY = 'log-cache:running'
 
 /**
  * Rows are kept for a day, so a repeat visit costs no request at all.
@@ -34,6 +31,18 @@ interface SheetRow {
   thoughts: string
   images: string[]
   maps: string
+}
+
+/** A running log entry, ready to render. */
+export interface LogEntry {
+  /** Formatted date. */
+  a: string
+  /** Title. */
+  b: string
+  /** Body. */
+  c: string
+  images: string[]
+  link?: { label: string; href: string }
 }
 
 interface Cached {
@@ -133,9 +142,9 @@ function toRows(payload: unknown): SheetRow[] {
     .filter((r) => r.name !== '')
 }
 
-function readCache(kind: PageSection): SheetRow[] | null {
+function readCache(): SheetRow[] | null {
   try {
-    const raw = localStorage.getItem(CACHE_PREFIX + kind)
+    const raw = localStorage.getItem(CACHE_KEY)
     if (!raw) return null
     const { at, rows } = JSON.parse(raw) as Cached
     if (!Array.isArray(rows) || Date.now() - at > DAY) return null
@@ -145,23 +154,23 @@ function readCache(kind: PageSection): SheetRow[] | null {
   }
 }
 
-function writeCache(kind: PageSection, rows: SheetRow[]) {
+function writeCache(rows: SheetRow[]) {
   try {
-    localStorage.setItem(CACHE_PREFIX + kind, JSON.stringify({ at: Date.now(), rows } as Cached))
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), rows } as Cached))
   } catch {
     // Private browsing and disabled storage both throw; the fetch still worked.
   }
 }
 
-function clearCache(kind: PageSection) {
+function clearCache() {
   try {
-    localStorage.removeItem(CACHE_PREFIX + kind)
+    localStorage.removeItem(CACHE_KEY)
   } catch {
     // Nothing stored to begin with.
   }
 }
 
-/** Newest first, matching how the seed entries are ordered. */
+/** Newest first. */
 function byNewest(a: SheetRow, b: SheetRow) {
   return (b.date || '').localeCompare(a.date || '')
 }
@@ -176,8 +185,8 @@ function mark(iso: string, lang: Lang): string {
   return lang === 'fr' ? `${dd}.${mm}.${yyyy}` : `${mm}.${dd}.${yyyy}`
 }
 
-/** Shapes cached rows into the same `Entry` the rest of the site renders. */
-export function toEntries(rows: SheetRow[], lang: Lang, mapLabel: string): Entry[] {
+/** Shapes cached rows into entries the log page renders. */
+export function toEntries(rows: SheetRow[], lang: Lang, mapLabel: string): LogEntry[] {
   return [...rows].sort(byNewest).map((r) => ({
     a: mark(r.date, lang),
     b: r.name,
@@ -194,31 +203,29 @@ export interface SheetLog {
   loading: Ref<boolean>
 }
 
-export function useSheetLog(kind: PageSection): SheetLog {
+export function useSheetLog(): SheetLog {
   const rows = ref<SheetRow[] | null>(null)
   const failed = ref(false)
   const loading = ref(true)
 
-  const id = SHEET_IDS[kind]
-  if (!id) {
-    // No sheet configured: the caller falls back to its seed entries.
+  if (!SHEET_ID) {
     failed.value = true
     loading.value = false
     return { rows, failed, loading }
   }
 
   if (CACHE_ENABLED) {
-    const cached = readCache(kind)
+    const cached = readCache()
     if (cached) {
       rows.value = cached
       loading.value = false
       return { rows, failed, loading }
     }
   } else {
-    clearCache(kind)
+    clearCache()
   }
 
-  fetch(endpoint(id))
+  fetch(endpoint(SHEET_ID))
     .then((res) => {
       if (!res.ok) throw new Error(`sheet responded ${res.status}`)
       return res.text()
@@ -226,7 +233,7 @@ export function useSheetLog(kind: PageSection): SheetLog {
     .then((body) => {
       const parsed = toRows(parseGviz(body))
       rows.value = parsed
-      if (CACHE_ENABLED) writeCache(kind, parsed)
+      if (CACHE_ENABLED) writeCache(parsed)
     })
     .catch(() => {
       failed.value = true

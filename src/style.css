@@ -1,17 +1,15 @@
 :root {
-  --ground: #f8f4f4;
-  --ink: #201f1d;
-  --accent: #7d5411;
-  --gold: #b68235;
-  --body: #444141;
-  --muted: #605d5d;
-  --prose: #332f2f;
-  --rule: rgba(32, 31, 29, 0.16);
-  --rule-soft: rgba(32, 31, 29, 0.1);
-  --mark: rgba(32, 31, 29, 0.4);
+  /* Three values, and nothing else: white, black, and one grey for anything
+     not currently selected. Photographs keep their own colour. */
+  --ground: #ffffff;
+  --ink: #000000;
+  --gray: #8a8a8a;
+  /* Barely-there grey, for a rule that should read as absence until it is not. */
+  --hairline: #e4e4e4;
+  /* One typeface for the whole site — the header's. */
   --serif: 'Lora', Georgia, serif;
-  --display: 'Cormorant Garamond', Garamond, serif;
-  --mono: 'Courier Prime', ui-monospace, Menlo, monospace;
+  /* Code only, where character alignment matters. Nothing else uses it. */
+  --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -55,14 +53,68 @@ button:disabled {
   cursor: default;
 }
 
+/*
+ * Links carry no colour and no underline of their own. Where one needs to read
+ * as a control it is given the grey-to-black treatment at its own call site;
+ * elsewhere it simply takes the colour of the text around it.
+ */
 a {
-  color: var(--accent);
+  color: inherit;
   text-decoration: none;
-  transition: color 0.3s ease;
 }
 
-a:hover {
+/*
+ * An outbound link that has to read as a control: github, linkedin, email,
+ * strava. Black text on a black rule at rest; both recede on hover — the text
+ * to grey, and the rule to near-white as a second line wipes in from the left
+ * over the first, so the underline appears to erase itself.
+ *
+ * Used across views, so it lives here rather than in any one of them.
+ */
+.underlink {
+  position: relative;
+  display: inline-block;
   color: var(--ink);
+  padding-bottom: 6px;
+  transition: color 0.4s var(--ease);
+}
+
+.underlink:hover,
+.underlink:focus-visible {
+  color: var(--gray);
+}
+
+.underlink::before,
+.underlink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+}
+
+.underlink::before {
+  background: var(--ink);
+}
+
+/* Painted after ::before, so it covers it exactly as it wipes across. */
+.underlink::after {
+  background: var(--hairline);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s var(--ease);
+}
+
+.underlink:hover::after,
+.underlink:focus-visible::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .underlink::after {
+    transition: none;
+  }
 }
 
 button {
@@ -76,15 +128,15 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--ink);
   outline-offset: 3px;
 }
 
 /*
- * No scrollbar is painted anywhere — the page, the detail popup, the carousel
- * track, and anything added later. Scrolling itself is untouched: wheel,
- * trackpad, touch, keyboard and scroll-snap all behave exactly as before.
- * Applied universally rather than per element so nothing can be missed.
+ * No scrollbar is painted anywhere — the page, the carousel track, and
+ * anything added later. Scrolling itself is untouched: wheel, trackpad, touch,
+ * keyboard and scroll-snap all behave exactly as before. Applied universally
+ * rather than per element so nothing can be missed.
  */
 *,
 html,

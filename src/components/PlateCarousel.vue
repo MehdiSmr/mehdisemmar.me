@@ -43,11 +43,6 @@ const view = computed<Slot[]>(() => {
   return [r[r.length - 1], ...r, r[0]]
 })
 
-const at = computed(() => view.value[slot.value]?.n ?? 0)
-const counter = computed(
-  () => `${String(at.value + 1).padStart(2, '0')} / ${String(real.value.length).padStart(2, '0')}`
-)
-
 const reduced = () =>
   typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -138,23 +133,19 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
+    <!-- The arrows are the whole control; there is no counter beside them. -->
     <figcaption v-if="many" class="bar">
-      <span class="count">{{ counter }}</span>
-      <span class="arrows">
-        <button type="button" aria-label="Previous" @click="step(-1)">‹</button>
-        <button type="button" aria-label="Next" @click="step(1)">›</button>
-      </span>
+      <button type="button" aria-label="Previous" @click="step(-1)">‹</button>
+      <button type="button" aria-label="Next" @click="step(1)">›</button>
     </figcaption>
   </figure>
 </template>
 
 <style scoped>
+/* The photograph sits on the page directly — no mat, no border. */
 .plate {
   margin: 6px 0;
-  padding: 9px;
   max-width: 540px;
-  background: #f3f0ec;
-  border: 1px solid rgba(32, 31, 29, 0.12);
 }
 
 .track {
@@ -178,41 +169,33 @@ onBeforeUnmount(() => {
   display: block;
   width: 100%;
   height: 230px;
-  /* `contain`, not `cover`: the whole frame stays visible and the leftover
-     space is the mat's own colour, so a tall photo reads as mounted rather
-     than cropped. The fixed height keeps slides from jumping as you move. */
+  /* `contain`, not `cover`: the whole frame stays visible. The leftover space
+     is the page's own white, so nothing frames the photo. The fixed height
+     keeps slides from jumping as you move between them. */
   object-fit: contain;
-  background: #f3f0ec;
+  /* Pinned left, so a narrow photo lines up with the text beside it rather
+     than floating in the middle of the slide. */
+  object-position: left center;
+  background: var(--ground);
 }
 
+/* Left, under the photo's own left edge. */
 .bar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   padding: 9px 1px 1px;
 }
 
-.count {
-  font: 400 9.5px/1 var(--mono);
-  font-feature-settings: 'tnum';
-  letter-spacing: 0.14em;
-  color: #7d7979;
-}
-
-.arrows {
-  display: flex;
-  gap: 10px;
-}
-
-.arrows button {
-  font: 400 14px/1 var(--mono);
-  color: var(--accent);
+.bar button {
+  font: 400 16px/1 var(--serif);
+  color: var(--gray);
   padding: 0 2px;
   transition: color 0.3s ease;
 }
 
-.arrows button:hover {
+.bar button:hover,
+.bar button:active {
   color: var(--ink);
 }
 

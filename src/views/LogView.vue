@@ -3,34 +3,31 @@ import { computed } from 'vue'
 import PlateCarousel from '../components/PlateCarousel.vue'
 import { lang } from '../composables/useLang'
 import { toEntries, useSheetLog } from '../composables/useSheetLog'
-import { content, type PageSection } from '../data/content'
-
-const props = defineProps<{ kind: PageSection }>()
+import { content } from '../data/content'
 
 const d = computed(() => content[lang.value])
-const { rows: sheetRows, loading, failed } = useSheetLog(props.kind)
+const { rows: sheetRows, loading, failed } = useSheetLog()
 
 /**
  * The sheet is the only source. An empty sheet means an empty log; a failed
  * fetch says so plainly rather than showing something that is not real.
  */
 const posts = computed(() =>
-  sheetRows.value ? toEntries(sheetRows.value, lang.value, d.value.linkLabel[props.kind]) : []
+  sheetRows.value ? toEntries(sheetRows.value, lang.value, d.value.runningLinkLabel) : []
 )
 
-/** Only ever the loading note now; the entry count is not shown. */
+/** Only ever the loading note; the entry count is not shown. */
 const mark = computed(() => (loading.value ? d.value.loading : ''))
 </script>
 
 <template>
   <div class="log">
     <div class="masthead">
-      <RouterLink class="back" to="/">{{ d.back }}</RouterLink>
       <div class="titleline">
-        <h1 class="title">{{ d.labels[kind] }}</h1>
+        <h1 class="title">{{ d.running.title }}</h1>
         <div class="mark">{{ mark }}</div>
       </div>
-      <p class="blurb">{{ d.blurbs[kind] }}</p>
+      <p class="blurb">{{ d.running.blurb }}</p>
     </div>
 
     <p v-if="failed" class="empty">{{ d.error }}</p>
@@ -42,7 +39,13 @@ const mark = computed(() => (loading.value ? d.value.loading : ''))
       <h2 class="head">{{ post.b }}</h2>
       <PlateCarousel :images="post.images" :alt="post.b" />
       <p class="body">{{ post.c }}</p>
-      <a v-if="post.link" class="link" :href="post.link.href" target="_blank" rel="noopener">
+      <a
+        v-if="post.link"
+        class="link underlink"
+        :href="post.link.href"
+        target="_blank"
+        rel="noopener"
+      >
         {{ post.link.label }}
       </a>
     </article>
@@ -60,16 +63,7 @@ const mark = computed(() => (loading.value ? d.value.loading : ''))
 .masthead {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  border-bottom: 1px solid var(--rule);
-  padding-bottom: 26px;
-}
-
-.back {
-  font: 400 10.5px/1 var(--mono);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  align-self: flex-start;
+  gap: 18px;
 }
 
 .titleline {
@@ -81,14 +75,15 @@ const mark = computed(() => (loading.value ? d.value.loading : ''))
 
 .title {
   margin: 0;
-  font: 300 46px/1.05 var(--display);
-  letter-spacing: -0.01em;
+  font: 400 30px/1.15 var(--serif);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .mark {
-  font: 400 11px/1 var(--mono);
+  font: 400 11px/1 var(--serif);
   font-feature-settings: 'tnum';
-  color: var(--mark);
+  color: var(--gray);
   white-space: nowrap;
 }
 
@@ -96,35 +91,34 @@ const mark = computed(() => (loading.value ? d.value.loading : ''))
   margin: 0;
   max-width: 440px;
   font: 400 13.5px/1.8 var(--serif);
-  color: var(--muted);
 }
 
 .empty {
   margin: 0;
   font: 400 13.5px/1.7 var(--serif);
-  color: rgba(32, 31, 29, 0.42);
+  color: var(--gray);
   font-style: italic;
 }
 
+/* Entries are separated by space alone — no rule between them. */
 .post {
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding-bottom: 44px;
-  border-bottom: 1px solid var(--rule-soft);
 }
 
 .date {
-  font: 400 10.5px/1 var(--mono);
+  font: 400 10.5px/1 var(--serif);
   font-feature-settings: 'tnum';
   letter-spacing: 0.16em;
-  color: var(--accent);
+  text-transform: uppercase;
+  color: var(--gray);
 }
 
 .head {
   margin: 0;
-  font: 400 32px/1.15 var(--display);
-  letter-spacing: -0.005em;
+  font: 400 21px/1.35 var(--serif);
   text-wrap: pretty;
 }
 
@@ -132,18 +126,16 @@ const mark = computed(() => (loading.value ? d.value.loading : ''))
   margin: 0;
   max-width: 560px;
   font: 400 15px/1.85 var(--serif);
-  color: var(--prose);
   text-align: justify;
   hyphens: auto;
 }
 
+/* Underlined so it reads as a control — see `.underlink` in style.css. */
 .link {
-  font: 400 10.5px/1.6 var(--mono);
+  font: 400 10.5px/1.6 var(--serif);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  border-bottom: 1px solid rgba(182, 130, 53, 0.5);
   align-self: flex-start;
-  padding-bottom: 2px;
   margin-top: 4px;
 }
 
@@ -153,11 +145,11 @@ const mark = computed(() => (loading.value ? d.value.loading : ''))
   }
 
   .title {
-    font-size: 36px;
+    font-size: 24px;
   }
 
   .head {
-    font-size: 26px;
+    font-size: 19px;
   }
 
   .titleline {
