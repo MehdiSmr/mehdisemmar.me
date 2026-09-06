@@ -1,0 +1,72 @@
+import MarkdownIt from 'markdown-it'
+
+/**
+ * One markdown configuration for the whole site: blog post bodies, and the
+ * short prose on the home page. `html: false` means authored markup never
+ * reaches the page, so rendered output is safe to bind with `v-html`.
+ */
+export const md = new MarkdownIt({ html: false, linkify: true, typographer: true })
+
+/**
+ * Outbound links open in a new tab. Links beginning with `/` are this site's
+ * own and are left alone — HomeView routes them through vue-router rather than
+ * letting the browser reload the page.
+ */
+const openLink = md.renderer.rules.link_open
+md.renderer.rules.link_open = (tokens, i, opts, env, self) => {
+  const href = String(tokens[i].attrGet('href') ?? '')
+  if (/^https?:/i.test(href)) {
+    tokens[i].attrSet('target', '_blank')
+    tokens[i].attrSet('rel', 'noopener noreferrer')
+  }
+  return openLink ? openLink(tokens, i, opts, env, self) : self.renderToken(tokens, i, opts)
+}
+
+/** Body photos are lazy — a post can carry a lot of them. */
+const openImage = md.renderer.rules.image
+md.renderer.rules.image = (tokens, i, opts, env, self) => {
+  tokens[i].attrSet('loading', 'lazy')
+  tokens[i].attrSet('decoding', 'async')
+  return openImage ? openImage(tokens, i, opts, env, self) : self.renderToken(tokens, i, opts)
+}
+
+/**
+ * A paragraph holding nothing but an image becomes a `<figure>`, with the alt
+ * text repeated as its caption. `<figure>` cannot legally nest inside `<p>`, so
+ * the paragraph's own tag is rewritten rather than wrapped.
+ */
+md.core.ruler.push('image_figure', (state) => {
+  const tokens = state.tokens
+
+  for (let i = 1; i < tokens.length - 1; i++) {
+    if (tokens[i].type !== 'inline') continue
+
+    const kids = tokens[i].children ?? []
+    if (kids.length !== 1 || kids[0].type !== 'image') continue
+
+    const open = tokens[i - 1]
+    const close = tokens[i + 1]
+    if (open.type !== 'paragraph_open' || close.type !== 'paragraph_close') continue
+
+    open.tag = 'figure'
+    close.tag = 'figure'
+    open.attrSet('class', 'plate')
+
+    // The image token's content is its alt text.
+    const alt = kids[0].content
+    if (!alt) continue
+
+    const caption = new state.Token('html_block', '', 0)
+    caption.content = `<figcaption>${md.utils.escapeHtml(alt)}</figcaption>`
+    tokens.splice(i + 1, 0, caption)
+    i++
+  }
+})
+
+/**
+ * Renders a single line or paragraph without wrapping it in `<p>` — for copy
+ * that already sits inside an element of its own.
+ */
+export function renderInline(src: string): string {
+  return md.renderInline(src)
+}

@@ -46,17 +46,19 @@ export const content: Record<Lang, LangContent> = {
   en: {
     nav: { home: 'home', resume: 'résumé', blog: 'blog', running: 'running' },
     bio: [
-      'Placeholder. Write the real paragraph here — who you are, what you are studying, what you are building, and whatever else belongs on a first impression.',
-      'A second paragraph, if you want one. Replace or delete it.'
+      "Hi, I'm Mehdi Semmar, a Software Engineering student at the University of Ottawa with a habit of collecting new sectors. Across five co-op terms I've worked in government, as a full-stack developer in [public safety](/blog/versaterm), an ML engineer in [automotive R&D](/blog/raven), and an AI software engineer in [fintech](/blog/vertex). The throughline: drop me into an unfamiliar stack and I'll start building.",
+      "When I'm not on a co-op, I'm building something of my own. I co-founded and incorporated [RZO Sports](/blog/rzo), a marketplace connecting athletes with sports venues that placed second of 40 teams in a pitch competition. I also like showing up for my community, on the dev team for uOttaHack 8, leading events for [SESA](/blog/sesa), and TAing software engineering courses.",
+      "Lately I've been drawn to AI and machine learning, and I'm starting as a Research Assistant working on reinforcement learning for autonomous drones. I also love math enough to take extra courses on the side. Off the keyboard, I'm discovering the world or out running (I finished a marathon).",
+      'Always happy to connect and chat. Enjoy the site :)'
     ],
     portraitAlt: 'Mehdi Semmar',
     blog: {
       title: 'blog',
-      blurb: 'Placeholder. One line on what these write-ups are.'
+      blurb: 'Ideas, experiences, and thoughts, written down before I forget them.'
     },
     running: {
       title: 'running log',
-      blurb: 'Mornings, splits, and what the run actually felt like.'
+      blurb: 'Mornings, splits, and little reflections, one run at a time.'
     },
     back: '← back',
     empty: 'Nothing here yet.',
@@ -70,17 +72,19 @@ export const content: Record<Lang, LangContent> = {
   fr: {
     nav: { home: 'accueil', resume: 'cv', blog: 'blogue', running: 'course' },
     bio: [
-      "Texte à remplacer. Écris ici le vrai paragraphe — qui tu es, ce que tu étudies, ce que tu construis, et tout ce qui mérite d'être dit en premier.",
-      'Un deuxième paragraphe, si tu en veux un. Remplace-le ou supprime-le.'
+      "Bonjour, je suis Mehdi Semmar, étudiant en génie logiciel à l'Université d'Ottawa, avec la manie de collectionner les secteurs. En cinq stages coop, j'ai travaillé dans le gouvernement, comme développeur full-stack en [sécurité publique](/blog/versaterm), ingénieur en apprentissage automatique en [R-D automobile](/blog/raven), et ingénieur logiciel en IA en [fintech](/blog/vertex). Le fil conducteur : lâchez-moi dans une pile inconnue et je me mets à construire.",
+      "Quand je ne suis pas en stage, je construis quelque chose à moi. J'ai cofondé et incorporé [RZO Sports](/blog/rzo), une place de marché reliant les athlètes aux terrains de sport, arrivée deuxième sur 40 équipes dans un concours de pitch. J'aime aussi m'impliquer dans ma communauté : équipe de développement d'uOttaHack 8, direction des événements de [SESA](/blog/sesa), et assistant d'enseignement pour des cours de génie logiciel.",
+      "Depuis quelque temps, l'IA et l'apprentissage automatique m'attirent, et je commence comme assistant de recherche sur l'apprentissage par renforcement appliqué aux drones autonomes. J'aime aussi assez les mathématiques pour suivre des cours supplémentaires à côté. Loin du clavier, je découvre le monde ou je cours (j'ai terminé un marathon).",
+      'Toujours partant pour échanger. Bonne visite :)'
     ],
     portraitAlt: 'Mehdi Semmar',
     blog: {
       title: 'blogue',
-      blurb: 'Texte à remplacer. Une ligne sur ce que sont ces textes.'
+      blurb: 'Des idées, des expériences, et des pensées, notées avant que je les oublie.'
     },
     running: {
       title: 'journal de course',
-      blurb: 'Les matins, les temps de passage, et ce que la sortie a vraiment donné.'
+      blurb: 'Les matins, les temps de passage, et de petites réflexions, une sortie à la fois.'
     },
     back: '← retour',
     empty: "Rien pour l'instant.",
