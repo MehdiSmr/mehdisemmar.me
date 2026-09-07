@@ -177,6 +177,29 @@ const post = computed(() => postAt(props.slug, lang.value))
   max-width: 400px;
 }
 
+/* Images written back to back. The grid runs wider than the measure of the
+   text, so a screenshot at half its width is still worth looking at. */
+.body :deep(.figure-grid) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 30px 0;
+  width: min(940px, calc(100vw - 120px));
+}
+
+/* The cell decides the width in here, so a hint would only fight it. */
+.body :deep(.figure-grid figure.plate) {
+  margin: 0;
+  max-width: none;
+}
+
+@media (max-width: 720px) {
+  .body :deep(.figure-grid) {
+    width: 100%;
+    gap: 10px;
+  }
+}
+
 .body :deep(img) {
   display: block;
   width: 100%;

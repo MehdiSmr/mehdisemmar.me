@@ -17,7 +17,7 @@ export const links = {
 }
 
 /** The portrait on the home page. */
-export const portrait = '/me.jpeg'
+export const portrait = '/assets/images/me.jpeg'
 
 export interface LangContent {
   nav: { home: string; resume: string; blog: string; running: string }

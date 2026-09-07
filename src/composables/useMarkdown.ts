@@ -76,6 +76,52 @@ md.core.ruler.push('image_figure', (state) => {
   }
 })
 
+const isFigureOpen = (t: { type: string; tag: string }) =>
+  t.type === 'paragraph_open' && t.tag === 'figure'
+
+const isFigureClose = (t: { type: string; tag: string }) =>
+  t.type === 'paragraph_close' && t.tag === 'figure'
+
+/**
+ * Two or more images in a row become a grid. Nothing to mark up: writing the
+ * images back to back is the whole convention, and a lone image is left as the
+ * full-width figure it already was.
+ *
+ * Runs after `image_figure`, which is what turns those paragraphs into figures.
+ */
+md.core.ruler.push('image_grid', (state) => {
+  const tokens = state.tokens
+
+  for (let i = 0; i < tokens.length; i++) {
+    if (!isFigureOpen(tokens[i])) continue
+
+    // Walk the run of adjacent figures, counting them.
+    let end = i
+    let count = 0
+    while (end < tokens.length && isFigureOpen(tokens[end])) {
+      let close = end
+      while (close < tokens.length && !isFigureClose(tokens[close])) close++
+      if (close === tokens.length) break
+      end = close + 1
+      count++
+    }
+
+    if (count < 2) {
+      i = end - 1
+      continue
+    }
+
+    const open = new state.Token('html_block', '', 0)
+    open.content = '<div class="figure-grid">\n'
+    const shut = new state.Token('html_block', '', 0)
+    shut.content = '</div>\n'
+
+    tokens.splice(end, 0, shut)
+    tokens.splice(i, 0, open)
+    i = end + 1
+  }
+})
+
 /**
  * Renders a single line or paragraph without wrapping it in `<p>` — for copy
  * that already sits inside an element of its own.
