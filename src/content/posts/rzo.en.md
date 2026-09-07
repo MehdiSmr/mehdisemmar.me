@@ -4,13 +4,14 @@ date: 2026-04-15
 order: 80
 ---
 
-I founded RZO Sports with a good friend of mine. He was the CEO, I was the tech
-guy, and it started when we stumbled into a real problem: there was no good
-marketplace for players to book sports fields and organize games in one
-streamlined place, and no simple way for venues to manage their bookings on the
-other side. There are some solid competitors out there, like GoodRec,
-CatchCorner, and EZFacility, but each of them focused on one piece of the
-puzzle. We wanted to centralize everything in a single app.
+![](/assets/images/rzologo.png "medium")
+
+I founded RZO Sports with a good friend of mine. It started when we stumbled
+into a real problem: there was no good marketplace for players to book sports
+fields and organize games in one streamlined place, and no simple way for venues
+to manage their bookings on the other side. There are some solid competitors out
+there, like GoodRec, CatchCorner, and EZFacility, but each of them focused on
+one piece of the puzzle. We wanted to centralize everything in a single app.
 
 We got our start through Startup Garage, an accelerator at uOttawa. That's where
 we built out the business plan, the branding, and everything around it, and

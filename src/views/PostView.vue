@@ -124,14 +124,42 @@ const post = computed(() => postAt(props.slug, lang.value))
   line-height: 1.4;
 }
 
-/* A link in prose behaves like every other control: grey until hovered. */
+/*
+ * The `.underlink` treatment, as on the home page: black text on a black rule,
+ * and on hover a near-white line wipes over it from the left while the text
+ * greys. Built from two stacked gradients rather than that class's pseudo-
+ * elements, which cannot wrap across a line break — and a link mid-paragraph
+ * very much can.
+ */
 .body :deep(a) {
-  color: var(--gray);
-  transition: color 0.3s ease;
+  color: var(--ink);
+  padding-bottom: 2px;
+  background-image:
+    linear-gradient(var(--hairline), var(--hairline)),
+    linear-gradient(var(--ink), var(--ink));
+  background-size:
+    0 1px,
+    100% 1px;
+  background-position:
+    0 100%,
+    0 100%;
+  background-repeat: no-repeat;
+  transition:
+    background-size 0.4s var(--ease),
+    color 0.4s var(--ease);
 }
 
 .body :deep(a:hover) {
-  color: var(--ink);
+  color: var(--gray);
+  background-size:
+    100% 1px,
+    100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .body :deep(a) {
+    transition: none;
+  }
 }
 
 .body :deep(strong) {
@@ -177,6 +205,16 @@ const post = computed(() => postAt(props.slug, lang.value))
   max-width: 400px;
 }
 
+/* Wider than the measure of the text, for a diagram whose labels would be
+   unreadable at the column's width. Pulled left by the shell's own padding so
+   it sits centred against the page rather than hanging off the text's right
+   edge; that padding is the furthest it can go without leaving the shell. */
+.body :deep(figure.plate.wide) {
+  width: min(940px, calc(100vw - 120px));
+  max-width: none;
+  margin-left: -60px;
+}
+
 /* Images written back to back. The grid runs wider than the measure of the
    text, so a screenshot at half its width is still worth looking at. */
 .body :deep(.figure-grid) {
@@ -187,16 +225,29 @@ const post = computed(() => postAt(props.slug, lang.value))
   width: min(940px, calc(100vw - 120px));
 }
 
-/* The cell decides the width in here, so a hint would only fight it. */
+/* The cell decides the width in here, so a hint would only fight it. Cells
+   stretch to the tallest in their row and the photograph fills its cell, so a
+   pair reads as one size however differently the two were shot. */
 .body :deep(.figure-grid figure.plate) {
   margin: 0;
   max-width: none;
+  height: 100%;
+}
+
+.body :deep(.figure-grid img) {
+  height: 100%;
+  object-fit: cover;
 }
 
 @media (max-width: 720px) {
   .body :deep(.figure-grid) {
     width: 100%;
     gap: 10px;
+  }
+
+  .body :deep(figure.plate.wide) {
+    width: 100%;
+    margin-left: 0;
   }
 }
 

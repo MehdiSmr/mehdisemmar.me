@@ -32,10 +32,11 @@ md.renderer.rules.image = (tokens, i, opts, env, self) => {
 
 /**
  * Width hints an image can carry as its markdown title, so a logo need not run
- * the full width of the column: `![](/logo.png "small")`. Anything else in the
- * title position is ignored and left alone.
+ * the full width of the column: `![](/logo.png "small")`. `wide` goes the other
+ * way, breaking out past the measure of the text for a diagram that needs the
+ * room. Anything else in the title position is ignored and left alone.
  */
-const SIZES = new Set(['small', 'medium'])
+const SIZES = new Set(['small', 'medium', 'wide'])
 
 /**
  * A paragraph holding nothing but an image becomes a `<figure>`, with the alt
