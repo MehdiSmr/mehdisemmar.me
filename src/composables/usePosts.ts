@@ -1,3 +1,4 @@
+import { formatDate } from './useDate'
 import { md } from './useMarkdown'
 import type { Lang } from '../data/content'
 
@@ -20,14 +21,21 @@ export interface Post {
   title: string
   /** Role or capacity — the line under the title. */
   role: string
-  /** Free-text dates, shown as written. */
-  dates: string
+  /**
+   * Ready to display, formatted for the language asked for. A frontmatter
+   * `date` of `YYYY-MM-DD` is rendered the way the running log renders its
+   * dates; anything else is passed through as the author typed it.
+   */
+  date: string
   /** Sort key. Higher is newer; ties fall back to the slug. */
   order: number
   skills: string[]
   /** Rendered HTML body. */
   html: string
 }
+
+/** A post as parsed, before its date is formatted for a given language. */
+type ParsedPost = Omit<Post, 'date'> & { rawDate: string }
 
 interface Front {
   [key: string]: string | string[]
@@ -93,7 +101,7 @@ const files = import.meta.glob('../content/posts/*.md', {
 }) as Record<string, string>
 
 /** Parsed once at module load — the files cannot change at runtime. */
-const byLang: Record<Lang, Map<string, Post>> = { en: new Map(), fr: new Map() }
+const byLang: Record<Lang, Map<string, ParsedPost>> = { en: new Map(), fr: new Map() }
 
 for (const [path, raw] of Object.entries(files)) {
   const name = NAME.exec(path)
@@ -109,7 +117,7 @@ for (const [path, raw] of Object.entries(files)) {
     translated: true,
     title: str(front, 'title') || slug,
     role: str(front, 'role'),
-    dates: str(front, 'dates'),
+    rawDate: str(front, 'date'),
     order: Number(str(front, 'order')) || 0,
     skills: list(front, 'skills'),
     html: md.render(body)
@@ -123,14 +131,24 @@ function byNewest(a: Post, b: Post) {
 
 /**
  * Every post in `lang`, with the English file standing in wherever a
- * translation is missing. Ordering is the same in both languages.
+ * translation is missing. Ordering is the same in both languages, and dates are
+ * formatted for the language asked for rather than for the file they came from.
  */
 export function postsIn(lang: Lang): Post[] {
   const out: Post[] = []
+
   for (const [slug, en] of byLang.en) {
-    const local = lang === 'en' ? undefined : byLang[lang].get(slug)
-    out.push(local ?? { ...en, lang, translated: lang === 'en' })
+    const local = lang === 'en' ? en : byLang[lang].get(slug)
+    const { rawDate, ...post } = local ?? en
+    out.push({
+      ...post,
+      lang,
+      translated: local !== undefined,
+      // A date it cannot read is shown as typed, so "Dates TBD" still works.
+      date: formatDate(rawDate, lang) || rawDate
+    })
   }
+
   return out.sort(byNewest)
 }
 

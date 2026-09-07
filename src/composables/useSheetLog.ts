@@ -1,4 +1,5 @@
 import { ref, type Ref } from 'vue'
+import { formatDate } from './useDate'
 import type { Lang } from '../data/content'
 
 /**
@@ -175,20 +176,10 @@ function byNewest(a: SheetRow, b: SheetRow) {
   return (b.date || '').localeCompare(a.date || '')
 }
 
-/** Day and month swap by language; the year always trails, as both locales write it. */
-function mark(iso: string, lang: Lang): string {
-  if (!iso) return ''
-  const d = new Date(iso)
-  const mm = String(d.getMonth() + 1).padStart(2, '0')
-  const dd = String(d.getDate()).padStart(2, '0')
-  const yyyy = String(d.getFullYear())
-  return lang === 'fr' ? `${dd}.${mm}.${yyyy}` : `${mm}.${dd}.${yyyy}`
-}
-
 /** Shapes cached rows into entries the log page renders. */
 export function toEntries(rows: SheetRow[], lang: Lang, mapLabel: string): LogEntry[] {
   return [...rows].sort(byNewest).map((r) => ({
-    a: mark(r.date, lang),
+    a: formatDate(r.date, lang),
     b: r.name,
     c: r.thoughts,
     images: r.images,

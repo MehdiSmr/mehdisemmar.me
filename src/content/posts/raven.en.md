@@ -1,7 +1,7 @@
 ---
 title: Raven Connected
 role: Role TBD
-dates: Dates TBD
+date: Dates TBD
 order: 60
 skills: [SAM3 / SAM3D, VGGT, Gaussian Splatting, Depth Pro]
 ---

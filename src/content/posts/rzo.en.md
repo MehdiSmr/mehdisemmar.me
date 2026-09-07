@@ -1,7 +1,7 @@
 ---
 title: RZO Sports
 role: Co-founder
-dates: Dates TBD
+date: Dates TBD
 order: 80
 skills: [Spring Boot, React, MySQL, Docker, EC2]
 ---

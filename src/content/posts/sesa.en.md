@@ -1,7 +1,7 @@
 ---
 title: SESA
 role: Events team lead
-dates: Dates TBD
+date: Dates TBD
 order: 40
 skills: [Team lead, Events, Partnerships]
 ---

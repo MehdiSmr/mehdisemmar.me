@@ -18,7 +18,7 @@ const post = computed(() => postAt(props.slug, lang.value))
 
     <template v-else>
       <header class="masthead">
-        <div class="dates">{{ post.dates }}</div>
+        <div class="dates">{{ post.date }}</div>
         <h1 class="title">{{ post.title }}</h1>
         <div v-if="post.role" class="role">{{ post.role }}</div>
       </header>
@@ -165,6 +165,16 @@ const post = computed(() => postAt(props.slug, lang.value))
    colour. Only the caption is set apart from it. */
 .body :deep(figure.plate) {
   margin: 30px 0;
+}
+
+/* Width hints from the markdown, for images that would look absurd at the full
+   width of the column — a logo, a screenshot of one control. */
+.body :deep(figure.plate.small) {
+  max-width: 200px;
+}
+
+.body :deep(figure.plate.medium) {
+  max-width: 400px;
 }
 
 .body :deep(img) {

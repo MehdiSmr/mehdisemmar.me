@@ -31,6 +31,13 @@ md.renderer.rules.image = (tokens, i, opts, env, self) => {
 }
 
 /**
+ * Width hints an image can carry as its markdown title, so a logo need not run
+ * the full width of the column: `![](/logo.png "small")`. Anything else in the
+ * title position is ignored and left alone.
+ */
+const SIZES = new Set(['small', 'medium'])
+
+/**
  * A paragraph holding nothing but an image becomes a `<figure>`, with the alt
  * text repeated as its caption. `<figure>` cannot legally nest inside `<p>`, so
  * the paragraph's own tag is rewritten rather than wrapped.
@@ -48,9 +55,15 @@ md.core.ruler.push('image_figure', (state) => {
     const close = tokens[i + 1]
     if (open.type !== 'paragraph_open' || close.type !== 'paragraph_close') continue
 
+    // A recognised hint sizes the figure and is consumed, so it never reaches
+    // the page as a tooltip.
+    const hint = String(kids[0].attrGet('title') ?? '').trim()
+    const sized = SIZES.has(hint)
+    if (sized) kids[0].attrs = (kids[0].attrs ?? []).filter(([name]) => name !== 'title')
+
     open.tag = 'figure'
     close.tag = 'figure'
-    open.attrSet('class', 'plate')
+    open.attrSet('class', sized ? `plate ${hint}` : 'plate')
 
     // The image token's content is its alt text.
     const alt = kids[0].content

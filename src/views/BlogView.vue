@@ -22,7 +22,7 @@ const posts = computed(() => postsIn(lang.value))
       <li v-for="post in posts" :key="post.slug">
         <RouterLink class="row" :to="`/blog/${post.slug}`">
           <span class="head">{{ post.title }}</span>
-          <span class="dates">{{ post.dates }}</span>
+          <span class="dates">{{ post.date }}</span>
         </RouterLink>
       </li>
     </ol>
