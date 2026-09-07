@@ -1,3 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="15" ry="15" fill="#ffffff" />
+  <!--
+    A white square is invisible against a light browser tab strip, so on light
+    it carries a grey edge. In dark mode the tab is dark and the white reads on
+    its own, so the edge is dropped.
+  -->
+  <style>
+    .square { fill: #ffffff; stroke: #c8c8c8; stroke-width: 3; }
+    @media (prefers-color-scheme: dark) {
+      .square { stroke: none; }
+    }
+  </style>
+  <rect class="square" x="1.5" y="1.5" width="61" height="61" rx="14" ry="14" />
 </svg>
