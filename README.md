@@ -1,12 +1,12 @@
 # mehdisemmar.me
 
-Source for my personal site — live at [mehdisemmar.me](https://mehdisemmar.me).
+Source for my personal site, live at [mehdisemmar.me](https://mehdisemmar.me).
 
 A home page, a blog of write-ups on places I have worked, and a running log that
 reads itself out of a Google Sheet. Black, white, one grey, one typeface.
 
 > **Using this repo:** the code is MIT and yours to fork. The writing and the
-> photographs are not — see [LICENSE](LICENSE). Fork it and put your own content
+> photographs are not. See [LICENSE](LICENSE). Fork it and put your own content
 > in; that is what it is for.
 
 ## Stack
@@ -58,12 +58,12 @@ src/
 | `/running` | `LogView.vue` | Running log, from a Google Sheet |
 
 Unknown paths redirect to `/`. The router uses history mode, so the host has to
-serve `index.html` for unmatched paths — see `wrangler.jsonc`.
+serve `index.html` for unmatched paths. See `wrangler.jsonc`.
 
 ## Writing a blog post
 
 Posts are markdown files in `src/content/posts`, named `<slug>.<lang>.md`. Drop
-a file in and it appears — there is nothing else to register. The file name is
+a file in and it appears; there is nothing else to register. The file name is
 the URL: `vertex.en.md` is served at `/blog/vertex`.
 
 ```markdown
@@ -85,10 +85,10 @@ Body prose, **bold**, *italic*, [links](https://example.com), lists, quotes.
 | `title` | Post title, and the whole of its row on the blog index. Defaults to the slug. |
 | `role` | Line under the title, on the post's own page. Optional. |
 | `dates` | Free text, shown as written. |
-| `order` | Sort key — higher is newer. Ties fall back to the slug. |
+| `order` | Sort key. Higher is newer. Ties fall back to the slug. |
 | `skills` | Listed at the foot of the post. Optional. |
 
-The frontmatter parser accepts `key: value` and `key: [a, b, c]`, one per line —
+The frontmatter parser accepts `key: value` and `key: [a, b, c]`, one per line:
 a small YAML subset, not the whole language. It lives in `usePosts.ts` and is
 about thirty lines; extend it there if you need more.
 
@@ -124,14 +124,14 @@ Two things that will bite you:
 - **So must every photo.** Drive share links are rewritten to the thumbnail
   endpoint, which serves a sign-in page rather than an image for anything not
   publicly shared. A photo that fails to load is dropped, and an entry whose
-  only photo fails shows no carousel at all — which looks identical to an entry
+  only photo fails shows no carousel at all, which looks identical to an entry
   that never had one.
 
 ## Design notes
 
 Three colours, defined once in `style.css`: white, black, and one grey for any
 control that is not currently selected. Photographs keep their own colour and
-sit on the page with no mat or border. There are no rules or separators —
+sit on the page with no mat or border. There are no rules or separators;
 spacing does that work. One typeface, Lora, at every size.
 
 Outbound links that need to read as controls use `.underlink`, which draws its
@@ -142,7 +142,7 @@ changing colour.
 
 Static assets from `dist/`, on Cloudflare. Configuration is in `wrangler.jsonc`.
 `VITE_RUNNING_LOG` is read at build time, so it has to be set wherever the build
-runs — it ends up in the bundle, which is fine: the sheet has to be world
+runs. It ends up in the bundle, which is fine: the sheet has to be world
 readable for the fetch to work at all.
 
 ## License
