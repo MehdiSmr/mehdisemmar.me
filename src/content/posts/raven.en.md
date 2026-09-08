@@ -1,5 +1,5 @@
 ---
-title: Falling in love with research at Raven Connected
+title: Building a leaf-pile volume estimator, until Meta shipped a better one
 date: 2026-01-14
 order: 60
 ---
