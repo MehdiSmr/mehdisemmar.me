@@ -225,8 +225,8 @@ de détection d'accidents de Raven, ce qui faisait un beau contraste avec toute 
 recherche.
 
 Le travail a aussi porté ses fruits de façon concrète : le MVP et ses résultats
-ont été assez convaincants pour aider à signer un contrat à cinq chiffres avec
-une entreprise spécialisée en nettoyage des rues.
+ont été assez convaincants pour aider à signer un contrat avec une entreprise
+spécialisée en nettoyage des rues.
 
 Mais la vraie leçon dépasse n'importe quel bout de code. J'ai fabriqué un jeu de
 données étiqueté à partir de rien. J'ai spécialisé un modèle de fondation de

@@ -197,8 +197,7 @@ I did also get to touch the embedded side, tweaking Raven's accident-detection
 algorithm, which was a nice contrast to all the research.
 
 The work paid off in a concrete way, too: the MVP and its results were
-convincing enough to help sign a five-figure contract with a street-cleaning
-company.
+convincing enough to help sign a contract with a street-cleaning company.
 
 But the real takeaway is bigger than any one piece of code. I manufactured a
 labelled dataset out of nothing. I specialised a 300M-parameter foundation model
