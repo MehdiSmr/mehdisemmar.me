@@ -29,8 +29,6 @@ addictive.
 
 ![](/assets/images/ravenphoto2.jpeg)
 
-## The problem
-
 The project was called LeafDet. The goal sounds simple until you try it: from a
 single dashcam frame of a street, detect a pile of leaves on the road and
 estimate its physical volume in cubic metres, presumably so a city could route
@@ -58,9 +56,7 @@ always the same resolution and stay pixel-aligned. That lets me mask the point
 cloud directly with zero resampling error, and I actually assert that invariant
 in code so it can never silently break.
 
-## The dataset problem, and getting labels for free
-
-This was my favourite part. Since no leaf-pile dataset existed, I generated one.
+The dataset was my favourite part. Since no leaf-pile dataset existed, I generated one.
 
 I started by pulling frames from raw dashcam footage. Then, to create piles that
 weren't there, I used Gemini's image model to paint a leaf pile into a clean
@@ -95,8 +91,6 @@ covers enough of the image, and deletes the rest. That's how I moved the model
 from purely synthetic training toward real, model-in-the-loop labelling of a
 corpus far too large to review by hand.
 
-## The model
-
 LeafDet is a frozen DINOv3 ViT-L/16 backbone with a small trainable head on top.
 The image goes through DINOv3 to get 1024-dimensional patch features, then
 through a CBAM attention block that learns which of those channels matter for
@@ -116,8 +110,6 @@ was a from-scratch CNN classifier that only answered "is there a pile in this
 image?" Within about a week I realised classification could never give me
 volume, threw it out, and pivoted to per-pixel segmentation on a frozen
 foundation backbone. That pivot is what made everything downstream possible.
-
-## Volume estimation, and the part I'm proudest of
 
 For volume I built a from-scratch geometric-primitives library: 23 shape fitters
 (polyhedra, prisms, pyramids, quadrics like hemispheres and ellipsoids and
@@ -147,8 +139,6 @@ That piece is research-grade and fully documented. It's the work I learned the
 most from, and, as it turned out, the last big thing I built before the ground
 shifted under me.
 
-## The plot twist: SAM3 and SAM3D
-
 About three weeks before the end of my internship, Meta published SAM3 and
 SAM3D. I remember reading the papers and feeling my stomach drop, because it was
 instantly obvious they were a real leap, and that a lot of what I'd spent months
@@ -177,8 +167,6 @@ them in fast.
 
 ![](/assets/images/leafdet_final_pipeline_sam3_sam3d.png "wide")
 
-## Infrastructure
-
 None of this would have run without the plumbing. I wrote a ~350-line storage
 manager for uploads, downloads, recursive listing, and syncing results, and
 then, mid-project, the whole thing migrated from AWS SageMaker to GCP Vertex AI.
@@ -190,8 +178,6 @@ per-worker client isolation (the GCS client isn't fork-safe and deadlocks under
 multiple workers) and exponential-backoff retries for flaky network-mounted
 data. I also built a Viser-based 3D viewer served to my laptop browser so I
 could actually inspect results that were computed on a remote GPU box.
-
-## What it taught me
 
 I did also get to touch the embedded side, tweaking Raven's accident-detection
 algorithm, which was a nice contrast to all the research.

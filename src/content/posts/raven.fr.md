@@ -31,8 +31,6 @@ addictif.
 
 ![](/assets/images/ravenphoto2.jpeg)
 
-## Le problème
-
 Le projet s'appelait LeafDet. L'objectif a l'air simple jusqu'à ce qu'on essaie :
 à partir d'une seule image de dashcam d'une rue, détecter un tas de feuilles sur
 la route et estimer son volume physique en mètres cubes, sans doute pour qu'une
@@ -65,9 +63,7 @@ restent alignés au pixel près. Ça me permet de masquer le nuage de points
 directement, sans aucune erreur de rééchantillonnage, et je vérifie d'ailleurs
 cet invariant dans le code pour qu'il ne puisse jamais se briser en silence.
 
-## Le problème du jeu de données, et obtenir des étiquettes gratuitement
-
-C'était ma partie préférée. Comme aucun jeu de données de tas de feuilles
+Le jeu de données a été ma partie préférée. Comme aucun jeu de données de tas de feuilles
 n'existait, j'en ai généré un.
 
 J'ai commencé par extraire des images de séquences brutes de dashcam. Ensuite,
@@ -109,8 +105,6 @@ d'un entraînement purement synthétique vers un étiquetage sur données réell
 avec le modèle dans la boucle, sur un corpus bien trop grand pour être revu à la
 main.
 
-## Le modèle
-
 LeafDet est un backbone DINOv3 ViT-L/16 gelé, avec une petite tête entraînable
 par-dessus. L'image passe par DINOv3 pour obtenir des caractéristiques par patch
 en 1024 dimensions, puis par un bloc d'attention CBAM qui apprend lesquels de ces
@@ -132,8 +126,6 @@ un tas de feuilles dans cette image ? » En une semaine environ, j'ai réalisé 
 la classification ne pourrait jamais me donner un volume, je l'ai jetée, et je
 suis passé à une segmentation pixel par pixel sur un backbone de fondation gelé.
 Ce virage est ce qui a rendu tout le reste possible.
-
-## L'estimation du volume, et la partie dont je suis le plus fier
 
 Pour le volume, j'ai construit de zéro une bibliothèque de primitives
 géométriques : 23 ajusteurs de formes (polyèdres, prismes, pyramides, quadriques
@@ -167,8 +159,6 @@ Cette partie est de niveau recherche et entièrement documentée. C'est ce qui m
 le plus appris, et, comme les choses ont tourné, la dernière grosse chose que
 j'ai construite avant que le sol ne se dérobe sous mes pieds.
 
-## Le revirement : SAM3 et SAM3D
-
 Environ trois semaines avant la fin de mon stage, Meta a publié SAM3 et SAM3D. Je
 me souviens d'avoir lu les articles et d'avoir eu l'estomac noué, parce qu'il
 était tout de suite évident que c'était un vrai bond en avant, et qu'une bonne
@@ -201,8 +191,6 @@ intégrer rapidement.
 
 ![](/assets/images/leafdet_final_pipeline_sam3_sam3d.png "wide")
 
-## L'infrastructure
-
 Rien de tout ça n'aurait fonctionné sans la plomberie. J'ai écrit un gestionnaire
 de stockage d'environ 350 lignes pour les téléversements, les téléchargements, le
 listage récursif et la synchronisation des résultats, puis, en cours de projet,
@@ -217,8 +205,6 @@ des réessais avec backoff exponentiel pour des données montées en réseau et
 instables. J'ai aussi construit un visualiseur 3D basé sur Viser, servi vers le
 navigateur de mon portable, pour pouvoir réellement inspecter des résultats
 calculés sur une machine GPU distante.
-
-## Ce que ça m'a appris
 
 J'ai aussi eu la chance de toucher au côté embarqué, en peaufinant l'algorithme
 de détection d'accidents de Raven, ce qui faisait un beau contraste avec toute la
