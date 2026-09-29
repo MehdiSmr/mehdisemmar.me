@@ -13,7 +13,7 @@ export const links = {
    * Google Drive, not public/ — the file is swapped in Drive without a redeploy.
    * Requires the file to stay shared as "anyone with the link".
    */
-  resume: 'https://drive.google.com/file/d/1YUbbRJ3UaRxa_8-T3BiMeN-EsW04bigT/view?usp=sharing'
+  resume: 'https://drive.google.com/file/d/1N9g-tbwuRcLwH7wvh5kSYY1l2kYr-019/view?usp=sharing'
 }
 
 /** The portrait on the home page. */
